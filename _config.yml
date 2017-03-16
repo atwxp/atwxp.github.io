@@ -76,6 +76,9 @@ deploy:
   repository: https://github.com/atwxp/atwxp.github.io.git
   branch: master
 
+plugin:
+  - hexo-generator-feed
+
 feed:
     type: atom
     path: atom.xml
