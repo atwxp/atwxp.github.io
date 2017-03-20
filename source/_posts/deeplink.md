@@ -1,6 +1,6 @@
 ---
 title: DeepLink && Universal Link
-tags: [移动web开发, 基础知识]
+tags: [移动web开发, 开发经验]
 categories: [FrontEnd]
 ---
 
