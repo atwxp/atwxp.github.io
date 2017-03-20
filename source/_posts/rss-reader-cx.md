@@ -7,10 +7,10 @@ categories: [茶余饭后]
 写了个简单的 `rss reader` 扩展，用来订阅一些博客了解最新的技术进展。
 
 ## 1、实现的功能
-- 支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到分享微博、印象笔记、（微信todo）
+- 支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到微博、印象笔记、（微信todo）
 - 可以配置每页文章数量，几天更新一次
-- 使用客户端存储 `localStorage`，分为两种类型存储：一种是 `rss feeds` 列表数组，一种是每个 `rss feed` 的文章数组
-- 每次切换到新的 `rss feed`，都会先判断本地存储是否存在且是否过期，不存在或者过期了都会重新更新
+- 使用客户端存储 `localStorage`
+- 每次切换到新的 `rss feed`，都会先判断本地存储是否存在且是否过期，过期会重新更新
 - 导入 `OPML` 不会立刻请求所有文章更新，而添加单个 `feed` 会立刻请求文章存储在本地
 
 ## 2、实现效果
@@ -26,7 +26,7 @@ categories: [茶余饭后]
 
 ### 3.1 chrome extension
 
-首先每个扩展都必须在有个 `manifest.json` 文件，它是扩展的入口，数据格式是 `json`，如：
+首先每个扩展都必须有个 `manifest.json` 文件，它是扩展的入口，数据格式是 `json`，如：
 ```js
 {
     "manifest_version": 2,
@@ -77,7 +77,9 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 - `/feed/:id`：feed的详情页
 
 #### 数据
-数据有两个：
+
+数据有两个，`feedList` 存储订阅的 `feed` 源数组，`config` 存储阅读器本身的配置
+
 ```js
 const store = {
     feedList: [],
@@ -88,7 +90,10 @@ const store = {
 }
 ```
 
-`action` 有三个：`ADD_FEED, DELETE_FEED, UPDATE_CONFIG`
+#### action
+
+`action` 有三个：添加订阅源 `ADD_FEED`, 删除订阅源 `DELETE_FEED`, 更改配置 `UPDATE_CONFIG`
+
 ```js
 [types.ADD_FEED] (state, feed) {
     feed.forEach(f => state.feedList.push(f))
@@ -102,16 +107,17 @@ const store = {
     ls.set('feeds', state.feedList)
 },
 
-[types.UPDATE_CONFIG] (state, cfg, save = true) {
+[types.UPDATE_CONFIG] (state, cfg) {
     Object.assign(state.config, cfg)
-
-    save && ls.set('config', state.config)
 }
 ```
 
 #### 分页
 
-拿到了某个 `feed` 下的所有文章列表后，会有两个变量 `allPost`(所有文章列表) 以及 `post`(要渲染的文章列表)，会在组件 `v-pager` 中触发 `pagechange` 事件获取当前页码
+拿到了某个 `feed` 下的所有文章列表后，会有两个变量 `allPost`(所有文章列表) 以及 `post`(要渲染的文章列表)
+
+然后在组件 `v-pager` 中触发 `pagechange` 事件获取当前页码，从而获得当前页要渲染的文章列表
+
 ```js
 pagechange(curPage) {
     this.post = this.allPost.slice((curPage - 1) * this.perPage, curPage * this.perPage)
@@ -120,7 +126,7 @@ pagechange(curPage) {
 
 #### 解析 xml
 
-解析一段字符串为 `XML` 主要用到了 `new DOMParser()`，然后根据文档到特点解析相应的信息即可
+解析一段字符串为 `XML` 主要用到了 `new DOMParser()`，然后根据 `DOM` 结构解析即可
 
 #### 其他
 
@@ -147,4 +153,4 @@ resolve: {
 },
 ```
 
-学习了 `vue` 全家桶的是用，不懂的地方其文档也写的非常清楚，以后还要更深入多理解
+学习了 `vue` 全家桶的使用，不懂的地方其文档也写的非常清楚，以后还要更深入的理解
