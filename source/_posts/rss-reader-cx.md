@@ -33,10 +33,6 @@ categories: [茶余饭后]
     "name": "RSS",
     "version": "2.0",
     "browser_action": {
-        // "default_icon": {
-        //     "19": "",
-        //     "38": ""
-        // }
     },
     "background": {
         "scripts": ["background.js"],
@@ -71,6 +67,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 ### 3.3 vue
 
 #### 路由
+
 路由设计很简单就三个：
 - `/add`: 添加、导出、导入 feed
 - `/setting`：设置每页文章数目、每几天更新
@@ -92,35 +89,23 @@ const store = {
 
 #### action
 
-`action` 有三个：添加订阅源 `ADD_FEED`, 删除订阅源 `DELETE_FEED`, 更改配置 `UPDATE_CONFIG`
+`action` 有四个：添加订阅源 `ADD_FEED`, 删除订阅源 `DELETE_FEED`, 更改配置 `UPDATE_CONFIG`，获取 `FeedList`
 
 ```js
-[types.ADD_FEED] (state, feed) {
-    feed.forEach(f => state.feedList.push(f))
-
-    ls.set('feeds', state.feedList)
-},
-
-[types.DELETE_FEED] (state, id) {
-    Vue.set(state, 'feedList', state.feedList.filter(f => f.id !== id))
-
-    ls.set('feeds', state.feedList)
-},
-
-[types.UPDATE_CONFIG] (state, cfg) {
-    Object.assign(state.config, cfg)
+export const addFeed = ({ commit }, feed) => {
+    commit(types.ADD_FEED, Array.isArray(feed) ? feed : [feed])
 }
-```
 
-#### 分页
+export const deleteFeed = ({ commit }, id) => {
+    commit(types.DELETE_FEED, id)
+}
 
-拿到了某个 `feed` 下的所有文章列表后，会有两个变量 `allPost`(所有文章列表) 以及 `post`(要渲染的文章列表)
+export const updateConfig = ({ commit }, cfg) => {
+    commit(types.UPDATE_CONFIG, cfg)
+}
 
-然后在组件 `v-pager` 中触发 `pagechange` 事件获取当前页码，从而获得当前页要渲染的文章列表
-
-```js
-pagechange(curPage) {
-    this.post = this.allPost.slice((curPage - 1) * this.perPage, curPage * this.perPage)
+export const fetchFeedList = ({ commit }, [ url, id ]) => {
+    commit(types.SET_FEEDLIST, rss)
 }
 ```
 
@@ -142,7 +127,9 @@ module: {
     ]
 }
 ```
-比如 `resolve` 中 `extensions` 第一个元素不再是 `''` 了，默认是 `['.js', 'json'`，模块的查找路径写成了 `modules: [src_path, 'node_modules']`
+
+比如 `resolve` 中 `extensions` 第一个元素不再是 `''` 了，默认是 `['.js', 'json']`，模块的查找路径写成了 `modules: [src_path, 'node_modules']`
+
 ```js
 resolve: {
     modules: [SRC_PARH, 'node_modules'],
