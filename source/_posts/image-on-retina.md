@@ -17,8 +17,8 @@ categories: [FrontEnd]
 拿 `MX3` 来说，分辨率 `1800 * 1080`，尺寸 `5.1寸`，它的 `PPI`：
 
 ```js
- 	// 411ppi
-	PPI = Math.sqrt(1080 * 1080 + 1800 * 1800) / 5.1;
+// 411ppi
+PPI = Math.sqrt(1080 * 1080 + 1800 * 1800) / 5.1;
 ```
 
 <!-- more -->
@@ -65,7 +65,7 @@ PS：`IOS` 下，`screen.width` 返回 `dips`
 - 对于 `IOS` 设备，获取 `scree.width` 得到 `dips`， 然后乘上 `window.devicePixelRatio` 得到 `physical pixel`
 - 对于安卓设备，读取 `screen.width` 得到 `physical pixel`，然后除以 `window.devicePixelRatio` 得到 `dips`
  
-关于 `devicePixelRatio` 的用法，参考这篇 [wiki](http://wiki.baidu.com/display/nuomiWap/Media++Query)
+关于 `devicePixelRatio` 的用法，参考这篇 [wiki](https://atwxp.github.io/2017/03/16/media-query/)
 
 ## 7、retina 屏幕下的图片适配
 
@@ -83,16 +83,18 @@ PS：`IOS` 下，`screen.width` 返回 `dips`
 ```css
 .icon {
 	width: 20px;
-	heigth: 20px;
+	height: 20px;
 	background: url(example@2x.png) no-repeat 0 0;
 	background-size: 20px 20px;
 }
  ```
-有时候我们会需要适配不同设备像素比，就要用到 [media query](http://wiki.baidu.com/display/nuomiWap/Media++Query) 了
+
+有时候我们会需要适配不同设备像素比，就要用到 [media query](https://atwxp.github.io/2017/03/16/media-query/) 了
+
  ```css
 .icon {
 	width: 20px;
-	heigth: 20px;
+	height: 20px;
 	background: url(example.png) no-repeat 0 0;
 	background-size: 20px 20px;
 }

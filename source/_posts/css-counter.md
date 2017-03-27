@@ -13,7 +13,7 @@ categories: [FrontEnd]
 ```css
 .list {
 	counter-reset: index;
-
+	
 	.item::before {
 		counter-increment: index;
 		content: counter(index);
@@ -22,7 +22,9 @@ categories: [FrontEnd]
 ```
 
 如果不想对某个元素生成计数器，有两个方法：
+
 - display: none
+
 - 无法正常生成内容的伪元素
 
 ## 好处

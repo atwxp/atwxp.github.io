@@ -10,15 +10,15 @@ categories: [FrontEnd]
 
 在 `HTML` 中可以这样使用
 ```html
-    <link rel="stylesheet" media="print" href="print.css" />
+<link rel="stylesheet" media="print" href="print.css" />
 ```
 在样式表中可以这样写:
  ```css
-    @media screen {
-        p {
-            color: #f00;
-        }
+@media screen {
+    p {
+        color: #f00;
     }
+}
 ```
 规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：`screen & print`
 
@@ -32,23 +32,23 @@ categories: [FrontEnd]
 
 媒体查询列表即包含着多个媒体查询条件，只要符合一条即返回 `true`，即**逻辑或**的处理逻辑。如果列表为空，相当于返回 `true`。
 ```css
-    @media screen, print { … }
-    @media all { … }
-    @media { … }
+@media screen, print { … }
+@media all { … }
+@media { … }
 ```
 ### all
 
 `all` 关键字表示适用于所有媒体类型，如果不明确媒体类型的话默认就是 `all`
 ```css
-    @media all and (device-width: 320px) {}
-    @media (device-width: 320px) {}
+@media all and (device-width: 320px) {}
+@media (device-width: 320px) {}
 ```
 ### not/only
 
 `not` 用来指定某个的媒体查询条件，而 `only` 用来指定某种媒体查询条件，用来排除不支持媒体查询的浏览器
 ```css
-    @media not screen {}
-    @media only print {}
+@media not screen {}
+@media only print {}
 ```
 ### 支持的属性
 
@@ -58,7 +58,7 @@ categories: [FrontEnd]
 
 - `device-width`：设备的宽度
 
- - `device-height`：设备的高度
+- `device-height`：设备的高度
 
 - `device-aspect-ratio`：设备像素比
 
@@ -72,30 +72,27 @@ PS：这里只列出经常使用的属性
 
 ### Resolution
 
-`resolution`描述设备的分辨率（像素密度），单位有 `dpi & dpcm`以及后来新增的 `dppi`。
+`resolution`描述设备的分辨率（像素密度），单位有 `dpi & dpcm`以及后来新增的 `dppi`
 
 - `dpi`：`dot per inch`
 
-
 - `dpcm`：`dot per centimeter`
 
-
 - `dppi`：`dot per pixel`
-
 
 简单的说就是 `resolution` 定义了 `1px || 1 inch || 1 cm CSS` 像素包含了多少个 `物理像素点`。
 
 例如 `iphone retina` 的设备像素比是 `2`，那么完整的写法是：
 ```css
-    /* dpi */
-    @media screen and (min-device-pixel-ratio: 2),
-        (min-resolution: 192dpi){
-    }
+/* dpi */
+@media screen and (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi){
+}
 
-    /* dppi */
-    @media screen and (min-device-pixel-ratio: 2),
-        (min-resolution: 2dppi) {
-    }
+/* dppi */
+@media screen and (min-device-pixel-ratio: 2),
+    (min-resolution: 2dppi) {
+}
 ```
 PS：`1dppi = 96dpi`
 
@@ -145,17 +142,16 @@ PS：`1dppi = 96dpi`
 
 所以，针对高像素密度的屏幕适配如下：
 ```css
-    @media
-        only screen and (-webkit-min-device-pixel-ratio: 2),   // webkit-base(safari, android)
-        only screen and (  min--moz-device-pixel-ratio: 2),    // firefox 16-
-        only screen and (    -o-min-device-pixel-ratio: 2/1),  // opera 11.5-
-        only screen and (      min-device-pixel-ratio: 2),     // for standard
-        only screen and (        min-resolution: 192dpi),      // IE9+
-        only screen and (          min-resolution: 2dppx)      // dppi
-        {
-            /* Retina-specific stuff here */
-        }
-
+@media
+    only screen and (-webkit-min-device-pixel-ratio: 2),   // webkit-base(safari, android)
+    only screen and (  min--moz-device-pixel-ratio: 2),    // firefox 16-
+    only screen and (    -o-min-device-pixel-ratio: 2/1),  // opera 11.5-
+    only screen and (      min-device-pixel-ratio: 2),     // for standard
+    only screen and (        min-resolution: 192dpi),      // IE9+
+    only screen and (          min-resolution: 2dppx)      // dppi
+    {
+        /* Retina-specific stuff here */
+    }
 ```
 # Refer
 

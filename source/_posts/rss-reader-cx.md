@@ -4,7 +4,7 @@ tags: [chrome extension]
 categories: [茶余饭后]
 ---
 
-写了个简单的 `rss reader` 扩展，用来订阅一些博客了解最新的技术进展。
+写了个简单的 [rss reader](https://github.com/atwxp/rss/) 扩展，用来订阅一些博客了解最新的技术进展。
 
 ## 1、实现的功能
 - 支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到微博、印象笔记、（微信todo）

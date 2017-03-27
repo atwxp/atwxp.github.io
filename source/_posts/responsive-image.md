@@ -26,10 +26,11 @@ categories: [FrontEnd]
         padding-bottom: 20%;
     }
 ```
-假设我们的精灵图是 `1000px*500px`，左边是 `500px` 宽的第一张图，右边是第二张图，假设我们这样写：
+假设我们的精灵图是 `1000*500px`，左边是 `500px` 宽的第一张图，右边是第二张图，假设我们这样写：
+
 ```less
     div.sprite {
-        background-image: url(./sprite.png');
+        background-image: url(./sprite.png);
         background-size: 100%;
     }
 ```

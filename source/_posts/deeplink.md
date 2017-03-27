@@ -202,9 +202,7 @@ window.addEventListener('pagehide', function () {
 
 - 豆瓣等(`universal link`)
 
-第二种方法参考 [微信API－－WXAppExtendObject](http://www.jianshu.com/p/3c2a0ba09ac8)
-
-其它的情况见 [关于微信禁止网页上下载app的解决方法（运营相关） - WIKI](http://wiki.baidu.com/pages/viewpage.action?pageId=107752090)
+参考 [微信API－－WXAppExtendObject](http://www.jianshu.com/p/3c2a0ba09ac8)
 
 ## 5、测试 demo
 

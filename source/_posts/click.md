@@ -13,7 +13,7 @@ categories: [FrontEnd]
 代码如下：
 
 ```js
-    $(document).on('click', '.footer', function (e){
+    $(document).on('click', '.footer', function (e) {
         
     });
 ```
