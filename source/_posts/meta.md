@@ -4,6 +4,8 @@ tags: [移动web开发, 基础知识]
 categories: [FrontEnd]
 ---
 
+# meta 标签
+
 ### viewport
 
 设置布局视口为设备宽度，不允许用户缩放，在网页加载时隐藏地址栏与导航栏
@@ -34,10 +36,10 @@ categories: [FrontEnd]
 
 `iPhone` 下会自动将一连串数字转换为拨号超链接，`email`则会调起邮件系统，去掉自动识别：
 ```html
-    <meta name="format-detection" content="telephone=no">
-    <meta name="format-detection" content="email=no">
-    <!-- or -->
-    <meta name="format-detection" content="telephone=no, email=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<!-- or -->
+<meta name="format-detection" content="telephone=no, email=no">
 ```
 <!-- more -->
 
@@ -75,78 +77,83 @@ PS：`IOS7` 开始设备图标的推荐尺寸变化了：
 
 总结下来：
 ```html
-    <!-- For Chrome for Android: -->
-    <link rel="icon" sizes="192x192" href="touch-icon-192x192.png">
+<!-- For Chrome for Android: -->
+<link rel="icon" sizes="192x192" href="touch-icon-192x192.png">
 
-    <!-- For iPhone 6 Plus with @3× display: -->
-    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="apple-touch-icon-180x180-precomposed.png">
+<!-- For iPhone 6 Plus with @3× display: -->
+<link rel="apple-touch-icon-precomposed" sizes="180x180" href="apple-touch-icon-180x180-precomposed.png">
 
-    <!-- For iPad with @2× display running iOS ≥ 7: -->
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="apple-touch-icon-152x152-precomposed.png">
+<!-- For iPad with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="apple-touch-icon-152x152-precomposed.png">
 
-    <!-- For iPad with @2× display running iOS ≤ 6: -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144-precomposed.png">
+<!-- For iPad with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144-precomposed.png">
 
-    <!-- For iPhone with @2× display running iOS ≥ 7: -->
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="apple-touch-icon-120x120-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="apple-touch-icon-120x120-precomposed.png">
 
-    <!-- For iPhone with @2× display running iOS ≤ 6: -->
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
+<!-- For iPhone with @2× display running iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114-precomposed.png">
 
-    <!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="apple-touch-icon-76x76-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≥ 7: -->
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="apple-touch-icon-76x76-precomposed.png">
 
-    <!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
+<!-- For the iPad mini and the first- and second-generation iPad (@1× display) on iOS ≤ 6: -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72-precomposed.png">
 
-    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"><!-- 57×57px -->
+<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"><!-- 57×57px -->
 ```
 上面的代码我们使用了 `app-touch-icon-precomposed` 属性，和 `app-touch-icon` 的区别在于：**前者添加的是设计原图，不带有高光渐变效果，后者则是会带有 `IOS` 统一的高光效果**
 
 PS：判断用户是否是“将网页添加到主屏后，再从主屏幕打开这个网页”
+
 ```
-    navigator.standalone
+navigator.standalone
 ```
+
 ### app-touch-startup-image
 
 前面我们成功的添加页面到主屏幕上，然后我们还可以设置 `app-touch-startup-image`，即一个类似 `NativeApp` 的启动画面。
+
 ```html
     <link rel="apple-touch-startup-image" href="startup-image.png" />
 ```
+
 `iphone3, 4, 5, 6`只支持`竖屏模式`，而 `iPhone 6 Plus` 支持横屏，`iPad`有横屏竖屏。
 
 `Apple` 官方文档建议竖屏模式的 `iPhone 3， 4` 启动动画的大小 `320 * 460`，之所以少了 `20px`，我们很容易想到是 `IOS` 状态栏的高度大小。对于 `retina` 屏幕，我们需要准备 `640 * 920` 大小的图片。不同于 `app-touch-icon`，启动画面没有`sizes`属性。
+
 ```html
-    <!-- iPhone -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px)" href="apple-touch-startup-image-320x460.png">
+<!-- iPhone -->
+<link rel="apple-touch-startup-image" media="(device-width: 320px)" href="apple-touch-startup-image-320x460.png">
 
-    <!-- iPhone (Retina) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-640x920.png">
+<!-- iPhone (Retina) -->
+<link rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-640x920.png">
 
-    <!-- iPhone 5 (Retina) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-width: 568px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-640x1096.png">
+<!-- iPhone 5 (Retina) -->
+<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-width: 568px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-640x1096.png">
 
-    <!-- iPhone 6 (retina) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-750x1294.png">
+<!-- iPhone 6 (retina) -->
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-750x1294.png">
 
-    <!-- iPhone 6+ (portrait )-->
-    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="apple-touch-startup-image-1242x2148.png">
+<!-- iPhone 6+ (portrait )-->
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="apple-touch-startup-image-1242x2148.png">
 
-    <!-- iPhone 6+ (landscape) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="apple-touch-startup-image-1182x2208.png">
+<!-- iPhone 6+ (landscape) -->
+<link rel="apple-touch-startup-image" media="(device-width: 414px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="apple-touch-startup-image-1182x2208.png">
 
-    <!-- iPad (portrait) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)" href="apple-touch-startup-image-768x1004.png">
+<!-- iPad (portrait) -->
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)" href="apple-touch-startup-image-768x1004.png">
 
-    <!-- iPad (landscape) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)" href="apple-touch-startup-image-748x1024.png">
+<!-- iPad (landscape) -->
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)" href="apple-touch-startup-image-748x1024.png">
 
-    <!-- iPad (Retina, portrait) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-1536x2008.png">
+<!-- iPad (Retina, portrait) -->
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-1536x2008.png">
 
-    <!-- iPad (Retina, landscape) -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-1496x2048.png">
+<!-- iPad (Retina, landscape) -->
+<link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="apple-touch-startup-image-1496x2048.png">
 ```
 ### apple-mobile-web-app-capable
 
@@ -186,107 +193,120 @@ PS：只有在 `<meta name="apple-mobile-web-app-capable" content="yes"> `时生
 
 1、IOS上长按`链接`或者`图片`会默认弹出系统菜单，`-webkit-touch-callout` 可以禁止这个菜单的弹出（菜单默认是开启的），安卓不起作用
 ```less
-    a,
-    img {
-        -webkit-touch-callout: none;
-    }
+a,
+img {
+    -webkit-touch-callout: none;
+}
 ```
 2、禁止选择文本（如果没有选择文本需要，建议最好加上）
 ```less
-    html,
-    body {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
+html,
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 ```
 3、避免屏幕旋转导致字体大小缩放
 ```less
-    body {
-        -webkit-text-size-adjust: 100%;
-    }
+body {
+    -webkit-text-size-adjust: 100%;
+}
 ```
 4、更改`IOS` 可点击元素的高亮颜色：当透明度设为0，则会禁用此属性；当透明度设为1，元素在点击时不可见；除了`iOS Safari`，大部分 `Android` 手机也是支持的
+
 ```less
-    body {
-        -webkit-tap-highlight-color: rba(255, 255, 255, 0);
-    }
+body {
+    -webkit-tap-highlight-color: rba(255, 255, 255, 0);
+}
+
 ```
 5、隐藏地址栏
-```less
-        settTimeout(function (){
-            window.scrollTo(0, 1);
-        }, 0);
+
+```javascript
+setTimeout(function (){
+    window.scrollTo(0, 1);
+}, 0);
 ```
+
 6、开启电话、短信功能
+
  ```html
-    // 电话
-    <a href="tel:10086">10086</a>
+// 电话
+<a href="tel:10086">10086</a>
 
-    // 短信
-    <a href="sms:10086">10086</a>
+// 短信
+<a href="sms:10086">10086</a>
 
-    // 邮箱
-    <a href="mailto:example@gmai.com">example@gmail.com</a>
+// 邮箱
+<a href="mailto:example@gmai.com">example@gmail.com</a>
 ```
+
 7、判断屏幕方向
 ```js
-    switch (window.orientation) {
-        case -90:
-        case 90:
-            alert("横屏:" + window.orientation);
-            break;
-        case 0:
-        case 180:
-            alert("竖屏:" + window.orientation);
-            break;
-     }
+switch (window.orientation) {
+    case -90:
+    case 90:
+        alert('横屏:' + window.orientation)
+        break
+
+    case 0:
+    case 180:
+        alert('竖屏:' + window.orientation)
+        break
+
+    default:
+    }
 ```
 8、关闭 `IOS` 输入框首字母大写
+
 ```html
-    <input type="text" autocapitalize="off" />
+<input type="text" autocapitalize="off" />
 ```
+
 9、关闭 `IOS` 输入自动修正
+
 ```html
-    <input type="text" autocorrect="off" />
+<input type="text" autocorrect="off" />
 ```
 10、-webkit-appearance
 
 >  display an element using a platform-native styling based on the operating system's theme.
 
 ```less
-    /* Partial list of available values in Gecko */
-    -moz-appearance: none;
-    -moz-appearance: button;
-    -moz-appearance: checkbox;
-    -moz-appearance: scrollbarbutton-up;
+/* Partial list of available values in Gecko */
+-moz-appearance: none;
+-moz-appearance: button;
+-moz-appearance: checkbox;
+-moz-appearance: scrollbarbutton-up;
 
-    /* Partial list of available values in WebKit/Blink */
-    -webkit-appearance: none;
-    -webkit-appearance: button;
-    -webkit-appearance: checkbox;
-    -webkit-appearance: scrollbarbutton-up;
+/* Partial list of available values in WebKit/Blink */
+-webkit-appearance: none;
+-webkit-appearance: button;
+-webkit-appearance: checkbox;
+-webkit-appearance: scrollbarbutton-up;
 ```
 通常我们使用  `none` 重置表单外观
 
 11、修改 placeholder 文字颜色
+
 ```less
-    ::-webkit-input-placeholder {
-        color: #f00;
-    }
-    /* firefox 18- */
-    :-moz-input-placeholder {
-        color: #f00;
-    }
-    /* firefox 19+ */
-    ::-moz-placeholder {
-        color: #f00;
-    }
-    /* ie 10+ */
-    :-ms-input-placeholder {
-        color: #f00;
-    }
+::-webkit-input-placeholder {
+    color: #f00;
+}
+/* firefox 18- */
+:-moz-input-placeholder {
+    color: #f00;
+}
+/* firefox 19+ */
+::-moz-placeholder {
+    color: #f00;
+}
+/* ie 10+ */
+:-ms-input-placeholder {
+    color: #f00;
+}
 ```
 # Refer
 

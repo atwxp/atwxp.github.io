@@ -83,7 +83,10 @@ $(document.body.children[0]).on('click', function () {
 });
 ```
 
-扫一扫 [Demo](http://jsbin.com/zexiqo)
+## Demo
+
+点 [这里](http://jsbin.com/zexiqo)，扫码如下，
+
 ![](/assets/img/click-qrcode.png)
 
 ## 总结

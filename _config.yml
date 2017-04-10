@@ -2,6 +2,10 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
+# Header
+menu:
+  主页: /
+
 # Site
 title: 武小盼uker的博客
 subtitle: coding my code,uku my ukulele

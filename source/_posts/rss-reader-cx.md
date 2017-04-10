@@ -64,6 +64,8 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 这俩的规范在 [这里](https://validator.w3.org/feed/docs/)
 
+解析一段字符串为 `XML` 主要用到了 `new DOMParser()`，然后根据 `DOM` 结构解析即可
+
 ### 3.3 vue
 
 #### 路由
@@ -109,11 +111,7 @@ export const fetchFeedList = ({ commit }, [ url, id ]) => {
 }
 ```
 
-#### 解析 xml
-
-解析一段字符串为 `XML` 主要用到了 `new DOMParser()`，然后根据 `DOM` 结构解析即可
-
-#### 其他
+### 3.4 其他
 
 `webpack2` 有很多规则都不太一样了，比如 `loader` 的配置，`loaders` 改为了 `rules`，`loader`名字不能简写要写上 `xx-loader`
 
@@ -140,4 +138,8 @@ resolve: {
 },
 ```
 
+## 4、 总结
+
 学习了 `vue` 全家桶的使用，不懂的地方其文档也写的非常清楚，以后还要更深入的理解
+
+End.
