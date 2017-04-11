@@ -6,21 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://atwxp.github.io">
-  <title>响应式图片精灵实现 | 武小盼uker的博客</title>
+  <title>弹性布局的实践 | 武小盼uker的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 logo 如 QQ，微信，微博等，这些 logo 图片都是各自加载的，现在希望能做一张精灵图减少 HTTP 请求，样式如下图：  遇到的问题就是怎么能自适应的设置图片大小以及位置">
+  <meta name="description" content="如下图所示的布局，红球区域有33个球，篮球区域有16个球，要求自适应页面且最边上的球必须紧靠区域边缘  HTML 结构 12345&amp;lt;div class=&quot;ball-list&quot;&amp;gt;&amp;lt;i class=&quot;ball&quot;&amp;gt;&amp;lt;/i&amp;gt;&amp;lt;i class=&quot;ball&quot;&amp;gt;&amp;lt;/i&amp;gt;...&amp;lt;/div&amp;gt;">
 <meta name="keywords" content="移动web开发,开发经验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="响应式图片精灵实现">
-<meta property="og:url" content="https://atwxp.github.io/2017/04/10/responsive-image/index.html">
+<meta property="og:title" content="弹性布局的实践">
+<meta property="og:url" content="https://atwxp.github.io/2017/04/11/flex-study/index.html">
 <meta property="og:site_name" content="武小盼uker的博客">
-<meta property="og:description" content="背景在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 logo 如 QQ，微信，微博等，这些 logo 图片都是各自加载的，现在希望能做一张精灵图减少 HTTP 请求，样式如下图：  遇到的问题就是怎么能自适应的设置图片大小以及位置">
-<meta property="og:image" content="https://atwxp.github.io/assets/img/sms.png">
-<meta property="og:updated_time" content="2017-04-10T03:39:49.000Z">
+<meta property="og:description" content="如下图所示的布局，红球区域有33个球，篮球区域有16个球，要求自适应页面且最边上的球必须紧靠区域边缘  HTML 结构 12345&amp;lt;div class=&quot;ball-list&quot;&amp;gt;&amp;lt;i class=&quot;ball&quot;&amp;gt;&amp;lt;/i&amp;gt;&amp;lt;i class=&quot;ball&quot;&amp;gt;&amp;lt;/i&amp;gt;...&amp;lt;/div&amp;gt;">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/flex-study-001.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/flex-study-002.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/flex-study-003.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/flex-study-004.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/flex-study-005.png">
+<meta property="og:updated_time" content="2017-04-11T04:10:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="响应式图片精灵实现">
-<meta name="twitter:description" content="背景在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 logo 如 QQ，微信，微博等，这些 logo 图片都是各自加载的，现在希望能做一张精灵图减少 HTTP 请求，样式如下图：  遇到的问题就是怎么能自适应的设置图片大小以及位置">
-<meta name="twitter:image" content="https://atwxp.github.io/assets/img/sms.png">
+<meta name="twitter:title" content="弹性布局的实践">
+<meta name="twitter:description" content="如下图所示的布局，红球区域有33个球，篮球区域有16个球，要求自适应页面且最边上的球必须紧靠区域边缘  HTML 结构 12345&amp;lt;div class=&quot;ball-list&quot;&amp;gt;&amp;lt;i class=&quot;ball&quot;&amp;gt;&amp;lt;/i&amp;gt;&amp;lt;i class=&quot;ball&quot;&amp;gt;&amp;lt;/i&amp;gt;...&amp;lt;/div&amp;gt;">
+<meta name="twitter:image" content="https://atwxp.github.io/assets/img/flex-study-001.png">
   
     <link rel="alternative" href="/atom.xml" title="武小盼uker的博客" type="application/atom+xml">
   
@@ -150,44 +154,47 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-responsive-image" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-flex-study" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      响应式图片精灵实现
+      弹性布局的实践
     </h1>
   
 
         
-        <a href="/2017/04/10/responsive-image/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+        <a href="/2017/04/11/flex-study/" class="archive-article-date">
+  	<time datetime="2017-04-11T04:05:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 <code>logo</code> 如 <code>QQ</code>，微信，微博等，这些 <code>logo</code> 图片都是各自加载的，现在希望能做一张精灵图减少 <code>HTTP</code> 请求，样式如下图：</p>
-<p><img src="/assets/img/sms.png" alt="Alt text"></p>
-<p>遇到的问题就是怎么能自适应的设置图片大小以及位置</p>
+        <p>如下图所示的布局，红球区域有33个球，篮球区域有16个球，要求自适应页面且最边上的球必须紧靠区域边缘</p>
+<p><img src="/assets/img/flex-study-001.png" alt="Alt text"></p>
+<p><code>HTML</code> 结构</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ball-list"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"ball"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"ball"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>首先我们有一个放置背景图片的容器，通过 <code>CSS</code> 把它写成<strong>正方形</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;sprite&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">div.sprite &#123;</div><div class="line">    width: 20%;</div><div class="line">    height: 0;</div><div class="line">    padding-bottom: 20%;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>假设我们的精灵图是 <code>1000*500px</code>，左边是 <code>500px</code> 宽的第一张图，右边是第二张图，假设我们这样写：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.sprite</span> &#123;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">./sprite.png</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们会发现这张图会自动缩放在容器里，不是我们想要的容器内只显示一张图的效果。</p>
-<p>实际上我们希望显示这张精灵图的一半大小，那么我们可以设置 <code>background-size: 200%</code>，这句话会设置精灵图的宽度为两个容器宽度的大小，又因为精灵图本身的两张图宽度比例是 <code>1:1</code> 的，所以每个图的宽度都是容器宽度<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.sprite</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">20%</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">padding-bottom</span>: <span class="number">20%</span>;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">'./sprite.png'</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">200%</span>;</div><div class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">        <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>响应式的关键是 <strong>使用百分比设置图片的位置</strong></p>
-<p>拿项目本身来说，每个 <code>logo</code> 容器都是正方形，精灵图是 <code>4 * 2</code> 的，且每个都是 <code>198*198</code> 即也是正方形，怎么实现呢？<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">./sms.png</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">400%</span> <span class="number">200%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>水平宽度写 <code>400%</code> 即是容器宽度的 4 倍大小，精灵图本身宽度是4个logo，所以每个logo在宽度上刚好占满容器宽度；高度同理</p>
-<p>微信、微博、空间、邮件这几个很好设置图片位置<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.wx</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.weibo</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.qzone</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.email</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>那么中间的怎么设置位置呢？我是这么理解，既然每个 <code>logo</code> 和容器大小是一样的，位置又是通过百分比来设置，那么假设 <code>w</code> 是容器宽度，<code>m</code> 表示精灵图有 <code>m</code> 列，第一排第  <code>n</code> 列 <code>logo</code> 的位置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">percent * w * m - percent * w = (n - <span class="number">1</span>) * w</div></pre></td></tr></table></figure></p>
-<p>即设置第一个 <code>logo</code> 百分比是 0，第二个是  <code>1/3</code> 第三个是 <code>2/3</code> 第四个是  <code>3/3</code></p>
-<h1 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h1><ul>
-<li><a href="http://brianjohnsondesign.com/responsive-background-image-sprites-css-tutorial/" target="_blank" rel="external">responsive-background-image-sprites-css-tutorial</a></li>
-</ul>
+<h2 id="1、float-inline-block-布局"><a href="#1、float-inline-block-布局" class="headerlink" title="1、float/inline-block 布局"></a>1、<code>float/inline-block</code> 布局</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ball</span> &#123;</div><div class="line">    <span class="attribute">display</span>: inline-block;</div><div class="line">    <span class="attribute">width</span>: <span class="number">28px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">28px</span>;</div><div class="line">    <span class="attribute">margin-right</span>: <span class="number">8px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/flex-study-002.png" alt="Alt text"></p>
+<p>右侧会存在空隙，因为一行放不下的时候，浏览器就会折行显示</p>
+<h2 id="2、flex-布局"><a href="#2、flex-布局" class="headerlink" title="2、flex 布局"></a>2、<code>flex</code> 布局</h2><p>这种复杂又要求自适应宽度的布局，用 <code>flex</code> 再好不过了</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ball-list</span> &#123;</div><div class="line">	<span class="attribute">display</span>: flex;</div><div class="line">	<span class="attribute">flex-wrap</span>: wrap;</div><div class="line">	<span class="attribute">justify-content</span>: space-between;</div><div class="line">	<span class="selector-class">.ball</span> &#123;</div><div class="line">		<span class="comment">// 兼容旧浏览器，子元素必须是块元素</span></div><div class="line">		<span class="attribute">display</span>: block;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="/assets/img/flex-study-003.png" alt="Alt text"></p>
+<p>看样子不错的说，但是最后一行不尽人意</p>
+<h2 id="3、flex-margin-auto-布局"><a href="#3、flex-margin-auto-布局" class="headerlink" title="3、flex + margin: auto 布局"></a>3、<code>flex + margin: auto</code> 布局</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">&amp;</span><span class="selector-class">.flexauto</span> &#123;</div><div class="line">    <span class="selector-class">.ball</span><span class="selector-pseudo">:last-child</span> &#123;</div><div class="line">      <span class="attribute">margin-right</span>: auto;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/flex-study-004.png" alt="Alt text"></p>
+<p>效果不错，但是不够好</p>
+<h2 id="4、flex-js"><a href="#4、flex-js" class="headerlink" title="4、flex + js"></a>4、<code>flex + js</code></h2><p>尝试了前面几种方法，都不尽人意，看来纯粹使用 <code>css</code> 是行不通的，那只能使用 <code>js</code> 计算空出的占位符个数，手动填满这个区域</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> width = <span class="built_in">parseFloat</span>(<span class="built_in">window</span>.getComputedStyle(ballList).width);</div><div class="line"></div><div class="line"><span class="comment">// 33 是球的个数</span></div><div class="line"><span class="comment">// 8 是 margin-right</span></div><div class="line"><span class="comment">// 38 是球的宽度</span></div><div class="line"><span class="keyword">var</span> cols = <span class="built_in">Math</span>.floor((width + <span class="number">8</span>) / <span class="number">38</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> remainCols = cols - <span class="number">33</span> % cols;</div><div class="line"></div><div class="line"><span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; remainCols; i++) &#123;</div><div class="line">    <span class="keyword">var</span> itag = <span class="built_in">document</span>.createElement(<span class="string">'i'</span>);</div><div class="line"></div><div class="line">    itag.className = <span class="string">'ball'</span>;</div><div class="line"></div><div class="line">    fragment.appendChild(itag);</div><div class="line">&#125;</div><div class="line">  </div><div class="line">ballList.appendChild(fragment);</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/flex-study-005.png" alt="Alt text"></p>
+<p>大功告成</p>
+<h2 id="5、Demo"><a href="#5、Demo" class="headerlink" title="5、Demo"></a>5、Demo</h2><p>戳 <a href="http://output.jsbin.com/vexaseloku" target="_blank" rel="external">这里</a></p>
 <p>End.</p>
 
       
@@ -304,7 +311,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://atwxp.github.io/2017/04/10/responsive-image/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://atwxp.github.io/2017/04/11/flex-study/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -318,11 +325,15 @@
   
 <nav id="article-nav">
   
-  
-    <a href="/2017/04/10/ad/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">反广告过滤</div>
-      <i class="icon-circle-right"></i>
+    <a href="/2017/04/10/webpack-hash/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          对 webpack hash 的理解
+        
+      </div>
     </a>
+  
   
 </nav>
 

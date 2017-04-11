@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://atwxp.github.io/"/>
-  <updated>2017-04-10T12:20:44.000Z</updated>
+  <updated>2017-04-11T04:10:42.000Z</updated>
   <id>https://atwxp.github.io/</id>
   
   <author>
@@ -14,6 +14,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>弹性布局的实践</title>
+    <link href="https://atwxp.github.io/2017/04/11/flex-study/"/>
+    <id>https://atwxp.github.io/2017/04/11/flex-study/</id>
+    <published>2017-04-11T04:05:21.000Z</published>
+    <updated>2017-04-11T04:10:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>如下图所示的布局，红球区域有33个球，篮球区域有16个球，要求自适应页面且最边上的球必须紧靠区域边缘</p>
+<p><img src="/assets/img/flex-study-001.png" alt="Alt text"></p>
+<p><code>HTML</code> 结构</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ball-list"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"ball"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"ball"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line">...</div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="1、float-inline-block-布局"><a href="#1、float-inline-block-布局" class="headerlink" title="1、float/inline-block 布局"></a>1、<code>float/inline-block</code> 布局</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ball</span> &#123;</div><div class="line">    <span class="attribute">display</span>: inline-block;</div><div class="line">    <span class="attribute">width</span>: <span class="number">28px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">28px</span>;</div><div class="line">    <span class="attribute">margin-right</span>: <span class="number">8px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/flex-study-002.png" alt="Alt text"></p>
+<p>右侧会存在空隙，因为一行放不下的时候，浏览器就会折行显示</p>
+<h2 id="2、flex-布局"><a href="#2、flex-布局" class="headerlink" title="2、flex 布局"></a>2、<code>flex</code> 布局</h2><p>这种复杂又要求自适应宽度的布局，用 <code>flex</code> 再好不过了</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ball-list</span> &#123;</div><div class="line">	<span class="attribute">display</span>: flex;</div><div class="line">	<span class="attribute">flex-wrap</span>: wrap;</div><div class="line">	<span class="attribute">justify-content</span>: space-between;</div><div class="line">	<span class="selector-class">.ball</span> &#123;</div><div class="line">		<span class="comment">// 兼容旧浏览器，子元素必须是块元素</span></div><div class="line">		<span class="attribute">display</span>: block;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="/assets/img/flex-study-003.png" alt="Alt text"></p>
+<p>看样子不错的说，但是最后一行不尽人意</p>
+<h2 id="3、flex-margin-auto-布局"><a href="#3、flex-margin-auto-布局" class="headerlink" title="3、flex + margin: auto 布局"></a>3、<code>flex + margin: auto</code> 布局</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">&amp;</span><span class="selector-class">.flexauto</span> &#123;</div><div class="line">    <span class="selector-class">.ball</span><span class="selector-pseudo">:last-child</span> &#123;</div><div class="line">      <span class="attribute">margin-right</span>: auto;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/flex-study-004.png" alt="Alt text"></p>
+<p>效果不错，但是不够好</p>
+<h2 id="4、flex-js"><a href="#4、flex-js" class="headerlink" title="4、flex + js"></a>4、<code>flex + js</code></h2><p>尝试了前面几种方法，都不尽人意，看来纯粹使用 <code>css</code> 是行不通的，那只能使用 <code>js</code> 计算空出的占位符个数，手动填满这个区域</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> width = <span class="built_in">parseFloat</span>(<span class="built_in">window</span>.getComputedStyle(ballList).width);</div><div class="line"></div><div class="line"><span class="comment">// 33 是球的个数</span></div><div class="line"><span class="comment">// 8 是 margin-right</span></div><div class="line"><span class="comment">// 38 是球的宽度</span></div><div class="line"><span class="keyword">var</span> cols = <span class="built_in">Math</span>.floor((width + <span class="number">8</span>) / <span class="number">38</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> remainCols = cols - <span class="number">33</span> % cols;</div><div class="line"></div><div class="line"><span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; remainCols; i++) &#123;</div><div class="line">    <span class="keyword">var</span> itag = <span class="built_in">document</span>.createElement(<span class="string">'i'</span>);</div><div class="line"></div><div class="line">    itag.className = <span class="string">'ball'</span>;</div><div class="line"></div><div class="line">    fragment.appendChild(itag);</div><div class="line">&#125;</div><div class="line">  </div><div class="line">ballList.appendChild(fragment);</div></pre></td></tr></table></figure>
+<p><img src="/assets/img/flex-study-005.png" alt="Alt text"></p>
+<p>大功告成</p>
+<h2 id="5、Demo"><a href="#5、Demo" class="headerlink" title="5、Demo"></a>5、Demo</h2><p>戳 <a href="http://output.jsbin.com/vexaseloku" target="_blank" rel="external">这里</a></p>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如下图所示的布局，红球区域有33个球，篮球区域有16个球，要求自适应页面且最边上的球必须紧靠区域边缘&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/flex-study-001.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;HTML&lt;/code&gt; 结构&lt;/p&gt;
+&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;ball-list&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;ball&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;i&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;ball&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;i&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
   
   <entry>
     <title>对 webpack hash 的理解</title>
@@ -108,102 +157,38 @@
   </entry>
   
   <entry>
-    <title>反广告过滤</title>
-    <link href="https://atwxp.github.io/2017/04/10/ad/"/>
-    <id>https://atwxp.github.io/2017/04/10/ad/</id>
+    <title>响应式图片精灵实现</title>
+    <link href="https://atwxp.github.io/2017/04/10/responsive-image/"/>
+    <id>https://atwxp.github.io/2017/04/10/responsive-image/</id>
     <published>2017-04-10T03:39:49.000Z</published>
     <updated>2017-04-10T03:39:49.000Z</updated>
     
-    <content type="html"><![CDATA[<p> <code>dom</code>  的类名中存在某些关键词会被一些浏览器（猎豹，qq，UC…）的广告过滤机制干掉</p>
-<p>已知的会被过滤掉的关键字：</p>
-<ul>
-<li>banner</li>
-<li>ad</li>
-<li>poster</li>
-<li>flag</li>
-<li>block</li>
-<li>download</li>
-<li>na-download</li>
-</ul>
-<p>包括 <code>HTML</code> 中的 <code>&lt;img /&gt;</code> 的资源路径可能也会被过滤了，有次我把图片命名为 <code>ad.jpg</code> 就被过滤了。。</p>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt; &lt;code&gt;dom&lt;/code&gt;  的类名中存在某些关键词会被一些浏览器（猎豹，qq，UC…）的广告过滤机制干掉&lt;/p&gt;
-&lt;p&gt;已知的会被过滤掉的关键字：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;banner&lt;/li&gt;
-&lt;li&gt;ad&lt;/li&gt;
-&lt;li&gt;poster&lt;/li&gt;
-&lt;li&gt;f
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iphone上click事件不冒泡到document</title>
-    <link href="https://atwxp.github.io/2017/04/10/click/"/>
-    <id>https://atwxp.github.io/2017/04/10/click/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T04:04:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在一个带有 <strong>展开/收起</strong> 的列表里，使用了委托处理点击 <strong>查看更多</strong> 的逻辑，如下图：</p>
-<p><img src="/assets/img/more.png" alt=""></p>
-<p>代码如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.footer'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>这段代码在 <code>iphone</code> 上点开不了，安卓都是 <code>OK</code> 的。可以点一下 <a href="http://jsbin.com/zusapo/1/edit?html,css,js,output" target="_blank" rel="external">测试DEMO</a> 体验一下</p>
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 <code>logo</code> 如 <code>QQ</code>，微信，微博等，这些 <code>logo</code> 图片都是各自加载的，现在希望能做一张精灵图减少 <code>HTTP</code> 请求，样式如下图：</p>
+<p><img src="/assets/img/sms.png" alt="Alt text"></p>
+<p>遇到的问题就是怎么能自适应的设置图片大小以及位置</p>
 <a id="more"></a>
-<h2 id="为什么呢"><a href="#为什么呢" class="headerlink" title="为什么呢"></a>为什么呢</h2><p>从网上搜到几篇文章提到 <a href="http://api.jquery.com/live/" target="_blank" rel="external">API-jQuery</a> 有对 <code>click</code> 使用的提示：</p>
-<blockquote>
-<p>On mobile iOS (iPhone, iPad and iPod Touch) the click event does not bubble to the document body for most elements and cannot be used with .live() without applying one of the following workarounds:</p>
-<ul>
-<li>Use natively clickable elements such as a or button, as both of these do bubble to document.</li>
-<li>Use .on() or .delegate() attached to an element below the level of document.body, since mobile iOS does bubble within the body.</li>
-<li>Apply the CSS style cursor:pointer to the element that needs to bubble clicks (or a parent including document.documentElement). Note however, this will disable copy\paste on the element and cause it to be highlighted when touched.</li>
+<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>首先我们有一个放置背景图片的容器，通过 <code>CSS</code> 把它写成<strong>正方形</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;sprite&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">div.sprite &#123;</div><div class="line">    width: 20%;</div><div class="line">    height: 0;</div><div class="line">    padding-bottom: 20%;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>假设我们的精灵图是 <code>1000*500px</code>，左边是 <code>500px</code> 宽的第一张图，右边是第二张图，假设我们这样写：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.sprite</span> &#123;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">./sprite.png</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们会发现这张图会自动缩放在容器里，不是我们想要的容器内只显示一张图的效果。</p>
+<p>实际上我们希望显示这张精灵图的一半大小，那么我们可以设置 <code>background-size: 200%</code>，这句话会设置精灵图的宽度为两个容器宽度的大小，又因为精灵图本身的两张图宽度比例是 <code>1:1</code> 的，所以每个图的宽度都是容器宽度<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.sprite</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">20%</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">padding-bottom</span>: <span class="number">20%</span>;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">'./sprite.png'</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">200%</span>;</div><div class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">        <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>响应式的关键是 <strong>使用百分比设置图片的位置</strong></p>
+<p>拿项目本身来说，每个 <code>logo</code> 容器都是正方形，精灵图是 <code>4 * 2</code> 的，且每个都是 <code>198*198</code> 即也是正方形，怎么实现呢？<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">./sms.png</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">400%</span> <span class="number">200%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>水平宽度写 <code>400%</code> 即是容器宽度的 4 倍大小，精灵图本身宽度是4个logo，所以每个logo在宽度上刚好占满容器宽度；高度同理</p>
+<p>微信、微博、空间、邮件这几个很好设置图片位置<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.wx</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.weibo</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.qzone</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.email</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>那么中间的怎么设置位置呢？我是这么理解，既然每个 <code>logo</code> 和容器大小是一样的，位置又是通过百分比来设置，那么假设 <code>w</code> 是容器宽度，<code>m</code> 表示精灵图有 <code>m</code> 列，第一排第  <code>n</code> 列 <code>logo</code> 的位置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">percent * w * m - percent * w = (n - <span class="number">1</span>) * w</div></pre></td></tr></table></figure></p>
+<p>即设置第一个 <code>logo</code> 百分比是 0，第二个是  <code>1/3</code> 第三个是 <code>2/3</code> 第四个是  <code>3/3</code></p>
+<h1 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h1><ul>
+<li><a href="http://brianjohnsondesign.com/responsive-background-image-sprites-css-tutorial/" target="_blank" rel="external">responsive-background-image-sprites-css-tutorial</a></li>
 </ul>
-</blockquote>
-<p>简单来说就是：</p>
-<p>手机端的 <code>IOS</code>（<code>iPhone, iPad, iPod Touch</code>) 上，对于大多数元素来说，<code>click</code> 事件不会冒泡到 <code>document.body</code> 这个元素上，而且如果不满足下面的条件之一，不能和 <code>.live()/.on()</code> 使用:</p>
-<ul>
-<li>使用原生可以冒泡到 <code>document</code> 的元素，如 <code>a，button</code></li>
-<li>委托事件到 <code>document.body</code> 的子元素</li>
-<li>给需要冒泡 <code>click</code> 的元素或者其父元素（包括 <code>document.documentElement</code> ）设置 <code>cursor: pointer</code>，但是这样做不能 <strong>复制/粘贴</strong> 该元素内容，并且点击元素会高亮显示</li>
-</ul>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrap"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fold"</span>&gt;</span>not A or button element, iphone 上 document委托失效<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fold"</span> <span class="attr">style</span>=<span class="string">"cursor:pointer"</span>&gt;</span>set cursor: pointer<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span> <span class="attr">class</span>=<span class="string">"fold"</span>&gt;</span>a element success<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>1、委托到目标元素的父元素</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.wrap'</span>).on(<span class="string">'click'</span>, <span class="string">'.fold'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'委托到目标元素的父元素, success！'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>没啥兼容问题</p>
-<p>2、设置目标元素 cursor: pointer<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.fold'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    alert(<span class="string">'cursor: pointer, success！'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p><code>iphone6</code> 上测试，复制粘贴没有问题，点击存在高亮</p>
-<p>3、给body的子元素写一个click事件</p>
-<p>参考 <a href="http://www.uis.cc/content-9-380-1.html" target="_blank" rel="external">这篇文章</a></p>
-<blockquote>
-<p>在冒泡阶段，有一个节点处理了该事件，它就不会丢弃该事件，会继续往上冒，冒到body 然后document 然后window</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>.body.children[<span class="number">0</span>]).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'给body内其他元素绑定一个事件'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>点 <a href="http://jsbin.com/zexiqo" target="_blank" rel="external">这里</a>，扫码如下，</p>
-<p><img src="/assets/img/click-qrcode.png" alt=""></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对比以上三种解决方法，委托到目标元素的父元素 是最简单、没有兼容性问题的方法。</p>
 <p>End.</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;在一个带有 &lt;strong&gt;展开/收起&lt;/strong&gt; 的列表里，使用了委托处理点击 &lt;strong&gt;查看更多&lt;/strong&gt; 的逻辑，如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/img/more.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;代码如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;).on(&lt;span class=&quot;string&quot;&gt;&#39;click&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;.footer&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;e&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;这段代码在 &lt;code&gt;iphone&lt;/code&gt; 上点开不了，安卓都是 &lt;code&gt;OK&lt;/code&gt; 的。可以点一下 &lt;a href=&quot;http://jsbin.com/zusapo/1/edit?html,css,js,output&quot;&gt;测试DEMO&lt;/a&gt; 体验一下&lt;/p&gt;
+      &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 &lt;code&gt;logo&lt;/code&gt; 如 &lt;code&gt;QQ&lt;/code&gt;，微信，微博等，这些 &lt;code&gt;logo&lt;/code&gt; 图片都是各自加载的，现在希望能做一张精灵图减少 &lt;code&gt;HTTP&lt;/code&gt; 请求，样式如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/sms.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;遇到的问题就是怎么能自适应的设置图片大小以及位置&lt;/p&gt;
     
     </summary>
     
@@ -254,61 +239,97 @@
   </entry>
   
   <entry>
-    <title>window.getComputedStyle</title>
-    <link href="https://atwxp.github.io/2017/04/10/getComputedStyle/"/>
-    <id>https://atwxp.github.io/2017/04/10/getComputedStyle/</id>
+    <title>background-clip 的 bug</title>
+    <link href="https://atwxp.github.io/2017/04/10/background-clip/"/>
+    <id>https://atwxp.github.io/2017/04/10/background-clip/</id>
     <published>2017-04-10T03:39:49.000Z</published>
     <updated>2017-04-10T03:39:49.000Z</updated>
     
-    <content type="html"><![CDATA[<p>获取元素的样式通常使用 <code>window.getComputedStyle</code>，有一天我写成了 <code>document.getComputedStyle</code>，总感觉不对劲，网上一查还真这回事o(╯□╰)o，只不过不是这样写的，而是 <code>document.defaultView.getComputedStyle</code></p>
-<h2 id="window-getComputedStyle"><a href="#window-getComputedStyle" class="headerlink" title="window.getComputedStyle"></a>window.getComputedStyle</h2><pre><code>window.getComputedStyle(elem, [pseudoElt])
-</code></pre><p>1、使用这个方法返回的结果和 <code>elem.style</code> 返回的是一样的，都是 <code>CSSStyleDeclaration</code> 对象</p>
-<p><img src="/assets/img/getComputedStyle.png" alt=""></p>
-<p><img src="/assets/img/style-declaration.png" alt=""></p>
-<p>但是二者也有一些区别：</p>
-<a id="more"></a>
-<ul>
-<li>前者是只读的，可以获取元素所有的样式信息，在 <code>chrome</code> 下测试返回 <code>293</code> 个属性</li>
-<li>后者不仅可读还可以写，只能获取元素 <code>style</code> 属性中的样式</li>
+    <content type="html"><![CDATA[<p>同时设置 <code>border-radius</code> &amp; <code>background</code> &amp; <code>border-color</code> &amp; <code>background-clip</code> 在 <code>Android 4.1.1</code> 上有 <code>bug</code><br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">position</span>: absolute;</div><div class="line"><span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">margin-top</span>: -<span class="number">37px</span>;</div><div class="line"><span class="attribute">margin-left</span>: -<span class="number">37px</span>;</div><div class="line"><span class="attribute">width</span>: <span class="number">66px</span>;</div><div class="line"><span class="attribute">height</span>: <span class="number">66px</span>;</div><div class="line"></div><div class="line"><span class="comment">// border: 4px solid rgba(255, 255, 255, 0.5);</span></div><div class="line"><span class="attribute">border</span>: <span class="number">4px</span> solid <span class="number">#f00</span>;</div><div class="line"><span class="attribute">background</span>: <span class="number">#fafafa</span>;</div><div class="line"><span class="attribute">border-radius</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">-webkit-background-clip</span>: content-box;</div><div class="line"><span class="attribute">background-clip</span>: content-box;</div><div class="line"></div><div class="line"><span class="attribute">text-align</span>: center;</div><div class="line"><span class="attribute">line-height</span>: <span class="number">1</span>;</div><div class="line"><span class="attribute">z-index</span>: <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<p>设置 <code>border</code> 不是透明色，表现的和预期一样：</p>
+<p><img src="/assets/img/bgclip-normal.png" alt="Alt text"></p>
+<p>如果设置为透明色，就会这样：</p>
+<p><img src="/assets/img/bgclip-error.png" alt="Alt text"></p>
+<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
+<li><a href="https://css-tricks.com/the-backgound-clip-property-and-use-cases/" target="_blank" rel="external">the-backgound-clip-property-and-use-cases</a></li>
 </ul>
-<p>2、获取伪元素</p>
-<p><img src="/assets/img/pseudo.png" alt=""></p>
-<p>3、值的类型</p>
-<p>通过 <code>getComputedStyle()</code> 返回的值是 <code>resolved value</code>，这个值通常和 <code>CSS2.1 computed value</code> 相同，但是对于一些属性如 <code>width, height</code>可能就和 <code>used value</code> 相同。</p>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle" target="_blank" rel="external">MDN</a>上说有些浏览器获取不到元素过渡时候的样式，自测 <code>chomre, FF</code> 是可以的，不过使用的时候还是注意一下为好</p>
-<blockquote>
-<p>During a CSS transition, getComputedStyle returns the original property value in Firefox, but the final property value in WebKit.</p>
-</blockquote>
-<p>4、兼容性</p>
-<p>移动端：<code>IOS safari 4.3, android 3-</code> 不支持伪元素</p>
-<p>PC：<code>IE8-</code> 完全不支持</p>
-<p>所以在移动端，只要不涉及伪元素和低版本，可以放心使用</p>
-<h2 id="getPropertyValue"><a href="#getPropertyValue" class="headerlink" title="getPropertyValue()"></a>getPropertyValue()</h2><p>返回指定样式属性的值，是 <code>CSSStyleDeclaration</code> 对象的方法，用这个的好处：</p>
-<p>1、对于驼峰式的样式名，如 <code>background-color</code>，就可以直接写</p>
-<pre><code>window.getComputedStyle(div, null).backgroundColor;
-// equal
-div.style.getPropertyValue(&apos;background-color&apos;);
-</code></pre><p>2、对于 <code>float</code> 这些特殊样式名，不用考虑浏览器使用 <code>cssFloat, styleFloat</code> 等</p>
-<pre><code>div.style.getPropertyValue(&apos;float&apos;);
-</code></pre><p>综上，推荐使用这个获取样式</p>
-<p>3、兼容性</p>
-<p><code>IE9+</code>，现代浏览器 支持</p>
-<h2 id="document-defaultView-getComputedStyle"><a href="#document-defaultView-getComputedStyle" class="headerlink" title="document.defaultView.getComputedStyle"></a>document.defaultView.getComputedStyle</h2><p>不必要的，因为 <code>window.getComputedStyle()</code> 已经存在了，干嘛还再多访问一层属性呢</p>
+<p>End.</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;获取元素的样式通常使用 &lt;code&gt;window.getComputedStyle&lt;/code&gt;，有一天我写成了 &lt;code&gt;document.getComputedStyle&lt;/code&gt;，总感觉不对劲，网上一查还真这回事o(╯□╰)o，只不过不是这样写的，而是 &lt;code&gt;document.defaultView.getComputedStyle&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&quot;window-getComputedStyle&quot;&gt;&lt;a href=&quot;#window-getComputedStyle&quot; class=&quot;headerlink&quot; title=&quot;window.getComputedStyle&quot;&gt;&lt;/a&gt;window.getComputedStyle&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;window.getComputedStyle(elem, [pseudoElt])
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1、使用这个方法返回的结果和 &lt;code&gt;elem.style&lt;/code&gt; 返回的是一样的，都是 &lt;code&gt;CSSStyleDeclaration&lt;/code&gt; 对象&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/img/getComputedStyle.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/img/style-declaration.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;但是二者也有一些区别：&lt;/p&gt;
+      &lt;p&gt;同时设置 &lt;code&gt;border-radius&lt;/code&gt; &amp;amp; &lt;code&gt;background&lt;/code&gt; &amp;amp; &lt;code&gt;border-color&lt;/code&gt; &amp;amp; &lt;code&gt;background-clip&lt;/code&gt; 在 &lt;code&gt;
     
     </summary>
     
       <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
     
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iscroll 的坑</title>
+    <link href="https://atwxp.github.io/2017/04/10/iscroll/"/>
+    <id>https://atwxp.github.io/2017/04/10/iscroll/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给 <code>iscroll</code> 的子元素绑定 <code>click</code> 事件，在 猎豹，<code>chrome</code>, <code>UC</code> 等失效</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>后来查阅 <a href="https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/basicfeatures.html" target="_blank" rel="external">文档</a> 发现已经提示我们了</p>
+<blockquote>
+<p><code>options.click</code><br>为了重写原生滚动条，<code>iScroll</code> 禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应 <code>click</code> 事件，那么该设置次属性为 <code>true</code> 。请注意，建议使用自定义的 <code>tap</code> 事件来代替它（见下面）。<br>默认属性：<code>false</code></p>
+<p><code>options.tap</code><br>设置此属性为 <code>true</code>，当滚动区域被点击或者触摸但并没有滚动时，可以让 <code>iScroll</code> 抛出一个自定义的tap事件。<br>这是处理与可以点击元素之间的用户交互的建议方式。侦听 <code>tap</code> 事件和侦听标准事件的方式一致。示例如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">element.addEventListener(<span class="string">'tap'</span>, doSomething, <span class="literal">false</span>); \\ Native</div><div class="line">$(<span class="string">'#element'</span>).on(<span class="string">'tap'</span>, doSomething); \\ jQuery</div></pre></td></tr></table></figure></p>
+<p>你可以通过传递一个字符串来自定义事件名称。比如：<br>tap: ‘myCustomTapEvent’<br>在这个示例里你应该侦听名为myCustomTapEvent的事件。<br>默认值：false</p>
+</blockquote>
+<a id="more"></a>
+<p>在源码中可以找到实现<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">_initEvents: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	...</div><div class="line">	<span class="comment">// 注册 click</span></div><div class="line">	<span class="keyword">if</span> ( <span class="keyword">this</span>.options.click ) &#123;</div><div class="line">           eventType(<span class="keyword">this</span>.wrapper, <span class="string">'click'</span>, <span class="keyword">this</span>, <span class="literal">true</span>);</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">	<span class="comment">// 注册移动端事件</span></div><div class="line">	<span class="keyword">if</span> ( utils.hasTouch &amp;&amp; !<span class="keyword">this</span>.options.disableTouch ) &#123;</div><div class="line">           eventType(<span class="keyword">this</span>.wrapper, <span class="string">'touchstart'</span>, <span class="keyword">this</span>);</div><div class="line">           eventType(target, <span class="string">'touchmove'</span>, <span class="keyword">this</span>);</div><div class="line">           eventType(target, <span class="string">'touchcancel'</span>, <span class="keyword">this</span>);</div><div class="line">           eventType(target, <span class="string">'touchend'</span>, <span class="keyword">this</span>);</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">&#125;</div><div class="line"></div><div class="line">_start: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">	...</div><div class="line">	<span class="comment">// 在 touchstart 阻止浏览器触摸行为，且禁用页面滚动</span></div><div class="line">	<span class="comment">// preventDefaultException: &#123; tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/ &#125;,</span></div><div class="line">	<span class="comment">// 这里没有 `a` 标签，所以点击带有 `href` 的 `a` 标签也会失效</span></div><div class="line">	<span class="keyword">if</span> ( <span class="keyword">this</span>.options.preventDefault &amp;&amp; !utils.isBadAndroid &amp;&amp; !utils.preventDefaultException(e.target, <span class="keyword">this</span>.options.preventDefaultException) ) &#123;</div><div class="line">           e.preventDefault();</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">&#125;</div><div class="line"></div><div class="line">_end: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">	...</div><div class="line">	<span class="comment">// we scrolled less than 10 pixels</span></div><div class="line">       <span class="keyword">if</span> ( !<span class="keyword">this</span>.moved ) &#123;</div><div class="line">		<span class="comment">// 触发 tap 事件</span></div><div class="line">           <span class="keyword">if</span> ( <span class="keyword">this</span>.options.tap ) &#123;</div><div class="line">               utils.tap(e, <span class="keyword">this</span>.options.tap);</div><div class="line">           &#125;</div><div class="line">		<span class="comment">// 开启 click，使用自定义事件派发 click</span></div><div class="line">           <span class="keyword">if</span> ( <span class="keyword">this</span>.options.click ) &#123;</div><div class="line">               utils.click(e);</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">this</span>._execEvent(<span class="string">'scrollCancel'</span>);</div><div class="line">           <span class="keyword">return</span>;</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// addEventListener() a special function called handleEvent to catch any events</span></div><div class="line">handleEvent: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">	...		</div><div class="line">	case <span class="string">'touchstart'</span>:</div><div class="line">		<span class="keyword">this</span>._start(e);</div><div class="line">	<span class="keyword">case</span> <span class="string">'click'</span>:</div><div class="line">		<span class="keyword">if</span> ( !e._constructed ) &#123;</div><div class="line">               e.preventDefault();</div><div class="line">               e.stopPropagation();</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">break</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// utils.click</span></div><div class="line">   me.click = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">       <span class="keyword">var</span> target = e.target,</div><div class="line">           ev;</div><div class="line">       <span class="keyword">if</span> ( !(<span class="regexp">/(SELECT|INPUT|TEXTAREA)/i</span>).test(target.tagName) ) &#123;</div><div class="line">           ev = <span class="built_in">document</span>.createEvent(<span class="string">'MouseEvents'</span>);</div><div class="line">           ev.initMouseEvent(<span class="string">'click'</span>, <span class="literal">true</span>, <span class="literal">true</span>, e.view, <span class="number">1</span>,</div><div class="line">               target.screenX, target.screenY, target.clientX, target.clientY,</div><div class="line">               e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,</div><div class="line">               <span class="number">0</span>, <span class="literal">null</span>);</div><div class="line">           ev._constructed = <span class="literal">true</span>;</div><div class="line">           target.dispatchEvent(ev);</div><div class="line">       &#125;</div><div class="line">   &#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="配置方案"><a href="#配置方案" class="headerlink" title="配置方案"></a>配置方案</h2><p>1、开启 <code>click</code> 配置<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">myScroll = <span class="keyword">new</span> IScroll(<span class="string">'#wrapper'</span>, &#123;</div><div class="line">	<span class="attr">mouseWheel</span>: <span class="literal">true</span>,</div><div class="line">       <span class="attr">click</span>: <span class="literal">true</span></div><div class="line">   &#125;);</div><div class="line"><span class="built_in">document</span>.document.querySelector(<span class="string">'#wrapper'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>带有 <code>href</code> 的 <code>a</code> 可以点击</li>
+<li>不会有 300ms 延迟，在 <code>touchend</code> 触发的</li>
+<li>不会冒泡，被 <code>e._constructed</code> 禁用了</li>
+</ul>
+<p>2、开启 <code>tap</code> 配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">myScroll = new IScroll(&apos;#wrapper&apos;, &#123;</div><div class="line">	mouseWheel: true,</div><div class="line">       tap: true</div><div class="line">   &#125;);</div><div class="line">document.document.querySelector(&apos;#wrapper&apos;).addEventListener(&apos;tap&apos;, function () &#123;&#125;);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>带有 <code>href</code> 的 <code>a</code> 还是点击不了</li>
+</ul>
+<p>3、和 <code>zepto</code> 使用</p>
+<p>如果是使用 <code>$(&#39;&#39;).on(&#39;click&#39;)</code> 和 原生的 <code>addEventListener</code> 没有差别，这个时候需要开启 <code>click: true</code></p>
+<p>如果是使用 <code>$(&#39;&#39;).on(&#39;tap&#39;)</code>，配置 <code>click: false, tap: false</code> 就好了；如果配置了 <code>tap</code> 反而会触发两次 <code>tap</code> 事件</p>
+<p>4、 <code>fastclick</code> 使用</p>
+<p>配置 <code>click: false, tap: false</code>，某些安卓机（三星）绑定 <code>click</code> 还是点不了</p>
+<p>配置 <code>click: true</code>，<code>IOS</code> 点击不了（双击好像可以），三星反而能点击了</p>
+<p>5、 <code>zepto, fastclick</code> 使用</p>
+<p>配置 <code>click: false, tap: false</code>，使用 <code>$(&#39;&#39;).on(&#39;click&#39;)</code> 在某些安卓机不能点，开启 <code>click: true</code>，<code>IOS</code> 反而不能点</p>
+<p>配置 <code>click: false, tap: false</code>，使用 <code>$(&#39;&#39;).on(&#39;tap&#39;)</code> 好像没啥问题；如果配置了 <code>tap: true</code> 反而会触发两次 <code>tap</code> 事件</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>测试机型有限，也不知道还有哪些坑（使用了 <code>fastlick</code> 好晕）。综上，如果使用 <code>iscroll</code> 想要监听内部元素的点击事件：</p>
+<ul>
+<li>无论有没有 <code>fastclick</code>，使用 <code>zepto(&#39;&#39;).on(&#39;tap&#39;）</code> 应该是保险的；</li>
+<li>或者开启 <code>tap: true</code> 配合原生的 <code>addEventListener(tap)</code></li>
+</ul>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;给 &lt;code&gt;iscroll&lt;/code&gt; 的子元素绑定 &lt;code&gt;click&lt;/code&gt; 事件，在 猎豹，&lt;code&gt;chrome&lt;/code&gt;, &lt;code&gt;UC&lt;/code&gt; 等失效&lt;/p&gt;
+&lt;h2 id=&quot;原因&quot;&gt;&lt;a href=&quot;#原因&quot; class=&quot;headerlink&quot; title=&quot;原因&quot;&gt;&lt;/a&gt;原因&lt;/h2&gt;&lt;p&gt;后来查阅 &lt;a href=&quot;https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/basicfeatures.html&quot;&gt;文档&lt;/a&gt; 发现已经提示我们了&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;options.click&lt;/code&gt;&lt;br&gt;为了重写原生滚动条，&lt;code&gt;iScroll&lt;/code&gt; 禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应 &lt;code&gt;click&lt;/code&gt; 事件，那么该设置次属性为 &lt;code&gt;true&lt;/code&gt; 。请注意，建议使用自定义的 &lt;code&gt;tap&lt;/code&gt; 事件来代替它（见下面）。&lt;br&gt;默认属性：&lt;code&gt;false&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;options.tap&lt;/code&gt;&lt;br&gt;设置此属性为 &lt;code&gt;true&lt;/code&gt;，当滚动区域被点击或者触摸但并没有滚动时，可以让 &lt;code&gt;iScroll&lt;/code&gt; 抛出一个自定义的tap事件。&lt;br&gt;这是处理与可以点击元素之间的用户交互的建议方式。侦听 &lt;code&gt;tap&lt;/code&gt; 事件和侦听标准事件的方式一致。示例如下：&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;element.addEventListener(&lt;span class=&quot;string&quot;&gt;&#39;tap&#39;&lt;/span&gt;, doSomething, &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;); \\ Native&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;#element&#39;&lt;/span&gt;).on(&lt;span class=&quot;string&quot;&gt;&#39;tap&#39;&lt;/span&gt;, doSomething); \\ jQuery&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;你可以通过传递一个字符串来自定义事件名称。比如：&lt;br&gt;tap: ‘myCustomTapEvent’&lt;br&gt;在这个示例里你应该侦听名为myCustomTapEvent的事件。&lt;br&gt;默认值：false&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
     
       <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
     
@@ -382,207 +403,6 @@ div.style.getPropertyValue(&apos;background-color&apos;);
 &lt;p&gt;屏幕密度，即屏幕上存在的像素数量，通常用 &lt;code&gt;PPI&lt;/code&gt; 来衡量，即 &lt;code&gt;pixels per inch&lt;/code&gt;，每英寸的像素数。&lt;/p&gt;
 &lt;p&gt;拿 &lt;code&gt;MX3&lt;/code&gt; 来说，分辨率 &lt;code&gt;1800 * 1080&lt;/code&gt;，尺寸 &lt;code&gt;5.1寸&lt;/code&gt;，它的 &lt;code&gt;PPI&lt;/code&gt;：&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 411ppi&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;PPI = &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.sqrt(&lt;span class=&quot;number&quot;&gt;1080&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1080&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;1800&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1800&lt;/span&gt;) / &lt;span class=&quot;number&quot;&gt;5.1&lt;/span&gt;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="基础知识" scheme="https://atwxp.github.io/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iscroll 的坑</title>
-    <link href="https://atwxp.github.io/2017/04/10/iscroll/"/>
-    <id>https://atwxp.github.io/2017/04/10/iscroll/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给 <code>iscroll</code> 的子元素绑定 <code>click</code> 事件，在 猎豹，<code>chrome</code>, <code>UC</code> 等失效</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>后来查阅 <a href="https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/basicfeatures.html" target="_blank" rel="external">文档</a> 发现已经提示我们了</p>
-<blockquote>
-<p><code>options.click</code><br>为了重写原生滚动条，<code>iScroll</code> 禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应 <code>click</code> 事件，那么该设置次属性为 <code>true</code> 。请注意，建议使用自定义的 <code>tap</code> 事件来代替它（见下面）。<br>默认属性：<code>false</code></p>
-<p><code>options.tap</code><br>设置此属性为 <code>true</code>，当滚动区域被点击或者触摸但并没有滚动时，可以让 <code>iScroll</code> 抛出一个自定义的tap事件。<br>这是处理与可以点击元素之间的用户交互的建议方式。侦听 <code>tap</code> 事件和侦听标准事件的方式一致。示例如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">element.addEventListener(<span class="string">'tap'</span>, doSomething, <span class="literal">false</span>); \\ Native</div><div class="line">$(<span class="string">'#element'</span>).on(<span class="string">'tap'</span>, doSomething); \\ jQuery</div></pre></td></tr></table></figure></p>
-<p>你可以通过传递一个字符串来自定义事件名称。比如：<br>tap: ‘myCustomTapEvent’<br>在这个示例里你应该侦听名为myCustomTapEvent的事件。<br>默认值：false</p>
-</blockquote>
-<a id="more"></a>
-<p>在源码中可以找到实现<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">_initEvents: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	...</div><div class="line">	<span class="comment">// 注册 click</span></div><div class="line">	<span class="keyword">if</span> ( <span class="keyword">this</span>.options.click ) &#123;</div><div class="line">           eventType(<span class="keyword">this</span>.wrapper, <span class="string">'click'</span>, <span class="keyword">this</span>, <span class="literal">true</span>);</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">	<span class="comment">// 注册移动端事件</span></div><div class="line">	<span class="keyword">if</span> ( utils.hasTouch &amp;&amp; !<span class="keyword">this</span>.options.disableTouch ) &#123;</div><div class="line">           eventType(<span class="keyword">this</span>.wrapper, <span class="string">'touchstart'</span>, <span class="keyword">this</span>);</div><div class="line">           eventType(target, <span class="string">'touchmove'</span>, <span class="keyword">this</span>);</div><div class="line">           eventType(target, <span class="string">'touchcancel'</span>, <span class="keyword">this</span>);</div><div class="line">           eventType(target, <span class="string">'touchend'</span>, <span class="keyword">this</span>);</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">&#125;</div><div class="line"></div><div class="line">_start: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">	...</div><div class="line">	<span class="comment">// 在 touchstart 阻止浏览器触摸行为，且禁用页面滚动</span></div><div class="line">	<span class="comment">// preventDefaultException: &#123; tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT)$/ &#125;,</span></div><div class="line">	<span class="comment">// 这里没有 `a` 标签，所以点击带有 `href` 的 `a` 标签也会失效</span></div><div class="line">	<span class="keyword">if</span> ( <span class="keyword">this</span>.options.preventDefault &amp;&amp; !utils.isBadAndroid &amp;&amp; !utils.preventDefaultException(e.target, <span class="keyword">this</span>.options.preventDefaultException) ) &#123;</div><div class="line">           e.preventDefault();</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">&#125;</div><div class="line"></div><div class="line">_end: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">	...</div><div class="line">	<span class="comment">// we scrolled less than 10 pixels</span></div><div class="line">       <span class="keyword">if</span> ( !<span class="keyword">this</span>.moved ) &#123;</div><div class="line">		<span class="comment">// 触发 tap 事件</span></div><div class="line">           <span class="keyword">if</span> ( <span class="keyword">this</span>.options.tap ) &#123;</div><div class="line">               utils.tap(e, <span class="keyword">this</span>.options.tap);</div><div class="line">           &#125;</div><div class="line">		<span class="comment">// 开启 click，使用自定义事件派发 click</span></div><div class="line">           <span class="keyword">if</span> ( <span class="keyword">this</span>.options.click ) &#123;</div><div class="line">               utils.click(e);</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">this</span>._execEvent(<span class="string">'scrollCancel'</span>);</div><div class="line">           <span class="keyword">return</span>;</div><div class="line">       &#125;</div><div class="line">	...</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// addEventListener() a special function called handleEvent to catch any events</span></div><div class="line">handleEvent: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">	...		</div><div class="line">	case <span class="string">'touchstart'</span>:</div><div class="line">		<span class="keyword">this</span>._start(e);</div><div class="line">	<span class="keyword">case</span> <span class="string">'click'</span>:</div><div class="line">		<span class="keyword">if</span> ( !e._constructed ) &#123;</div><div class="line">               e.preventDefault();</div><div class="line">               e.stopPropagation();</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">break</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// utils.click</span></div><div class="line">   me.click = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">       <span class="keyword">var</span> target = e.target,</div><div class="line">           ev;</div><div class="line">       <span class="keyword">if</span> ( !(<span class="regexp">/(SELECT|INPUT|TEXTAREA)/i</span>).test(target.tagName) ) &#123;</div><div class="line">           ev = <span class="built_in">document</span>.createEvent(<span class="string">'MouseEvents'</span>);</div><div class="line">           ev.initMouseEvent(<span class="string">'click'</span>, <span class="literal">true</span>, <span class="literal">true</span>, e.view, <span class="number">1</span>,</div><div class="line">               target.screenX, target.screenY, target.clientX, target.clientY,</div><div class="line">               e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,</div><div class="line">               <span class="number">0</span>, <span class="literal">null</span>);</div><div class="line">           ev._constructed = <span class="literal">true</span>;</div><div class="line">           target.dispatchEvent(ev);</div><div class="line">       &#125;</div><div class="line">   &#125;;</div></pre></td></tr></table></figure></p>
-<h2 id="配置方案"><a href="#配置方案" class="headerlink" title="配置方案"></a>配置方案</h2><p>1、开启 <code>click</code> 配置<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">myScroll = <span class="keyword">new</span> IScroll(<span class="string">'#wrapper'</span>, &#123;</div><div class="line">	<span class="attr">mouseWheel</span>: <span class="literal">true</span>,</div><div class="line">       <span class="attr">click</span>: <span class="literal">true</span></div><div class="line">   &#125;);</div><div class="line"><span class="built_in">document</span>.document.querySelector(<span class="string">'#wrapper'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;);</div></pre></td></tr></table></figure></p>
-<ul>
-<li>带有 <code>href</code> 的 <code>a</code> 可以点击</li>
-<li>不会有 300ms 延迟，在 <code>touchend</code> 触发的</li>
-<li>不会冒泡，被 <code>e._constructed</code> 禁用了</li>
-</ul>
-<p>2、开启 <code>tap</code> 配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">myScroll = new IScroll(&apos;#wrapper&apos;, &#123;</div><div class="line">	mouseWheel: true,</div><div class="line">       tap: true</div><div class="line">   &#125;);</div><div class="line">document.document.querySelector(&apos;#wrapper&apos;).addEventListener(&apos;tap&apos;, function () &#123;&#125;);</div></pre></td></tr></table></figure></p>
-<ul>
-<li>带有 <code>href</code> 的 <code>a</code> 还是点击不了</li>
-</ul>
-<p>3、和 <code>zepto</code> 使用</p>
-<p>如果是使用 <code>$(&#39;&#39;).on(&#39;click&#39;)</code> 和 原生的 <code>addEventListener</code> 没有差别，这个时候需要开启 <code>click: true</code></p>
-<p>如果是使用 <code>$(&#39;&#39;).on(&#39;tap&#39;)</code>，配置 <code>click: false, tap: false</code> 就好了；如果配置了 <code>tap</code> 反而会触发两次 <code>tap</code> 事件</p>
-<p>4、 <code>fastclick</code> 使用</p>
-<p>配置 <code>click: false, tap: false</code>，某些安卓机（三星）绑定 <code>click</code> 还是点不了</p>
-<p>配置 <code>click: true</code>，<code>IOS</code> 点击不了（双击好像可以），三星反而能点击了</p>
-<p>5、 <code>zepto, fastclick</code> 使用</p>
-<p>配置 <code>click: false, tap: false</code>，使用 <code>$(&#39;&#39;).on(&#39;click&#39;)</code> 在某些安卓机不能点，开启 <code>click: true</code>，<code>IOS</code> 反而不能点</p>
-<p>配置 <code>click: false, tap: false</code>，使用 <code>$(&#39;&#39;).on(&#39;tap&#39;)</code> 好像没啥问题；如果配置了 <code>tap: true</code> 反而会触发两次 <code>tap</code> 事件</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>测试机型有限，也不知道还有哪些坑（使用了 <code>fastlick</code> 好晕）。综上，如果使用 <code>iscroll</code> 想要监听内部元素的点击事件：</p>
-<ul>
-<li>无论有没有 <code>fastclick</code>，使用 <code>zepto(&#39;&#39;).on(&#39;tap&#39;）</code> 应该是保险的；</li>
-<li>或者开启 <code>tap: true</code> 配合原生的 <code>addEventListener(tap)</code></li>
-</ul>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;给 &lt;code&gt;iscroll&lt;/code&gt; 的子元素绑定 &lt;code&gt;click&lt;/code&gt; 事件，在 猎豹，&lt;code&gt;chrome&lt;/code&gt;, &lt;code&gt;UC&lt;/code&gt; 等失效&lt;/p&gt;
-&lt;h2 id=&quot;原因&quot;&gt;&lt;a href=&quot;#原因&quot; class=&quot;headerlink&quot; title=&quot;原因&quot;&gt;&lt;/a&gt;原因&lt;/h2&gt;&lt;p&gt;后来查阅 &lt;a href=&quot;https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/basicfeatures.html&quot;&gt;文档&lt;/a&gt; 发现已经提示我们了&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;options.click&lt;/code&gt;&lt;br&gt;为了重写原生滚动条，&lt;code&gt;iScroll&lt;/code&gt; 禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应 &lt;code&gt;click&lt;/code&gt; 事件，那么该设置次属性为 &lt;code&gt;true&lt;/code&gt; 。请注意，建议使用自定义的 &lt;code&gt;tap&lt;/code&gt; 事件来代替它（见下面）。&lt;br&gt;默认属性：&lt;code&gt;false&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;options.tap&lt;/code&gt;&lt;br&gt;设置此属性为 &lt;code&gt;true&lt;/code&gt;，当滚动区域被点击或者触摸但并没有滚动时，可以让 &lt;code&gt;iScroll&lt;/code&gt; 抛出一个自定义的tap事件。&lt;br&gt;这是处理与可以点击元素之间的用户交互的建议方式。侦听 &lt;code&gt;tap&lt;/code&gt; 事件和侦听标准事件的方式一致。示例如下：&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;element.addEventListener(&lt;span class=&quot;string&quot;&gt;&#39;tap&#39;&lt;/span&gt;, doSomething, &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;); \\ Native&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;#element&#39;&lt;/span&gt;).on(&lt;span class=&quot;string&quot;&gt;&#39;tap&#39;&lt;/span&gt;, doSomething); \\ jQuery&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;你可以通过传递一个字符串来自定义事件名称。比如：&lt;br&gt;tap: ‘myCustomTapEvent’&lt;br&gt;在这个示例里你应该侦听名为myCustomTapEvent的事件。&lt;br&gt;默认值：false&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Media Query</title>
-    <link href="https://atwxp.github.io/2017/04/10/media-query/"/>
-    <id>https://atwxp.github.io/2017/04/10/media-query/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="一、Media-Type"><a href="#一、Media-Type" class="headerlink" title="一、Media Type"></a>一、Media Type</h1><p><code>HTML4</code> 和 <code>CSS2</code> 支持针对不同媒体类型（<code>Media Type</code>）定制不同的媒体样式。</p>
-<p>在 <code>HTML</code> 中可以这样使用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">media</span>=<span class="string">"print"</span> <span class="attr">href</span>=<span class="string">"print.css"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<p>在样式表中可以这样写:<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen &#123;</div><div class="line">    <span class="selector-tag">p</span> &#123;</div><div class="line">        <span class="attribute">color</span>: <span class="number">#f00</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：<code>screen &amp; print</code></p>
-<a id="more"></a>
-<h1 id="二、Media-Query"><a href="#二、Media-Query" class="headerlink" title="二、Media Query"></a>二、Media Query</h1><p><code>Media Query</code> 在 <code>Media Type</code>的基础上添加了对CSS属性的判断，所以它实际上是一个逻辑表达式。</p>
-<h3 id="OR-media-query-list"><a href="#OR-media-query-list" class="headerlink" title="OR (media query list)"></a>OR (media query list)</h3><p>媒体查询列表即包含着多个媒体查询条件，只要符合一条即返回 <code>true</code>，即<strong>逻辑或</strong>的处理逻辑。如果列表为空，相当于返回 <code>true</code>。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen, print &#123; … &#125;</div><div class="line">@<span class="keyword">media</span> all &#123; … &#125;</div><div class="line">@<span class="keyword">media</span> &#123; … &#125;</div></pre></td></tr></table></figure></p>
-<h3 id="all"><a href="#all" class="headerlink" title="all"></a>all</h3><p><code>all</code> 关键字表示适用于所有媒体类型，如果不明确媒体类型的话默认就是 <code>all</code><br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> all and (device-width: <span class="number">320px</span>) &#123;&#125;</div><div class="line">@<span class="keyword">media</span> (device-width: <span class="number">320px</span>) &#123;&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="not-only"><a href="#not-only" class="headerlink" title="not/only"></a>not/only</h3><p><code>not</code> 用来指定某个的媒体查询条件，而 <code>only</code> 用来指定某种媒体查询条件，用来排除不支持媒体查询的浏览器<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> not screen &#123;&#125;</div><div class="line">@<span class="keyword">media</span> only print &#123;&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="支持的属性"><a href="#支持的属性" class="headerlink" title="支持的属性"></a>支持的属性</h3><ul>
-<li><p><code>width</code>：布局视口的宽度</p>
-</li>
-<li><p><code>height</code>：布局视口的高度</p>
-</li>
-<li><p><code>device-width</code>：设备的宽度</p>
-</li>
-<li><p><code>device-height</code>：设备的高度</p>
-</li>
-<li><p><code>device-aspect-ratio</code>：设备像素比</p>
-</li>
-<li><p><code>orientation</code>：横屏(lanscape) 或者 竖屏(portrait)</p>
-</li>
-<li><p>…</p>
-</li>
-</ul>
-<p>PS：这里只列出经常使用的属性</p>
-<p>列出来这些属性之后，我发现少了我们最经常使用的 <code>device-pixel-ratio</code>，但是文档也没有提到它，后来在 <a href="http://caniuse.com/#search=media" target="_blank" rel="external">caniuse</a> 发现 <code>device-pixel-ratio</code> 竟然标记为 <code>older not standard device-pixel-ratio media query</code>。。。写了那么久以为是 <code>standard</code>，太孤陋寡闻了~</p>
-<h3 id="Resolution"><a href="#Resolution" class="headerlink" title="Resolution"></a>Resolution</h3><p><code>resolution</code>描述设备的分辨率（像素密度），单位有 <code>dpi &amp; dpcm</code>以及后来新增的 <code>dppi</code></p>
-<ul>
-<li><p><code>dpi</code>：<code>dot per inch</code></p>
-</li>
-<li><p><code>dpcm</code>：<code>dot per centimeter</code></p>
-</li>
-<li><p><code>dppi</code>：<code>dot per pixel</code></p>
-</li>
-</ul>
-<p>简单的说就是 <code>resolution</code> 定义了 <code>1px || 1 inch || 1 cm CSS</code> 像素包含了多少个 <code>物理像素点</code>。</p>
-<p>例如 <code>iphone retina</code> 的设备像素比是 <code>2</code>，那么完整的写法是：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* dpi */</span></div><div class="line">@<span class="keyword">media</span> screen and (min-device-pixel-ratio: <span class="number">2</span>),</div><div class="line">    (min-resolution: <span class="number">192dpi</span>)&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* dppi */</span></div><div class="line">@<span class="keyword">media</span> screen and (min-device-pixel-ratio: <span class="number">2</span>),</div><div class="line">    (min-resolution: <span class="number">2</span>dppi) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>PS：<code>1dppi = 96dpi</code></p>
-<p>至于为什么 <code>device-pixel-ratio</code> 不添加到规范中，可以看看 <a href="http://www.w3.org/blog/CSS/2012/06/14/unprefix-webkit-device-pixel-ratio/" target="_blank" rel="external">这篇文章</a></p>
-<h1 id="三、兼容性"><a href="#三、兼容性" class="headerlink" title="三、兼容性"></a>三、兼容性</h1><h3 id="Media-Query-Feature"><a href="#Media-Query-Feature" class="headerlink" title="Media Query Feature"></a>Media Query Feature</h3><table>
-<thead>
-<tr>
-<th style="text-align:center">IE</th>
-<th style="text-align:center">Chrome</th>
-<th style="text-align:left">FireFox</th>
-<th>Safari</th>
-<th>Opera</th>
-<th>IOS Safari</th>
-<th>Android</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">9+</td>
-<td style="text-align:center">4+</td>
-<td style="text-align:left">3.5+</td>
-<td>3.1+</td>
-<td>10.1+</td>
-<td>3.2+</td>
-<td>2.1+</td>
-</tr>
-</tbody>
-</table>
-<p>从 上表 以及 <a href="http://caniuse.com/#search=media" target="_blank" rel="external">caniuse</a> 可以看出，除了 <code>IE8-</code> 之外，其他浏览器都是支持 <code>Media Query</code>的，真是非常赞！</p>
-<h3 id="Resolution-Feature"><a href="#Resolution-Feature" class="headerlink" title="Resolution Feature"></a>Resolution Feature</h3><ul>
-<li><code>IE</code>：<code>IE9+</code> 支持，但是只支持 <code>dpi</code></li>
-</ul>
-<ul>
-<li><p><code>Chrome</code>：<code>4 - 28</code> 支持 <code>device-pixel-ratio</code>，<code>28+</code>支持 <code>resolution</code></p>
-<ul>
-<li><p>最小：<code>-min-webkit-device-pixel-ratio</code></p>
-</li>
-<li><p>最大：<code>-max-webkit-device-pixel-ratio</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p><code>Firefox</code>：<code>16-</code>  支持 <code>device-pixel-ratio</code>，对于 <code>resolution</code> 只支持 <code>dpi</code>；</p>
-<ul>
-<li><p>最小：<code>min--moz-device-pixel-ratio</code></p>
-</li>
-<li><p>最大：<code>max--moz-device-pixel-ratio</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><code>safari</code>：目前只支持 <code>device-pixel-ratio</code>，且要加 <code>-webkit-</code></li>
-</ul>
-<ul>
-<li><p><code>opera</code>：<code>10.1 - 11.5</code> 支持 <code>device-pixel-ratio</code>，<code>12.1+</code>开始支持 <code>resolution</code></p>
-<ul>
-<li><code>webkit</code> 下的 <code>2</code> 要写成 <code>2/1</code>，<code>1</code> 即要写成 <code>1/1</code></li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><code>android</code>：<code>2.3 - 4.3</code> 支持 <code>device-pixel-ratio</code>，<code>4.4+</code>开始支持 <code>resolution</code></li>
-</ul>
-<p>所以，针对高像素密度的屏幕适配如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span></div><div class="line">    only screen and (-webkit-min-device-pixel-ratio: <span class="number">2</span>),   // webkit-base(safari, android)</div><div class="line">    only screen and (  min--moz-device-pixel-ratio: <span class="number">2</span>),    // firefox <span class="number">16</span>-</div><div class="line">    only screen and (    -o-min-device-pixel-ratio: <span class="number">2</span>/<span class="number">1</span>),  // opera <span class="number">11.5</span>-</div><div class="line">    only screen and (      min-device-pixel-ratio: <span class="number">2</span>),     // for standard</div><div class="line">    only screen and (        min-resolution: <span class="number">192dpi</span>),      // IE9+</div><div class="line">    only screen and (          min-resolution: <span class="number">2dppx</span>)      // dppi</div><div class="line">    &#123;</div><div class="line">        <span class="comment">/* Retina-specific stuff here */</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<h1 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h1><ul>
-<li><a href="http://www.w3.org/TR/css3-mediaqueries" target="_blank" rel="external">Media Query W3C SPEC</a></li>
-<li><a href="http://www.w3.org/blog/CSS/2012/06/14/unprefix-webkit-device-pixel-ratio/" target="_blank" rel="external">unprefix-webkit-device-pixel-ratio</a></li>
-<li><a href="http://www.w3.org/TR/css3-images/#resolution-units" target="_blank" rel="external">resolution-units</a></li>
-<li><a href="https://css-tricks.com/snippets/css/retina-display-media-query/" target="_blank" rel="external">retina-display-media-query</a></li>
-<li><a href="http://stephen.io/mediaqueries/" target="_blank" rel="external">iPhone iPad Media Query</a></li>
-</ul>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;一、Media-Type&quot;&gt;&lt;a href=&quot;#一、Media-Type&quot; class=&quot;headerlink&quot; title=&quot;一、Media Type&quot;&gt;&lt;/a&gt;一、Media Type&lt;/h1&gt;&lt;p&gt;&lt;code&gt;HTML4&lt;/code&gt; 和 &lt;code&gt;CSS2&lt;/code&gt; 支持针对不同媒体类型（&lt;code&gt;Media Type&lt;/code&gt;）定制不同的媒体样式。&lt;/p&gt;
-&lt;p&gt;在 &lt;code&gt;HTML&lt;/code&gt; 中可以这样使用&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;link&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;media&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;print&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;print.css&quot;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;在样式表中可以这样写:&lt;br&gt; &lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;@&lt;span class=&quot;keyword&quot;&gt;media&lt;/span&gt; screen &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;selector-tag&quot;&gt;p&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attribute&quot;&gt;color&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;#f00&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：&lt;code&gt;screen &amp;amp; print&lt;/code&gt;&lt;/p&gt;
     
     </summary>
     
@@ -753,26 +573,290 @@ div.style.getPropertyValue(&apos;background-color&apos;);
   </entry>
   
   <entry>
-    <title>background-clip 的 bug</title>
-    <link href="https://atwxp.github.io/2017/04/10/background-clip/"/>
-    <id>https://atwxp.github.io/2017/04/10/background-clip/</id>
+    <title>window.getComputedStyle</title>
+    <link href="https://atwxp.github.io/2017/04/10/getComputedStyle/"/>
+    <id>https://atwxp.github.io/2017/04/10/getComputedStyle/</id>
     <published>2017-04-10T03:39:49.000Z</published>
     <updated>2017-04-10T03:39:49.000Z</updated>
     
-    <content type="html"><![CDATA[<p>同时设置 <code>border-radius</code> &amp; <code>background</code> &amp; <code>border-color</code> &amp; <code>background-clip</code> 在 <code>Android 4.1.1</code> 上有 <code>bug</code><br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">position</span>: absolute;</div><div class="line"><span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">margin-top</span>: -<span class="number">37px</span>;</div><div class="line"><span class="attribute">margin-left</span>: -<span class="number">37px</span>;</div><div class="line"><span class="attribute">width</span>: <span class="number">66px</span>;</div><div class="line"><span class="attribute">height</span>: <span class="number">66px</span>;</div><div class="line"></div><div class="line"><span class="comment">// border: 4px solid rgba(255, 255, 255, 0.5);</span></div><div class="line"><span class="attribute">border</span>: <span class="number">4px</span> solid <span class="number">#f00</span>;</div><div class="line"><span class="attribute">background</span>: <span class="number">#fafafa</span>;</div><div class="line"><span class="attribute">border-radius</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">-webkit-background-clip</span>: content-box;</div><div class="line"><span class="attribute">background-clip</span>: content-box;</div><div class="line"></div><div class="line"><span class="attribute">text-align</span>: center;</div><div class="line"><span class="attribute">line-height</span>: <span class="number">1</span>;</div><div class="line"><span class="attribute">z-index</span>: <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
-<p>设置 <code>border</code> 不是透明色，表现的和预期一样：</p>
-<p><img src="/assets/img/bgclip-normal.png" alt="Alt text"></p>
-<p>如果设置为透明色，就会这样：</p>
-<p><img src="/assets/img/bgclip-error.png" alt="Alt text"></p>
-<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
-<li><a href="https://css-tricks.com/the-backgound-clip-property-and-use-cases/" target="_blank" rel="external">the-backgound-clip-property-and-use-cases</a></li>
+    <content type="html"><![CDATA[<p>获取元素的样式通常使用 <code>window.getComputedStyle</code>，有一天我写成了 <code>document.getComputedStyle</code>，总感觉不对劲，网上一查还真这回事o(╯□╰)o，只不过不是这样写的，而是 <code>document.defaultView.getComputedStyle</code></p>
+<h2 id="window-getComputedStyle"><a href="#window-getComputedStyle" class="headerlink" title="window.getComputedStyle"></a>window.getComputedStyle</h2><pre><code>window.getComputedStyle(elem, [pseudoElt])
+</code></pre><p>1、使用这个方法返回的结果和 <code>elem.style</code> 返回的是一样的，都是 <code>CSSStyleDeclaration</code> 对象</p>
+<p><img src="/assets/img/getComputedStyle.png" alt=""></p>
+<p><img src="/assets/img/style-declaration.png" alt=""></p>
+<p>但是二者也有一些区别：</p>
+<a id="more"></a>
+<ul>
+<li>前者是只读的，可以获取元素所有的样式信息，在 <code>chrome</code> 下测试返回 <code>293</code> 个属性</li>
+<li>后者不仅可读还可以写，只能获取元素 <code>style</code> 属性中的样式</li>
+</ul>
+<p>2、获取伪元素</p>
+<p><img src="/assets/img/pseudo.png" alt=""></p>
+<p>3、值的类型</p>
+<p>通过 <code>getComputedStyle()</code> 返回的值是 <code>resolved value</code>，这个值通常和 <code>CSS2.1 computed value</code> 相同，但是对于一些属性如 <code>width, height</code>可能就和 <code>used value</code> 相同。</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle" target="_blank" rel="external">MDN</a>上说有些浏览器获取不到元素过渡时候的样式，自测 <code>chomre, FF</code> 是可以的，不过使用的时候还是注意一下为好</p>
+<blockquote>
+<p>During a CSS transition, getComputedStyle returns the original property value in Firefox, but the final property value in WebKit.</p>
+</blockquote>
+<p>4、兼容性</p>
+<p>移动端：<code>IOS safari 4.3, android 3-</code> 不支持伪元素</p>
+<p>PC：<code>IE8-</code> 完全不支持</p>
+<p>所以在移动端，只要不涉及伪元素和低版本，可以放心使用</p>
+<h2 id="getPropertyValue"><a href="#getPropertyValue" class="headerlink" title="getPropertyValue()"></a>getPropertyValue()</h2><p>返回指定样式属性的值，是 <code>CSSStyleDeclaration</code> 对象的方法，用这个的好处：</p>
+<p>1、对于驼峰式的样式名，如 <code>background-color</code>，就可以直接写</p>
+<pre><code>window.getComputedStyle(div, null).backgroundColor;
+// equal
+div.style.getPropertyValue(&apos;background-color&apos;);
+</code></pre><p>2、对于 <code>float</code> 这些特殊样式名，不用考虑浏览器使用 <code>cssFloat, styleFloat</code> 等</p>
+<pre><code>div.style.getPropertyValue(&apos;float&apos;);
+</code></pre><p>综上，推荐使用这个获取样式</p>
+<p>3、兼容性</p>
+<p><code>IE9+</code>，现代浏览器 支持</p>
+<h2 id="document-defaultView-getComputedStyle"><a href="#document-defaultView-getComputedStyle" class="headerlink" title="document.defaultView.getComputedStyle"></a>document.defaultView.getComputedStyle</h2><p>不必要的，因为 <code>window.getComputedStyle()</code> 已经存在了，干嘛还再多访问一层属性呢</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;获取元素的样式通常使用 &lt;code&gt;window.getComputedStyle&lt;/code&gt;，有一天我写成了 &lt;code&gt;document.getComputedStyle&lt;/code&gt;，总感觉不对劲，网上一查还真这回事o(╯□╰)o，只不过不是这样写的，而是 &lt;code&gt;document.defaultView.getComputedStyle&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&quot;window-getComputedStyle&quot;&gt;&lt;a href=&quot;#window-getComputedStyle&quot; class=&quot;headerlink&quot; title=&quot;window.getComputedStyle&quot;&gt;&lt;/a&gt;window.getComputedStyle&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;window.getComputedStyle(elem, [pseudoElt])
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1、使用这个方法返回的结果和 &lt;code&gt;elem.style&lt;/code&gt; 返回的是一样的，都是 &lt;code&gt;CSSStyleDeclaration&lt;/code&gt; 对象&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/getComputedStyle.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/style-declaration.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;但是二者也有一些区别：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iphone上click事件不冒泡到document</title>
+    <link href="https://atwxp.github.io/2017/04/10/click/"/>
+    <id>https://atwxp.github.io/2017/04/10/click/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T04:04:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在一个带有 <strong>展开/收起</strong> 的列表里，使用了委托处理点击 <strong>查看更多</strong> 的逻辑，如下图：</p>
+<p><img src="/assets/img/more.png" alt=""></p>
+<p>代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.footer'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这段代码在 <code>iphone</code> 上点开不了，安卓都是 <code>OK</code> 的。可以点一下 <a href="http://jsbin.com/zusapo/1/edit?html,css,js,output" target="_blank" rel="external">测试DEMO</a> 体验一下</p>
+<a id="more"></a>
+<h2 id="为什么呢"><a href="#为什么呢" class="headerlink" title="为什么呢"></a>为什么呢</h2><p>从网上搜到几篇文章提到 <a href="http://api.jquery.com/live/" target="_blank" rel="external">API-jQuery</a> 有对 <code>click</code> 使用的提示：</p>
+<blockquote>
+<p>On mobile iOS (iPhone, iPad and iPod Touch) the click event does not bubble to the document body for most elements and cannot be used with .live() without applying one of the following workarounds:</p>
+<ul>
+<li>Use natively clickable elements such as a or button, as both of these do bubble to document.</li>
+<li>Use .on() or .delegate() attached to an element below the level of document.body, since mobile iOS does bubble within the body.</li>
+<li>Apply the CSS style cursor:pointer to the element that needs to bubble clicks (or a parent including document.documentElement). Note however, this will disable copy\paste on the element and cause it to be highlighted when touched.</li>
+</ul>
+</blockquote>
+<p>简单来说就是：</p>
+<p>手机端的 <code>IOS</code>（<code>iPhone, iPad, iPod Touch</code>) 上，对于大多数元素来说，<code>click</code> 事件不会冒泡到 <code>document.body</code> 这个元素上，而且如果不满足下面的条件之一，不能和 <code>.live()/.on()</code> 使用:</p>
+<ul>
+<li>使用原生可以冒泡到 <code>document</code> 的元素，如 <code>a，button</code></li>
+<li>委托事件到 <code>document.body</code> 的子元素</li>
+<li>给需要冒泡 <code>click</code> 的元素或者其父元素（包括 <code>document.documentElement</code> ）设置 <code>cursor: pointer</code>，但是这样做不能 <strong>复制/粘贴</strong> 该元素内容，并且点击元素会高亮显示</li>
+</ul>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrap"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fold"</span>&gt;</span>not A or button element, iphone 上 document委托失效<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"fold"</span> <span class="attr">style</span>=<span class="string">"cursor:pointer"</span>&gt;</span>set cursor: pointer<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span> <span class="attr">class</span>=<span class="string">"fold"</span>&gt;</span>a element success<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>1、委托到目标元素的父元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'.wrap'</span>).on(<span class="string">'click'</span>, <span class="string">'.fold'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'委托到目标元素的父元素, success！'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>没啥兼容问题</p>
+<p>2、设置目标元素 cursor: pointer<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.fold'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    alert(<span class="string">'cursor: pointer, success！'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><code>iphone6</code> 上测试，复制粘贴没有问题，点击存在高亮</p>
+<p>3、给body的子元素写一个click事件</p>
+<p>参考 <a href="http://www.uis.cc/content-9-380-1.html" target="_blank" rel="external">这篇文章</a></p>
+<blockquote>
+<p>在冒泡阶段，有一个节点处理了该事件，它就不会丢弃该事件，会继续往上冒，冒到body 然后document 然后window</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>.body.children[<span class="number">0</span>]).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'给body内其他元素绑定一个事件'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>点 <a href="http://jsbin.com/zexiqo" target="_blank" rel="external">这里</a>，扫码如下，</p>
+<p><img src="/assets/img/click-qrcode.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对比以上三种解决方法，委托到目标元素的父元素 是最简单、没有兼容性问题的方法。</p>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;在一个带有 &lt;strong&gt;展开/收起&lt;/strong&gt; 的列表里，使用了委托处理点击 &lt;strong&gt;查看更多&lt;/strong&gt; 的逻辑，如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/img/more.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;代码如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;).on(&lt;span class=&quot;string&quot;&gt;&#39;click&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;.footer&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;e&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这段代码在 &lt;code&gt;iphone&lt;/code&gt; 上点开不了，安卓都是 &lt;code&gt;OK&lt;/code&gt; 的。可以点一下 &lt;a href=&quot;http://jsbin.com/zusapo/1/edit?html,css,js,output&quot;&gt;测试DEMO&lt;/a&gt; 体验一下&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Media Query</title>
+    <link href="https://atwxp.github.io/2017/04/10/media-query/"/>
+    <id>https://atwxp.github.io/2017/04/10/media-query/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一、Media-Type"><a href="#一、Media-Type" class="headerlink" title="一、Media Type"></a>一、Media Type</h1><p><code>HTML4</code> 和 <code>CSS2</code> 支持针对不同媒体类型（<code>Media Type</code>）定制不同的媒体样式。</p>
+<p>在 <code>HTML</code> 中可以这样使用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">media</span>=<span class="string">"print"</span> <span class="attr">href</span>=<span class="string">"print.css"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在样式表中可以这样写:<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen &#123;</div><div class="line">    <span class="selector-tag">p</span> &#123;</div><div class="line">        <span class="attribute">color</span>: <span class="number">#f00</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：<code>screen &amp; print</code></p>
+<a id="more"></a>
+<h1 id="二、Media-Query"><a href="#二、Media-Query" class="headerlink" title="二、Media Query"></a>二、Media Query</h1><p><code>Media Query</code> 在 <code>Media Type</code>的基础上添加了对CSS属性的判断，所以它实际上是一个逻辑表达式。</p>
+<h3 id="OR-media-query-list"><a href="#OR-media-query-list" class="headerlink" title="OR (media query list)"></a>OR (media query list)</h3><p>媒体查询列表即包含着多个媒体查询条件，只要符合一条即返回 <code>true</code>，即<strong>逻辑或</strong>的处理逻辑。如果列表为空，相当于返回 <code>true</code>。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen, print &#123; … &#125;</div><div class="line">@<span class="keyword">media</span> all &#123; … &#125;</div><div class="line">@<span class="keyword">media</span> &#123; … &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="all"><a href="#all" class="headerlink" title="all"></a>all</h3><p><code>all</code> 关键字表示适用于所有媒体类型，如果不明确媒体类型的话默认就是 <code>all</code><br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> all and (device-width: <span class="number">320px</span>) &#123;&#125;</div><div class="line">@<span class="keyword">media</span> (device-width: <span class="number">320px</span>) &#123;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="not-only"><a href="#not-only" class="headerlink" title="not/only"></a>not/only</h3><p><code>not</code> 用来指定某个的媒体查询条件，而 <code>only</code> 用来指定某种媒体查询条件，用来排除不支持媒体查询的浏览器<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> not screen &#123;&#125;</div><div class="line">@<span class="keyword">media</span> only print &#123;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="支持的属性"><a href="#支持的属性" class="headerlink" title="支持的属性"></a>支持的属性</h3><ul>
+<li><p><code>width</code>：布局视口的宽度</p>
+</li>
+<li><p><code>height</code>：布局视口的高度</p>
+</li>
+<li><p><code>device-width</code>：设备的宽度</p>
+</li>
+<li><p><code>device-height</code>：设备的高度</p>
+</li>
+<li><p><code>device-aspect-ratio</code>：设备像素比</p>
+</li>
+<li><p><code>orientation</code>：横屏(lanscape) 或者 竖屏(portrait)</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+<p>PS：这里只列出经常使用的属性</p>
+<p>列出来这些属性之后，我发现少了我们最经常使用的 <code>device-pixel-ratio</code>，但是文档也没有提到它，后来在 <a href="http://caniuse.com/#search=media" target="_blank" rel="external">caniuse</a> 发现 <code>device-pixel-ratio</code> 竟然标记为 <code>older not standard device-pixel-ratio media query</code>。。。写了那么久以为是 <code>standard</code>，太孤陋寡闻了~</p>
+<h3 id="Resolution"><a href="#Resolution" class="headerlink" title="Resolution"></a>Resolution</h3><p><code>resolution</code>描述设备的分辨率（像素密度），单位有 <code>dpi &amp; dpcm</code>以及后来新增的 <code>dppi</code></p>
+<ul>
+<li><p><code>dpi</code>：<code>dot per inch</code></p>
+</li>
+<li><p><code>dpcm</code>：<code>dot per centimeter</code></p>
+</li>
+<li><p><code>dppi</code>：<code>dot per pixel</code></p>
+</li>
+</ul>
+<p>简单的说就是 <code>resolution</code> 定义了 <code>1px || 1 inch || 1 cm CSS</code> 像素包含了多少个 <code>物理像素点</code>。</p>
+<p>例如 <code>iphone retina</code> 的设备像素比是 <code>2</code>，那么完整的写法是：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* dpi */</span></div><div class="line">@<span class="keyword">media</span> screen and (min-device-pixel-ratio: <span class="number">2</span>),</div><div class="line">    (min-resolution: <span class="number">192dpi</span>)&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* dppi */</span></div><div class="line">@<span class="keyword">media</span> screen and (min-device-pixel-ratio: <span class="number">2</span>),</div><div class="line">    (min-resolution: <span class="number">2</span>dppi) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>PS：<code>1dppi = 96dpi</code></p>
+<p>至于为什么 <code>device-pixel-ratio</code> 不添加到规范中，可以看看 <a href="http://www.w3.org/blog/CSS/2012/06/14/unprefix-webkit-device-pixel-ratio/" target="_blank" rel="external">这篇文章</a></p>
+<h1 id="三、兼容性"><a href="#三、兼容性" class="headerlink" title="三、兼容性"></a>三、兼容性</h1><h3 id="Media-Query-Feature"><a href="#Media-Query-Feature" class="headerlink" title="Media Query Feature"></a>Media Query Feature</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">IE</th>
+<th style="text-align:center">Chrome</th>
+<th style="text-align:left">FireFox</th>
+<th>Safari</th>
+<th>Opera</th>
+<th>IOS Safari</th>
+<th>Android</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">9+</td>
+<td style="text-align:center">4+</td>
+<td style="text-align:left">3.5+</td>
+<td>3.1+</td>
+<td>10.1+</td>
+<td>3.2+</td>
+<td>2.1+</td>
+</tr>
+</tbody>
+</table>
+<p>从 上表 以及 <a href="http://caniuse.com/#search=media" target="_blank" rel="external">caniuse</a> 可以看出，除了 <code>IE8-</code> 之外，其他浏览器都是支持 <code>Media Query</code>的，真是非常赞！</p>
+<h3 id="Resolution-Feature"><a href="#Resolution-Feature" class="headerlink" title="Resolution Feature"></a>Resolution Feature</h3><ul>
+<li><code>IE</code>：<code>IE9+</code> 支持，但是只支持 <code>dpi</code></li>
+</ul>
+<ul>
+<li><p><code>Chrome</code>：<code>4 - 28</code> 支持 <code>device-pixel-ratio</code>，<code>28+</code>支持 <code>resolution</code></p>
+<ul>
+<li><p>最小：<code>-min-webkit-device-pixel-ratio</code></p>
+</li>
+<li><p>最大：<code>-max-webkit-device-pixel-ratio</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><code>Firefox</code>：<code>16-</code>  支持 <code>device-pixel-ratio</code>，对于 <code>resolution</code> 只支持 <code>dpi</code>；</p>
+<ul>
+<li><p>最小：<code>min--moz-device-pixel-ratio</code></p>
+</li>
+<li><p>最大：<code>max--moz-device-pixel-ratio</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>safari</code>：目前只支持 <code>device-pixel-ratio</code>，且要加 <code>-webkit-</code></li>
+</ul>
+<ul>
+<li><p><code>opera</code>：<code>10.1 - 11.5</code> 支持 <code>device-pixel-ratio</code>，<code>12.1+</code>开始支持 <code>resolution</code></p>
+<ul>
+<li><code>webkit</code> 下的 <code>2</code> 要写成 <code>2/1</code>，<code>1</code> 即要写成 <code>1/1</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>android</code>：<code>2.3 - 4.3</code> 支持 <code>device-pixel-ratio</code>，<code>4.4+</code>开始支持 <code>resolution</code></li>
+</ul>
+<p>所以，针对高像素密度的屏幕适配如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span></div><div class="line">    only screen and (-webkit-min-device-pixel-ratio: <span class="number">2</span>),   // webkit-base(safari, android)</div><div class="line">    only screen and (  min--moz-device-pixel-ratio: <span class="number">2</span>),    // firefox <span class="number">16</span>-</div><div class="line">    only screen and (    -o-min-device-pixel-ratio: <span class="number">2</span>/<span class="number">1</span>),  // opera <span class="number">11.5</span>-</div><div class="line">    only screen and (      min-device-pixel-ratio: <span class="number">2</span>),     // for standard</div><div class="line">    only screen and (        min-resolution: <span class="number">192dpi</span>),      // IE9+</div><div class="line">    only screen and (          min-resolution: <span class="number">2dppx</span>)      // dppi</div><div class="line">    &#123;</div><div class="line">        <span class="comment">/* Retina-specific stuff here */</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h1 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h1><ul>
+<li><a href="http://www.w3.org/TR/css3-mediaqueries" target="_blank" rel="external">Media Query W3C SPEC</a></li>
+<li><a href="http://www.w3.org/blog/CSS/2012/06/14/unprefix-webkit-device-pixel-ratio/" target="_blank" rel="external">unprefix-webkit-device-pixel-ratio</a></li>
+<li><a href="http://www.w3.org/TR/css3-images/#resolution-units" target="_blank" rel="external">resolution-units</a></li>
+<li><a href="https://css-tricks.com/snippets/css/retina-display-media-query/" target="_blank" rel="external">retina-display-media-query</a></li>
+<li><a href="http://stephen.io/mediaqueries/" target="_blank" rel="external">iPhone iPad Media Query</a></li>
 </ul>
 <p>End.</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;同时设置 &lt;code&gt;border-radius&lt;/code&gt; &amp;amp; &lt;code&gt;background&lt;/code&gt; &amp;amp; &lt;code&gt;border-color&lt;/code&gt; &amp;amp; &lt;code&gt;background-clip&lt;/code&gt; 在 &lt;code&gt;
+      &lt;h1 id=&quot;一、Media-Type&quot;&gt;&lt;a href=&quot;#一、Media-Type&quot; class=&quot;headerlink&quot; title=&quot;一、Media Type&quot;&gt;&lt;/a&gt;一、Media Type&lt;/h1&gt;&lt;p&gt;&lt;code&gt;HTML4&lt;/code&gt; 和 &lt;code&gt;CSS2&lt;/code&gt; 支持针对不同媒体类型（&lt;code&gt;Media Type&lt;/code&gt;）定制不同的媒体样式。&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;HTML&lt;/code&gt; 中可以这样使用&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;link&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;media&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;print&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;print.css&quot;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在样式表中可以这样写:&lt;br&gt; &lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;@&lt;span class=&quot;keyword&quot;&gt;media&lt;/span&gt; screen &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;selector-tag&quot;&gt;p&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attribute&quot;&gt;color&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;#f00&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：&lt;code&gt;screen &amp;amp; print&lt;/code&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="基础知识" scheme="https://atwxp.github.io/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>touchcancel的使用</title>
+    <link href="https://atwxp.github.io/2017/04/10/touchcancel/"/>
+    <id>https://atwxp.github.io/2017/04/10/touchcancel/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>通常我们常用的手势事件有 <code>touchstart, touchmove, touchend</code>，对 <code>touchcancel</code> 用之甚少，仅知道就是由于系统原因导致的手势中断而触发的事件。</p>
+<p>在一个项目中我就用到了这个事件 <code>touchcancel</code>，有这么个需求：需要监听长按下载这个动作（浏览器默认支持长按下载，同时会弹出一个系统弹框）</p>
+<p>很自然我们就想到了监听 <code>touchstart/touchend</code>，在 <code>touchstart</code> 记录起始点/时间，在 <code>touchend</code> 记录终止点/时间，满足长按要求则触发事件；</p>
+<a id="more"></a>
+<p>在实际测试过程中，有些浏览器并不触发 <code>touchend</code> 事件，这时候想到了 <code>touchcancel</code> ，猜测应该是这些浏览器弹出下载浮层属于系统中断 <code>touch</code> 事件，经测试猜想是正确的。</p>
+<p>结论：某些浏览器下（<code>UC/QQ...</code>）系统弹层会阻止当前 <code>touch</code> 事件的发生，需要同时监听 <code>touchend/touchcancel</code>，代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * init</div><div class="line">     *</div><div class="line">     * @param &#123;DOM&#125;         wrapper longtap'wrapper</div><div class="line">     * @param &#123;Object&#125;      options options</div><div class="line">     * @property &#123;number&#125;   options.thresold 阈值</div><div class="line">     * @property &#123;number&#125;   options.allowedTIme 允许时间</div><div class="line">     * @param &#123;Function&#125;    callback 回调函数</div><div class="line">     */</div><div class="line">    <span class="keyword">var</span> init = <span class="function"><span class="keyword">function</span> (<span class="params">wrapper, options, callback</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> settings = &#123;</div><div class="line">            <span class="attr">thresold</span>: <span class="number">5</span>,</div><div class="line"></div><div class="line">            <span class="attr">allowedTime</span>: <span class="number">300</span></div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!wrapper) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> options === <span class="string">'function'</span>) &#123;</div><div class="line">            callback = options;</div><div class="line"></div><div class="line">            options = &#123;&#125;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        callback = callback || <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line">        util.extend(settings, options);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> startX;</div><div class="line">        <span class="keyword">var</span> startY;</div><div class="line">        <span class="keyword">var</span> startTime;</div><div class="line"></div><div class="line">        wrapper.addEventListener(<span class="string">'touchstart'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> touchobj = e.changedTouches[<span class="number">0</span>];</div><div class="line"></div><div class="line">            startX = touchobj.pageX;</div><div class="line"></div><div class="line">            startY = touchobj.pageY;</div><div class="line"></div><div class="line">            startTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">        wrapper.addEventListener(<span class="string">'touchend'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            e.stopPropagation();</div><div class="line">            e.preventDefault();</div><div class="line"></div><div class="line">            <span class="keyword">var</span> elapsedTime = +<span class="keyword">new</span> <span class="built_in">Date</span>() - startTime;</div><div class="line"></div><div class="line">            <span class="keyword">var</span> touchobj = e.changedTouches[<span class="number">0</span>];</div><div class="line">            <span class="keyword">var</span> endX = touchobj.pageX;</div><div class="line">            <span class="keyword">var</span> endY = touchobj.pageY;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (</div><div class="line">                <span class="built_in">Math</span>.abs(endX - startX) &lt; settings.thresold</div><div class="line">                &amp;&amp; <span class="built_in">Math</span>.abs(endY - startY) &lt; settings.thresold</div><div class="line">                &amp;&amp; elapsedTime &gt; settings.allowedTime</div><div class="line">            ) &#123;</div><div class="line">                callback();</div><div class="line">            &#125;</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">        wrapper.addEventListener(<span class="string">'touchcancel'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            callback();</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    exports.init = init;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通常我们常用的手势事件有 &lt;code&gt;touchstart, touchmove, touchend&lt;/code&gt;，对 &lt;code&gt;touchcancel&lt;/code&gt; 用之甚少，仅知道就是由于系统原因导致的手势中断而触发的事件。&lt;/p&gt;
+&lt;p&gt;在一个项目中我就用到了这个事件 &lt;code&gt;touchcancel&lt;/code&gt;，有这么个需求：需要监听长按下载这个动作（浏览器默认支持长按下载，同时会弹出一个系统弹框）&lt;/p&gt;
+&lt;p&gt;很自然我们就想到了监听 &lt;code&gt;touchstart/touchend&lt;/code&gt;，在 &lt;code&gt;touchstart&lt;/code&gt; 记录起始点/时间，在 &lt;code&gt;touchend&lt;/code&gt; 记录终止点/时间，满足长按要求则触发事件；&lt;/p&gt;
     
     </summary>
     
@@ -849,51 +933,6 @@ div.style.getPropertyValue(&apos;background-color&apos;);
     
     
       <category term="chrome extension" scheme="https://atwxp.github.io/tags/chrome-extension/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>响应式图片精灵实现</title>
-    <link href="https://atwxp.github.io/2017/04/10/responsive-image/"/>
-    <id>https://atwxp.github.io/2017/04/10/responsive-image/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 <code>logo</code> 如 <code>QQ</code>，微信，微博等，这些 <code>logo</code> 图片都是各自加载的，现在希望能做一张精灵图减少 <code>HTTP</code> 请求，样式如下图：</p>
-<p><img src="/assets/img/sms.png" alt="Alt text"></p>
-<p>遇到的问题就是怎么能自适应的设置图片大小以及位置</p>
-<a id="more"></a>
-<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p>首先我们有一个放置背景图片的容器，通过 <code>CSS</code> 把它写成<strong>正方形</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;sprite&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">div.sprite &#123;</div><div class="line">    width: 20%;</div><div class="line">    height: 0;</div><div class="line">    padding-bottom: 20%;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>假设我们的精灵图是 <code>1000*500px</code>，左边是 <code>500px</code> 宽的第一张图，右边是第二张图，假设我们这样写：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.sprite</span> &#123;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">./sprite.png</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们会发现这张图会自动缩放在容器里，不是我们想要的容器内只显示一张图的效果。</p>
-<p>实际上我们希望显示这张精灵图的一半大小，那么我们可以设置 <code>background-size: 200%</code>，这句话会设置精灵图的宽度为两个容器宽度的大小，又因为精灵图本身的两张图宽度比例是 <code>1:1</code> 的，所以每个图的宽度都是容器宽度<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span><span class="selector-class">.sprite</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">20%</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">padding-bottom</span>: <span class="number">20%</span>;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">'./sprite.png'</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">200%</span>;</div><div class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">        <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>响应式的关键是 <strong>使用百分比设置图片的位置</strong></p>
-<p>拿项目本身来说，每个 <code>logo</code> 容器都是正方形，精灵图是 <code>4 * 2</code> 的，且每个都是 <code>198*198</code> 即也是正方形，怎么实现呢？<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.logo</span> &#123;</div><div class="line">    <span class="attribute">background-image</span>: url(<span class="string">./sms.png</span>);</div><div class="line">    <span class="attribute">background-size</span>: <span class="number">400%</span> <span class="number">200%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>水平宽度写 <code>400%</code> 即是容器宽度的 4 倍大小，精灵图本身宽度是4个logo，所以每个logo在宽度上刚好占满容器宽度；高度同理</p>
-<p>微信、微博、空间、邮件这几个很好设置图片位置<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.wx</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.weibo</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">0</span> <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.qzone</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.email</span> &#123;</div><div class="line">    <span class="attribute">background-position</span>: <span class="number">100%</span> <span class="number">100%</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>那么中间的怎么设置位置呢？我是这么理解，既然每个 <code>logo</code> 和容器大小是一样的，位置又是通过百分比来设置，那么假设 <code>w</code> 是容器宽度，<code>m</code> 表示精灵图有 <code>m</code> 列，第一排第  <code>n</code> 列 <code>logo</code> 的位置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">percent * w * m - percent * w = (n - <span class="number">1</span>) * w</div></pre></td></tr></table></figure></p>
-<p>即设置第一个 <code>logo</code> 百分比是 0，第二个是  <code>1/3</code> 第三个是 <code>2/3</code> 第四个是  <code>3/3</code></p>
-<h1 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h1><ul>
-<li><a href="http://brianjohnsondesign.com/responsive-background-image-sprites-css-tutorial/" target="_blank" rel="external">responsive-background-image-sprites-css-tutorial</a></li>
-</ul>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 &lt;code&gt;logo&lt;/code&gt; 如 &lt;code&gt;QQ&lt;/code&gt;，微信，微博等，这些 &lt;code&gt;logo&lt;/code&gt; 图片都是各自加载的，现在希望能做一张精灵图减少 &lt;code&gt;HTTP&lt;/code&gt; 请求，样式如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/img/sms.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;遇到的问题就是怎么能自适应的设置图片大小以及位置&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
@@ -1042,154 +1081,6 @@ p.name =&gt; 011
   </entry>
   
   <entry>
-    <title>UC下字体突然变大</title>
-    <link href="https://atwxp.github.io/2017/04/10/uc-font-scale/"/>
-    <id>https://atwxp.github.io/2017/04/10/uc-font-scale/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>项目中遇到了页面的字体在 <code>UC</code> 变大的问题，后来排查是一个地方的 <code>font-size: 12px</code> 导致的，临时方案就是换了字体大小解决了问题</p>
-<p>后来其他同事又遇到了这个问题，这不得不重视起来，于是在 <a href="https://www.zhihu.com/question/29769089" target="_blank" rel="external">知乎</a> 上找到了答案</p>
-<blockquote>
-<p>uc浏览器判断到页面上文字居多时，会自动放大字体优化移动用户体验</p>
-</blockquote>
-<p>解决方法是在头部加上<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"wap-font-scale"</span> <span class="attr">content</span>=<span class="string">"no"</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>尝试了其他方法也是可以的，如改变字体大小，把样式表放在最后加载等</p>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;项目中遇到了页面的字体在 &lt;code&gt;UC&lt;/code&gt; 变大的问题，后来排查是一个地方的 &lt;code&gt;font-size: 12px&lt;/code&gt; 导致的，临时方案就是换了字体大小解决了问题&lt;/p&gt;
-&lt;p&gt;后来其他同事又遇到了这个问题，这不得不重视起来，于是在 &lt;a hr
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>touchend不触发bug</title>
-    <link href="https://atwxp.github.io/2017/04/10/touched-not-trigger/"/>
-    <id>https://atwxp.github.io/2017/04/10/touched-not-trigger/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>给一个元素绑定 <code>touchstart, touchmove, touchend, click</code></p>
-<p>如果只是触摸一下这个元素，按理是只触发 <code>touchstart touchend click</code>，如果滚动的话，应该就是多了一个 <code>touchmove</code> 而已</p>
-<p>但是安卓机的某些浏览器（如 <code>UC</code>）在滚动的时候不会触发 <code>touchend</code>（偶尔也会触发），<code>touchmove</code> 可能也只是触发一次，见 <a href="http://output.jsbin.com/cuqedenofa" target="_blank" rel="external">demo</a></p>
-<p>解决方法：</p>
-<ul>
-<li>在 <code>touchstart</code> 设置 <code>e.preventDefault()</code>，页面不能滚动，链接不能跳转，不会触发 <code>click</code> 事件</li>
-<li>在 <code>touchmove</code> 设置 <code>e.preventDefault()</code>，页面不能滚动以及不能 <code>pinch-room</code></li>
-</ul>
-<p>参考 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Touch_events#Additional_tips" target="_blank" rel="external">Touch_events - MDN</a></p>
-<blockquote>
-<p>Since calling preventDefault() on a touchstart or the first touchmove event of a series prevents the corresponding mouse events from firing, it’s common to call preventDefault() ontouchmove rather than touchstart. That way, mouse events can still fire and things like links will continue to work.</p>
-</blockquote>
-<p>参考 <a href="http://www.quirksmode.org/mobile/default.html" target="_blank" rel="external">Preventing the touch default</a></p>
-<blockquote>
-<p>The default of all actions is prevented when you return false (or call preventDefault()) ontouchstart. The touchmove event is trickier: only scroll and pinch-zoom are prevented when you return false on that event.</p>
-</blockquote>
-<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
-<li><a href="https://www.douban.com/note/425950082/" target="_blank" rel="external">如何修复移动浏览器上 touchend 事件不触发的bug</a></li>
-</ul>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;给一个元素绑定 &lt;code&gt;touchstart, touchmove, touchend, click&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;如果只是触摸一下这个元素，按理是只触发 &lt;code&gt;touchstart touchend click&lt;/code&gt;，如果滚动的话，应该就是
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UA检测</title>
-    <link href="https://atwxp.github.io/2017/04/10/ua/"/>
-    <id>https://atwxp.github.io/2017/04/10/ua/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1、平台检测"><a href="#1、平台检测" class="headerlink" title="1、平台检测"></a>1、平台检测</h2><p>安卓<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> android = ua.match(<span class="regexp">/(Android)\s([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>IOS<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> ipad = ua.match(<span class="regexp">/(iPad).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> ipod = ua.match(<span class="regexp">/(iPod).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> iphone = !ipad &amp;&amp; ua.match(<span class="regexp">/(iPhone)\sOS\s([\d_]+)/</span>);</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="2、浏览器检测"><a href="#2、浏览器检测" class="headerlink" title="2、浏览器检测"></a>2、浏览器检测</h2><p>Chrome<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// chrome for ios use CriOS/ instead of Version/</span></div><div class="line"><span class="keyword">var</span> chrome = ua.match(<span class="regexp">/(Chrome)\/([\d.]+)/</span>) || ua.match(<span class="regexp">/(CriOS)\/([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>Safari<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> safari = ios &amp;&amp; ua.match(<span class="regexp">/Version\/([\d.]+)([^S]*(Safari)|[^M]*Mobile[^S]*(Safari))/</span>);</div></pre></td></tr></table></figure></p>
-<p>UC<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> uc = ua.match(<span class="regexp">/(UCBrowser)\/([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>QQ<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> qq = ua.match(<span class="regexp">/(MQQBrowser)\/([\d.]+)/</span>)</div></pre></td></tr></table></figure></p>
-<p>微信<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> wechat = ua.match(<span class="regexp">/(MicroMessenger)\/([\d._]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>QQIM<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// QQ聊天工具内置的浏览器, 安卓既有 MQQBrowser又有 QQ/5.8.0，IOS只有 QQ/5.8.0</span></div><div class="line"><span class="keyword">var</span> qqim = ua.match(<span class="regexp">/(QQ)\/([\d.]+)/</span>) || ua.match(<span class="regexp">/(MQQBrowser)\/([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>百度浏览器<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> bdbox = ua.match(<span class="regexp">/baiduboxapp/</span>);</div></pre></td></tr></table></figure></p>
-<p>手百<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> baidubrowser = ua.match(<span class="regexp">/baidubrowser\/([\d\.]*)/</span>);</div></pre></td></tr></table></figure></p>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1、平台检测&quot;&gt;&lt;a href=&quot;#1、平台检测&quot; class=&quot;headerlink&quot; title=&quot;1、平台检测&quot;&gt;&lt;/a&gt;1、平台检测&lt;/h2&gt;&lt;p&gt;安卓&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; android = ua.match(&lt;span class=&quot;regexp&quot;&gt;/(Android)\s([\d.]+)/&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;IOS&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ios = ua.match(&lt;span class=&quot;regexp&quot;&gt;/iPhone|iPad|iPod/&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ipad = ua.match(&lt;span class=&quot;regexp&quot;&gt;/(iPad).*OS\s([\d_]+)/&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ipod = ua.match(&lt;span class=&quot;regexp&quot;&gt;/(iPod).*OS\s([\d_]+)/&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; iphone = !ipad &amp;amp;&amp;amp; ua.match(&lt;span class=&quot;regexp&quot;&gt;/(iPhone)\sOS\s([\d_]+)/&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="基础知识" scheme="https://atwxp.github.io/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>touchcancel的使用</title>
-    <link href="https://atwxp.github.io/2017/04/10/touchcancel/"/>
-    <id>https://atwxp.github.io/2017/04/10/touchcancel/</id>
-    <published>2017-04-10T03:39:49.000Z</published>
-    <updated>2017-04-10T03:39:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>通常我们常用的手势事件有 <code>touchstart, touchmove, touchend</code>，对 <code>touchcancel</code> 用之甚少，仅知道就是由于系统原因导致的手势中断而触发的事件。</p>
-<p>在一个项目中我就用到了这个事件 <code>touchcancel</code>，有这么个需求：需要监听长按下载这个动作（浏览器默认支持长按下载，同时会弹出一个系统弹框）</p>
-<p>很自然我们就想到了监听 <code>touchstart/touchend</code>，在 <code>touchstart</code> 记录起始点/时间，在 <code>touchend</code> 记录终止点/时间，满足长按要求则触发事件；</p>
-<a id="more"></a>
-<p>在实际测试过程中，有些浏览器并不触发 <code>touchend</code> 事件，这时候想到了 <code>touchcancel</code> ，猜测应该是这些浏览器弹出下载浮层属于系统中断 <code>touch</code> 事件，经测试猜想是正确的。</p>
-<p>结论：某些浏览器下（<code>UC/QQ...</code>）系统弹层会阻止当前 <code>touch</code> 事件的发生，需要同时监听 <code>touchend/touchcancel</code>，代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * init</div><div class="line">     *</div><div class="line">     * @param &#123;DOM&#125;         wrapper longtap'wrapper</div><div class="line">     * @param &#123;Object&#125;      options options</div><div class="line">     * @property &#123;number&#125;   options.thresold 阈值</div><div class="line">     * @property &#123;number&#125;   options.allowedTIme 允许时间</div><div class="line">     * @param &#123;Function&#125;    callback 回调函数</div><div class="line">     */</div><div class="line">    <span class="keyword">var</span> init = <span class="function"><span class="keyword">function</span> (<span class="params">wrapper, options, callback</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> settings = &#123;</div><div class="line">            <span class="attr">thresold</span>: <span class="number">5</span>,</div><div class="line"></div><div class="line">            <span class="attr">allowedTime</span>: <span class="number">300</span></div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!wrapper) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> options === <span class="string">'function'</span>) &#123;</div><div class="line">            callback = options;</div><div class="line"></div><div class="line">            options = &#123;&#125;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        callback = callback || <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line">        util.extend(settings, options);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> startX;</div><div class="line">        <span class="keyword">var</span> startY;</div><div class="line">        <span class="keyword">var</span> startTime;</div><div class="line"></div><div class="line">        wrapper.addEventListener(<span class="string">'touchstart'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> touchobj = e.changedTouches[<span class="number">0</span>];</div><div class="line"></div><div class="line">            startX = touchobj.pageX;</div><div class="line"></div><div class="line">            startY = touchobj.pageY;</div><div class="line"></div><div class="line">            startTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">        wrapper.addEventListener(<span class="string">'touchend'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            e.stopPropagation();</div><div class="line">            e.preventDefault();</div><div class="line"></div><div class="line">            <span class="keyword">var</span> elapsedTime = +<span class="keyword">new</span> <span class="built_in">Date</span>() - startTime;</div><div class="line"></div><div class="line">            <span class="keyword">var</span> touchobj = e.changedTouches[<span class="number">0</span>];</div><div class="line">            <span class="keyword">var</span> endX = touchobj.pageX;</div><div class="line">            <span class="keyword">var</span> endY = touchobj.pageY;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (</div><div class="line">                <span class="built_in">Math</span>.abs(endX - startX) &lt; settings.thresold</div><div class="line">                &amp;&amp; <span class="built_in">Math</span>.abs(endY - startY) &lt; settings.thresold</div><div class="line">                &amp;&amp; elapsedTime &gt; settings.allowedTime</div><div class="line">            ) &#123;</div><div class="line">                callback();</div><div class="line">            &#125;</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line"></div><div class="line">        wrapper.addEventListener(<span class="string">'touchcancel'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            callback();</div><div class="line">        &#125;, <span class="literal">false</span>);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    exports.init = init;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>End.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;通常我们常用的手势事件有 &lt;code&gt;touchstart, touchmove, touchend&lt;/code&gt;，对 &lt;code&gt;touchcancel&lt;/code&gt; 用之甚少，仅知道就是由于系统原因导致的手势中断而触发的事件。&lt;/p&gt;
-&lt;p&gt;在一个项目中我就用到了这个事件 &lt;code&gt;touchcancel&lt;/code&gt;，有这么个需求：需要监听长按下载这个动作（浏览器默认支持长按下载，同时会弹出一个系统弹框）&lt;/p&gt;
-&lt;p&gt;很自然我们就想到了监听 &lt;code&gt;touchstart/touchend&lt;/code&gt;，在 &lt;code&gt;touchstart&lt;/code&gt; 记录起始点/时间，在 &lt;code&gt;touchend&lt;/code&gt; 记录终止点/时间，满足长按要求则触发事件；&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
-    
-    
-      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
-    
-      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
-    
-  </entry>
-  
-  <entry>
     <title>meta 元素的使用</title>
     <link href="https://atwxp.github.io/2017/04/10/meta/"/>
     <id>https://atwxp.github.io/2017/04/10/meta/</id>
@@ -1327,6 +1218,164 @@ ipad with no retina: 72 * 72 =&gt; 76 * 76
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;PS: iOS 8 中移除了 ‘minimal-ui’&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&quot;format-detection&quot;&gt;&lt;a href=&quot;#format-detection&quot; class=&quot;headerlink&quot; title=&quot;format-detection&quot;&gt;&lt;/a&gt;format-detection&lt;/h3&gt;&lt;p&gt;&lt;code&gt;iPhone&lt;/code&gt; 下会自动将一连串数字转换为拨号超链接，&lt;code&gt;email&lt;/code&gt;则会调起邮件系统，去掉自动识别：&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;meta&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;format-detection&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;content&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;telephone=no&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;meta&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;format-detection&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;content&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;email=no&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- or --&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;meta&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;format-detection&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;content&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;telephone=no, email=no&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="基础知识" scheme="https://atwxp.github.io/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>touchend不触发bug</title>
+    <link href="https://atwxp.github.io/2017/04/10/touched-not-trigger/"/>
+    <id>https://atwxp.github.io/2017/04/10/touched-not-trigger/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>给一个元素绑定 <code>touchstart, touchmove, touchend, click</code></p>
+<p>如果只是触摸一下这个元素，按理是只触发 <code>touchstart touchend click</code>，如果滚动的话，应该就是多了一个 <code>touchmove</code> 而已</p>
+<p>但是安卓机的某些浏览器（如 <code>UC</code>）在滚动的时候不会触发 <code>touchend</code>（偶尔也会触发），<code>touchmove</code> 可能也只是触发一次，见 <a href="http://output.jsbin.com/cuqedenofa" target="_blank" rel="external">demo</a></p>
+<p>解决方法：</p>
+<ul>
+<li>在 <code>touchstart</code> 设置 <code>e.preventDefault()</code>，页面不能滚动，链接不能跳转，不会触发 <code>click</code> 事件</li>
+<li>在 <code>touchmove</code> 设置 <code>e.preventDefault()</code>，页面不能滚动以及不能 <code>pinch-room</code></li>
+</ul>
+<p>参考 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Touch_events#Additional_tips" target="_blank" rel="external">Touch_events - MDN</a></p>
+<blockquote>
+<p>Since calling preventDefault() on a touchstart or the first touchmove event of a series prevents the corresponding mouse events from firing, it’s common to call preventDefault() ontouchmove rather than touchstart. That way, mouse events can still fire and things like links will continue to work.</p>
+</blockquote>
+<p>参考 <a href="http://www.quirksmode.org/mobile/default.html" target="_blank" rel="external">Preventing the touch default</a></p>
+<blockquote>
+<p>The default of all actions is prevented when you return false (or call preventDefault()) ontouchstart. The touchmove event is trickier: only scroll and pinch-zoom are prevented when you return false on that event.</p>
+</blockquote>
+<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
+<li><a href="https://www.douban.com/note/425950082/" target="_blank" rel="external">如何修复移动浏览器上 touchend 事件不触发的bug</a></li>
+</ul>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;给一个元素绑定 &lt;code&gt;touchstart, touchmove, touchend, click&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果只是触摸一下这个元素，按理是只触发 &lt;code&gt;touchstart touchend click&lt;/code&gt;，如果滚动的话，应该就是
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>反广告过滤</title>
+    <link href="https://atwxp.github.io/2017/04/10/ad/"/>
+    <id>https://atwxp.github.io/2017/04/10/ad/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p> <code>dom</code>  的类名中存在某些关键词会被一些浏览器（猎豹，qq，UC…）的广告过滤机制干掉</p>
+<p>已知的会被过滤掉的关键字：</p>
+<ul>
+<li>banner</li>
+<li>ad</li>
+<li>poster</li>
+<li>flag</li>
+<li>block</li>
+<li>download</li>
+<li>na-download</li>
+</ul>
+<p>包括 <code>HTML</code> 中的 <code>&lt;img /&gt;</code> 的资源路径可能也会被过滤了，有次我把图片命名为 <code>ad.jpg</code> 就被过滤了。。</p>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; &lt;code&gt;dom&lt;/code&gt;  的类名中存在某些关键词会被一些浏览器（猎豹，qq，UC…）的广告过滤机制干掉&lt;/p&gt;
+&lt;p&gt;已知的会被过滤掉的关键字：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;banner&lt;/li&gt;
+&lt;li&gt;ad&lt;/li&gt;
+&lt;li&gt;poster&lt;/li&gt;
+&lt;li&gt;f
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UC下字体突然变大</title>
+    <link href="https://atwxp.github.io/2017/04/10/uc-font-scale/"/>
+    <id>https://atwxp.github.io/2017/04/10/uc-font-scale/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>项目中遇到了页面的字体在 <code>UC</code> 变大的问题，后来排查是一个地方的 <code>font-size: 12px</code> 导致的，临时方案就是换了字体大小解决了问题</p>
+<p>后来其他同事又遇到了这个问题，这不得不重视起来，于是在 <a href="https://www.zhihu.com/question/29769089" target="_blank" rel="external">知乎</a> 上找到了答案</p>
+<blockquote>
+<p>uc浏览器判断到页面上文字居多时，会自动放大字体优化移动用户体验</p>
+</blockquote>
+<p>解决方法是在头部加上<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"wap-font-scale"</span> <span class="attr">content</span>=<span class="string">"no"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>尝试了其他方法也是可以的，如改变字体大小，把样式表放在最后加载等</p>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;项目中遇到了页面的字体在 &lt;code&gt;UC&lt;/code&gt; 变大的问题，后来排查是一个地方的 &lt;code&gt;font-size: 12px&lt;/code&gt; 导致的，临时方案就是换了字体大小解决了问题&lt;/p&gt;
+&lt;p&gt;后来其他同事又遇到了这个问题，这不得不重视起来，于是在 &lt;a hr
+    
+    </summary>
+    
+      <category term="FrontEnd" scheme="https://atwxp.github.io/categories/FrontEnd/"/>
+    
+    
+      <category term="移动web开发" scheme="https://atwxp.github.io/tags/%E7%A7%BB%E5%8A%A8web%E5%BC%80%E5%8F%91/"/>
+    
+      <category term="开发经验" scheme="https://atwxp.github.io/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UA检测</title>
+    <link href="https://atwxp.github.io/2017/04/10/ua/"/>
+    <id>https://atwxp.github.io/2017/04/10/ua/</id>
+    <published>2017-04-10T03:39:49.000Z</published>
+    <updated>2017-04-10T03:39:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1、平台检测"><a href="#1、平台检测" class="headerlink" title="1、平台检测"></a>1、平台检测</h2><p>安卓<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> android = ua.match(<span class="regexp">/(Android)\s([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>IOS<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> ipad = ua.match(<span class="regexp">/(iPad).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> ipod = ua.match(<span class="regexp">/(iPod).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> iphone = !ipad &amp;&amp; ua.match(<span class="regexp">/(iPhone)\sOS\s([\d_]+)/</span>);</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="2、浏览器检测"><a href="#2、浏览器检测" class="headerlink" title="2、浏览器检测"></a>2、浏览器检测</h2><p>Chrome<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// chrome for ios use CriOS/ instead of Version/</span></div><div class="line"><span class="keyword">var</span> chrome = ua.match(<span class="regexp">/(Chrome)\/([\d.]+)/</span>) || ua.match(<span class="regexp">/(CriOS)\/([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>Safari<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> safari = ios &amp;&amp; ua.match(<span class="regexp">/Version\/([\d.]+)([^S]*(Safari)|[^M]*Mobile[^S]*(Safari))/</span>);</div></pre></td></tr></table></figure></p>
+<p>UC<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> uc = ua.match(<span class="regexp">/(UCBrowser)\/([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>QQ<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> qq = ua.match(<span class="regexp">/(MQQBrowser)\/([\d.]+)/</span>)</div></pre></td></tr></table></figure></p>
+<p>微信<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> wechat = ua.match(<span class="regexp">/(MicroMessenger)\/([\d._]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>QQIM<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// QQ聊天工具内置的浏览器, 安卓既有 MQQBrowser又有 QQ/5.8.0，IOS只有 QQ/5.8.0</span></div><div class="line"><span class="keyword">var</span> qqim = ua.match(<span class="regexp">/(QQ)\/([\d.]+)/</span>) || ua.match(<span class="regexp">/(MQQBrowser)\/([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>百度浏览器<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> bdbox = ua.match(<span class="regexp">/baiduboxapp/</span>);</div></pre></td></tr></table></figure></p>
+<p>手百<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> baidubrowser = ua.match(<span class="regexp">/baidubrowser\/([\d\.]*)/</span>);</div></pre></td></tr></table></figure></p>
+<p>End.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;1、平台检测&quot;&gt;&lt;a href=&quot;#1、平台检测&quot; class=&quot;headerlink&quot; title=&quot;1、平台检测&quot;&gt;&lt;/a&gt;1、平台检测&lt;/h2&gt;&lt;p&gt;安卓&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; android = ua.match(&lt;span class=&quot;regexp&quot;&gt;/(Android)\s([\d.]+)/&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;IOS&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ios = ua.match(&lt;span class=&quot;regexp&quot;&gt;/iPhone|iPad|iPod/&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ipad = ua.match(&lt;span class=&quot;regexp&quot;&gt;/(iPad).*OS\s([\d_]+)/&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ipod = ua.match(&lt;span class=&quot;regexp&quot;&gt;/(iPod).*OS\s([\d_]+)/&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; iphone = !ipad &amp;amp;&amp;amp; ua.match(&lt;span class=&quot;regexp&quot;&gt;/(iPhone)\sOS\s([\d_]+)/&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
