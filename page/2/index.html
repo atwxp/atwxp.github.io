@@ -148,19 +148,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-media-query" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-background-clip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/media-query/">Media Query</a>
+      <a class="article-title" href="/2017/04/10/background-clip/">background-clip 的 bug</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/media-query/" class="archive-article-date">
+        <a href="/2017/04/10/background-clip/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -168,13 +168,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一、Media-Type"><a href="#一、Media-Type" class="headerlink" title="一、Media Type"></a>一、Media Type</h1><p><code>HTML4</code> 和 <code>CSS2</code> 支持针对不同媒体类型（<code>Media Type</code>）定制不同的媒体样式。</p>
-<p>在 <code>HTML</code> 中可以这样使用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">media</span>=<span class="string">"print"</span> <span class="attr">href</span>=<span class="string">"print.css"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<p>在样式表中可以这样写:<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen &#123;</div><div class="line">    <span class="selector-tag">p</span> &#123;</div><div class="line">        <span class="attribute">color</span>: <span class="number">#f00</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：<code>screen &amp; print</code></p>
-        
-          <a class="article-more-a" href="/2017/04/10/media-query/#more">more >></a>
-        
+        <p>同时设置 <code>border-radius</code> &amp; <code>background</code> &amp; <code>border-color</code> &amp; <code>background-clip</code> 在 <code>Android 4.1.1</code> 上有 <code>bug</code><br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">position</span>: absolute;</div><div class="line"><span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">margin-top</span>: -<span class="number">37px</span>;</div><div class="line"><span class="attribute">margin-left</span>: -<span class="number">37px</span>;</div><div class="line"><span class="attribute">width</span>: <span class="number">66px</span>;</div><div class="line"><span class="attribute">height</span>: <span class="number">66px</span>;</div><div class="line"></div><div class="line"><span class="comment">// border: 4px solid rgba(255, 255, 255, 0.5);</span></div><div class="line"><span class="attribute">border</span>: <span class="number">4px</span> solid <span class="number">#f00</span>;</div><div class="line"><span class="attribute">background</span>: <span class="number">#fafafa</span>;</div><div class="line"><span class="attribute">border-radius</span>: <span class="number">50%</span>;</div><div class="line"><span class="attribute">-webkit-background-clip</span>: content-box;</div><div class="line"><span class="attribute">background-clip</span>: content-box;</div><div class="line"></div><div class="line"><span class="attribute">text-align</span>: center;</div><div class="line"><span class="attribute">line-height</span>: <span class="number">1</span>;</div><div class="line"><span class="attribute">z-index</span>: <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<p>设置 <code>border</code> 不是透明色，表现的和预期一样：</p>
+<p><img src="/assets/img/bgclip-normal.png" alt="Alt text"></p>
+<p>如果设置为透明色，就会这样：</p>
+<p><img src="/assets/img/bgclip-error.png" alt="Alt text"></p>
+<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
+<li><a href="https://css-tricks.com/the-backgound-clip-property-and-use-cases/" target="_blank" rel="external">the-backgound-clip-property-and-use-cases</a></li>
+</ul>
+<p>End.</p>
+
       
 
       
@@ -191,7 +194,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
         		</li>
       		
 		</ul>
@@ -212,7 +215,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/media-query/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/background-clip/">展开全文 >></a>
         </p>
       
 
@@ -230,19 +233,19 @@
 
 
   
-    <article id="post-touchcancel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-responsive-image" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/touchcancel/">touchcancel的使用</a>
+      <a class="article-title" href="/2017/04/10/responsive-image/">响应式图片精灵实现</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/touchcancel/" class="archive-article-date">
+        <a href="/2017/04/10/responsive-image/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -250,11 +253,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>通常我们常用的手势事件有 <code>touchstart, touchmove, touchend</code>，对 <code>touchcancel</code> 用之甚少，仅知道就是由于系统原因导致的手势中断而触发的事件。</p>
-<p>在一个项目中我就用到了这个事件 <code>touchcancel</code>，有这么个需求：需要监听长按下载这个动作（浏览器默认支持长按下载，同时会弹出一个系统弹框）</p>
-<p>很自然我们就想到了监听 <code>touchstart/touchend</code>，在 <code>touchstart</code> 记录起始点/时间，在 <code>touchend</code> 记录终止点/时间，满足长按要求则触发事件；</p>
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在优化图片的时候，有一个分享功能，点击会弹出分享浮层，里面有各类社交 <code>logo</code> 如 <code>QQ</code>，微信，微博等，这些 <code>logo</code> 图片都是各自加载的，现在希望能做一张精灵图减少 <code>HTTP</code> 请求，样式如下图：</p>
+<p><img src="/assets/img/sms.png" alt="Alt text"></p>
+<p>遇到的问题就是怎么能自适应的设置图片大小以及位置</p>
         
-          <a class="article-more-a" href="/2017/04/10/touchcancel/#more">more >></a>
+          <a class="article-more-a" href="/2017/04/10/responsive-image/#more">more >></a>
         
       
 
@@ -293,173 +296,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/touchcancel/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-rss-reader-cx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/rss-reader-cx/">RSS Reader Chrome Extension</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/rss-reader-cx/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>写了个简单的 <a href="https://github.com/atwxp/rss/">rss reader</a> 扩展，用来订阅一些博客了解最新的技术进展。</p>
-<h2 id="1、实现的功能"><a href="#1、实现的功能" class="headerlink" title="1、实现的功能"></a>1、实现的功能</h2><ul>
-<li>支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到微博、印象笔记、（微信todo）</li>
-<li>可以配置每页文章数量，几天更新一次</li>
-<li>使用客户端存储 <code>localStorage</code></li>
-<li>每次切换到新的 <code>rss feed</code>，都会先判断本地存储是否存在且是否过期，过期会重新更新</li>
-<li>导入 <code>OPML</code> 不会立刻请求所有文章更新，而添加单个 <code>feed</code> 会立刻请求文章存储在本地</li>
-</ul>
-<h2 id="2、实现效果"><a href="#2、实现效果" class="headerlink" title="2、实现效果"></a>2、实现效果</h2><p><img src="/assets/img/rss.png" alt=""></p>
-<p><img src="/assets/img/rss-detail.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">chrome extension</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/茶余饭后/" class="article-tag-list-link color5">茶余饭后</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-selector" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/selector/">CSS Selector</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/selector/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是选择符"><a href="#什么是选择符" class="headerlink" title="什么是选择符"></a>什么是选择符</h2><p>选择符决定它和文档树中的哪个元素相匹配，其实是模式匹配，这样它所定义的样式就能应用到那个元素上。</p>
-<h2 id="怎么写"><a href="#怎么写" class="headerlink" title="怎么写"></a>怎么写</h2><p>选择符可以简单到只有一个元素名，如 <code>p {}</code>，也可以复杂到很多选择符组合在一起，如 <code>.header .title {}</code>。那它是怎么定义的呢？<a href="https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#selector-syntax">CSS3</a> 中定义：</p>
-<ul>
-<li>选择符是一组或多组<strong>简单选择符</strong>通过连接符组合起来的</li>
-<li>一组简单选择符就是多个<strong>简单选择符</strong>不是用连接符组合起来的</li>
-<li>简单选择符就是最最基本的选择符，包含 通用选择符(<code>*</code>)、类型选择符(<code>p, div...</code>)、类(<code>.header...</code>)、伪类(<code>:first-child...</code>)、ID(<code>#footer</code>…)、属性选择符(<code>[attr]...</code>)</li>
-<li>连接符包含 <code>space, +, &gt; , ~</code></li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/04/10/selector/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/selector/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/responsive-image/">展开全文 >></a>
         </p>
       
 
@@ -576,19 +413,19 @@
 
 
   
-    <article id="post-touched-not-trigger" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-selector" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/touched-not-trigger/">touchend不触发bug</a>
+      <a class="article-title" href="/2017/04/10/selector/">CSS Selector</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/touched-not-trigger/" class="archive-article-date">
+        <a href="/2017/04/10/selector/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -596,27 +433,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>给一个元素绑定 <code>touchstart, touchmove, touchend, click</code></p>
-<p>如果只是触摸一下这个元素，按理是只触发 <code>touchstart touchend click</code>，如果滚动的话，应该就是多了一个 <code>touchmove</code> 而已</p>
-<p>但是安卓机的某些浏览器（如 <code>UC</code>）在滚动的时候不会触发 <code>touchend</code>（偶尔也会触发），<code>touchmove</code> 可能也只是触发一次，见 <a href="http://output.jsbin.com/cuqedenofa" target="_blank" rel="external">demo</a></p>
-<p>解决方法：</p>
+        <h2 id="什么是选择符"><a href="#什么是选择符" class="headerlink" title="什么是选择符"></a>什么是选择符</h2><p>选择符决定它和文档树中的哪个元素相匹配，其实是模式匹配，这样它所定义的样式就能应用到那个元素上。</p>
+<h2 id="怎么写"><a href="#怎么写" class="headerlink" title="怎么写"></a>怎么写</h2><p>选择符可以简单到只有一个元素名，如 <code>p {}</code>，也可以复杂到很多选择符组合在一起，如 <code>.header .title {}</code>。那它是怎么定义的呢？<a href="https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#selector-syntax">CSS3</a> 中定义：</p>
 <ul>
-<li>在 <code>touchstart</code> 设置 <code>e.preventDefault()</code>，页面不能滚动，链接不能跳转，不会触发 <code>click</code> 事件</li>
-<li>在 <code>touchmove</code> 设置 <code>e.preventDefault()</code>，页面不能滚动以及不能 <code>pinch-room</code></li>
+<li>选择符是一组或多组<strong>简单选择符</strong>通过连接符组合起来的</li>
+<li>一组简单选择符就是多个<strong>简单选择符</strong>不是用连接符组合起来的</li>
+<li>简单选择符就是最最基本的选择符，包含 通用选择符(<code>*</code>)、类型选择符(<code>p, div...</code>)、类(<code>.header...</code>)、伪类(<code>:first-child...</code>)、ID(<code>#footer</code>…)、属性选择符(<code>[attr]...</code>)</li>
+<li>连接符包含 <code>space, +, &gt; , ~</code></li>
 </ul>
-<p>参考 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Touch_events#Additional_tips" target="_blank" rel="external">Touch_events - MDN</a></p>
-<blockquote>
-<p>Since calling preventDefault() on a touchstart or the first touchmove event of a series prevents the corresponding mouse events from firing, it’s common to call preventDefault() ontouchmove rather than touchstart. That way, mouse events can still fire and things like links will continue to work.</p>
-</blockquote>
-<p>参考 <a href="http://www.quirksmode.org/mobile/default.html" target="_blank" rel="external">Preventing the touch default</a></p>
-<blockquote>
-<p>The default of all actions is prevented when you return false (or call preventDefault()) ontouchstart. The touchmove event is trickier: only scroll and pinch-zoom are prevented when you return false on that event.</p>
-</blockquote>
-<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
-<li><a href="https://www.douban.com/note/425950082/" target="_blank" rel="external">如何修复移动浏览器上 touchend 事件不触发的bug</a></li>
-</ul>
-<p>End.</p>
-
+        
+          <a class="article-more-a" href="/2017/04/10/selector/#more">more >></a>
+        
       
 
       
@@ -629,11 +456,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
         		</li>
       		
 		</ul>
@@ -654,7 +477,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/touched-not-trigger/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/selector/">展开全文 >></a>
         </p>
       
 
@@ -672,19 +495,19 @@
 
 
   
-    <article id="post-ad" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-rss-reader-cx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/ad/">反广告过滤</a>
+      <a class="article-title" href="/2017/04/10/rss-reader-cx/">RSS Reader Chrome Extension</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/ad/" class="archive-article-date">
+        <a href="/2017/04/10/rss-reader-cx/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -692,20 +515,176 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> <code>dom</code>  的类名中存在某些关键词会被一些浏览器（猎豹，qq，UC…）的广告过滤机制干掉</p>
-<p>已知的会被过滤掉的关键字：</p>
-<ul>
-<li>banner</li>
-<li>ad</li>
-<li>poster</li>
-<li>flag</li>
-<li>block</li>
-<li>download</li>
-<li>na-download</li>
+        <p>写了个简单的 <a href="https://github.com/atwxp/rss/">rss reader</a> 扩展，用来订阅一些博客了解最新的技术进展。</p>
+<h2 id="1、实现的功能"><a href="#1、实现的功能" class="headerlink" title="1、实现的功能"></a>1、实现的功能</h2><ul>
+<li>支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到微博、印象笔记、（微信todo）</li>
+<li>可以配置每页文章数量，几天更新一次</li>
+<li>使用客户端存储 <code>localStorage</code></li>
+<li>每次切换到新的 <code>rss feed</code>，都会先判断本地存储是否存在且是否过期，过期会重新更新</li>
+<li>导入 <code>OPML</code> 不会立刻请求所有文章更新，而添加单个 <code>feed</code> 会立刻请求文章存储在本地</li>
 </ul>
-<p>包括 <code>HTML</code> 中的 <code>&lt;img /&gt;</code> 的资源路径可能也会被过滤了，有次我把图片命名为 <code>ad.jpg</code> 就被过滤了。。</p>
-<p>End.</p>
+<h2 id="2、实现效果"><a href="#2、实现效果" class="headerlink" title="2、实现效果"></a>2、实现效果</h2><p><img src="/assets/img/rss.png" alt=""></p>
+<p><img src="/assets/img/rss-detail.png" alt=""></p>
+        
+          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/#more">more >></a>
+        
+      
 
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">chrome extension</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/茶余饭后/" class="article-tag-list-link color5">茶余饭后</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-ua" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/ua/">UA检测</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/ua/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1、平台检测"><a href="#1、平台检测" class="headerlink" title="1、平台检测"></a>1、平台检测</h2><p>安卓<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> android = ua.match(<span class="regexp">/(Android)\s([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>IOS<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> ipad = ua.match(<span class="regexp">/(iPad).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> ipod = ua.match(<span class="regexp">/(iPod).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> iphone = !ipad &amp;&amp; ua.match(<span class="regexp">/(iPhone)\sOS\s([\d_]+)/</span>);</div></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2017/04/10/ua/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/ua/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-touchcancel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/touchcancel/">touchcancel的使用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/touchcancel/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通常我们常用的手势事件有 <code>touchstart, touchmove, touchend</code>，对 <code>touchcancel</code> 用之甚少，仅知道就是由于系统原因导致的手势中断而触发的事件。</p>
+<p>在一个项目中我就用到了这个事件 <code>touchcancel</code>，有这么个需求：需要监听长按下载这个动作（浏览器默认支持长按下载，同时会弹出一个系统弹框）</p>
+<p>很自然我们就想到了监听 <code>touchstart/touchend</code>，在 <code>touchstart</code> 记录起始点/时间，在 <code>touchend</code> 记录终止点/时间，满足长按要求则触发事件；</p>
+        
+          <a class="article-more-a" href="/2017/04/10/touchcancel/#more">more >></a>
+        
       
 
       
@@ -743,7 +722,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/ad/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/touchcancel/">展开全文 >></a>
         </p>
       
 
@@ -845,19 +824,19 @@
 
 
   
-    <article id="post-ua" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-touched-not-trigger" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/ua/">UA检测</a>
+      <a class="article-title" href="/2017/04/10/touched-not-trigger/">touchend不触发bug</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/ua/" class="archive-article-date">
+        <a href="/2017/04/10/touched-not-trigger/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -865,10 +844,108 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1、平台检测"><a href="#1、平台检测" class="headerlink" title="1、平台检测"></a>1、平台检测</h2><p>安卓<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> android = ua.match(<span class="regexp">/(Android)\s([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>IOS<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> ipad = ua.match(<span class="regexp">/(iPad).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> ipod = ua.match(<span class="regexp">/(iPod).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> iphone = !ipad &amp;&amp; ua.match(<span class="regexp">/(iPhone)\sOS\s([\d_]+)/</span>);</div></pre></td></tr></table></figure></p>
+        <p>给一个元素绑定 <code>touchstart, touchmove, touchend, click</code></p>
+<p>如果只是触摸一下这个元素，按理是只触发 <code>touchstart touchend click</code>，如果滚动的话，应该就是多了一个 <code>touchmove</code> 而已</p>
+<p>但是安卓机的某些浏览器（如 <code>UC</code>）在滚动的时候不会触发 <code>touchend</code>（偶尔也会触发），<code>touchmove</code> 可能也只是触发一次，见 <a href="http://output.jsbin.com/cuqedenofa" target="_blank" rel="external">demo</a></p>
+<p>解决方法：</p>
+<ul>
+<li>在 <code>touchstart</code> 设置 <code>e.preventDefault()</code>，页面不能滚动，链接不能跳转，不会触发 <code>click</code> 事件</li>
+<li>在 <code>touchmove</code> 设置 <code>e.preventDefault()</code>，页面不能滚动以及不能 <code>pinch-room</code></li>
+</ul>
+<p>参考 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Touch_events#Additional_tips" target="_blank" rel="external">Touch_events - MDN</a></p>
+<blockquote>
+<p>Since calling preventDefault() on a touchstart or the first touchmove event of a series prevents the corresponding mouse events from firing, it’s common to call preventDefault() ontouchmove rather than touchstart. That way, mouse events can still fire and things like links will continue to work.</p>
+</blockquote>
+<p>参考 <a href="http://www.quirksmode.org/mobile/default.html" target="_blank" rel="external">Preventing the touch default</a></p>
+<blockquote>
+<p>The default of all actions is prevented when you return false (or call preventDefault()) ontouchstart. The touchmove event is trickier: only scroll and pinch-zoom are prevented when you return false on that event.</p>
+</blockquote>
+<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><ul>
+<li><a href="https://www.douban.com/note/425950082/" target="_blank" rel="external">如何修复移动浏览器上 touchend 事件不触发的bug</a></li>
+</ul>
+<p>End.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/touched-not-trigger/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-media-query" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
         
-          <a class="article-more-a" href="/2017/04/10/ua/#more">more >></a>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/media-query/">Media Query</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/media-query/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、Media-Type"><a href="#一、Media-Type" class="headerlink" title="一、Media Type"></a>一、Media Type</h1><p><code>HTML4</code> 和 <code>CSS2</code> 支持针对不同媒体类型（<code>Media Type</code>）定制不同的媒体样式。</p>
+<p>在 <code>HTML</code> 中可以这样使用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">media</span>=<span class="string">"print"</span> <span class="attr">href</span>=<span class="string">"print.css"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在样式表中可以这样写:<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen &#123;</div><div class="line">    <span class="selector-tag">p</span> &#123;</div><div class="line">        <span class="attribute">color</span>: <span class="number">#f00</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：<code>screen &amp; print</code></p>
+        
+          <a class="article-more-a" href="/2017/04/10/media-query/#more">more >></a>
         
       
 
@@ -907,7 +984,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/ua/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/media-query/">展开全文 >></a>
         </p>
       
 
@@ -1015,6 +1092,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">开发经验</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
               </li>
              
               <li class="article-tag-list-item">
