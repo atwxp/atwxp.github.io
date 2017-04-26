@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://atwxp.github.io/2017/04/19/high-performace-mobile-web-001/index.html">
 <meta property="og:site_name" content="武小盼uker的博客">
 <meta property="og:description" content="最近读了一本关于移动web开发性能优化方面的书 《High Performance Mobile Web》，这本书系统全面的介绍了性能优化的知识点，对我来说至少以后再回答 “你是怎么做性能优化的？” 这个问题，不会再简单罗列诸如懒加载图片、缓存 js/css、按需加载这些了，而是会从不同的方面系统的给出优化点。接下来的系列会对这本书做个简单的总结。 首先谈谈移动设备和PC之间的不同，包括硬件、网络">
-<meta property="og:updated_time" content="2017-04-23T07:16:10.000Z">
+<meta property="og:updated_time" content="2017-04-23T07:20:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="High Performance Mobile Web 101">
 <meta name="twitter:description" content="最近读了一本关于移动web开发性能优化方面的书 《High Performance Mobile Web》，这本书系统全面的介绍了性能优化的知识点，对我来说至少以后再回答 “你是怎么做性能优化的？” 这个问题，不会再简单罗列诸如懒加载图片、缓存 js/css、按需加载这些了，而是会从不同的方面系统的给出优化点。接下来的系列会对这本书做个简单的总结。 首先谈谈移动设备和PC之间的不同，包括硬件、网络">
@@ -244,6 +244,7 @@
 <h4 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h4><p><code>iOS 8</code> 之后，有两个 <code>webview</code> 可以用：<code>UIWebView / WKWebView</code></p>
 <h4 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h4><p><code>Android</code> 使用的是基于 <code>webkit</code> 的 <code>webview</code>，<code>Android 2.x</code> 性能非常慢，虽然在 <code>4.0 - 4.3</code> 有所好转，但是在性能兼容性上并没有显著的提升。所以很多厂商都决定使用新版本的 <code>webkit</code> 或者 <code>chromium</code> 替换默认的 webview ，这就导致每个设备、操作系统对应的 webkit/chromium 的版本可能不一致</p>
 <p>在 <code>Android 4.4</code> 之后，<code>Google</code> 决定使用 <code>chromium</code>。在 <code>Android 5.0</code> 之后，基于 <code>chromium 39</code> 版本的 <code>webview</code> 可以自动从 <code>Google Play Store</code> 更新，意味着用户不必手动更新系统就能体验最新webview的特性了</p>
+<p>End.</p>
 
       
 
@@ -383,6 +384,11 @@
     </a>
   
   
+    <a href="/2017/04/26/wechat/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">微信小程序的尝试</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
 </nav>
 
 
@@ -488,6 +494,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">

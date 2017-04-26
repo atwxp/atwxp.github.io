@@ -6,17 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://atwxp.github.io">
-  <title>Tag: 构建工具 | 武小盼uker的博客</title>
+  <title>微信小程序的尝试 | 武小盼uker的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="coding my code,uku my ukulele">
-<meta property="og:type" content="website">
-<meta property="og:title" content="武小盼uker的博客">
-<meta property="og:url" content="https://atwxp.github.io/tags/构建工具/index.html">
+  <meta name="description" content="因工作需求尝试开发了微信小程序，这里总结一下开发经验。 准备工作根据官方文档，我们首先要申请 AppId，跟着流程走就好了，因为是个人开发所以主体类型就选择个人。 接下来我们要下载 微信开发者工具，它用来创建、调试、发布小程序。 浏览一下官方文档，我们大概知道：  小程序的文件类型有四种： .wxml, .wxss, .js, .json  小程序的每个页面都要写在 app.json 中的 pag">
+<meta name="keywords" content="小程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序的尝试">
+<meta property="og:url" content="https://atwxp.github.io/2017/04/26/wechat/index.html">
 <meta property="og:site_name" content="武小盼uker的博客">
-<meta property="og:description" content="coding my code,uku my ukulele">
+<meta property="og:description" content="因工作需求尝试开发了微信小程序，这里总结一下开发经验。 准备工作根据官方文档，我们首先要申请 AppId，跟着流程走就好了，因为是个人开发所以主体类型就选择个人。 接下来我们要下载 微信开发者工具，它用来创建、调试、发布小程序。 浏览一下官方文档，我们大概知道：  小程序的文件类型有四种： .wxml, .wxss, .js, .json  小程序的每个页面都要写在 app.json 中的 pag">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-001.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-002.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-003.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-004.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-005.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-006.png">
+<meta property="og:image" content="https://atwxp.github.io/assets/img/wechat-007.png">
+<meta property="og:updated_time" content="2017-04-26T07:49:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="武小盼uker的博客">
-<meta name="twitter:description" content="coding my code,uku my ukulele">
+<meta name="twitter:title" content="微信小程序的尝试">
+<meta name="twitter:description" content="因工作需求尝试开发了微信小程序，这里总结一下开发经验。 准备工作根据官方文档，我们首先要申请 AppId，跟着流程走就好了，因为是个人开发所以主体类型就选择个人。 接下来我们要下载 微信开发者工具，它用来创建、调试、发布小程序。 浏览一下官方文档，我们大概知道：  小程序的文件类型有四种： .wxml, .wxss, .js, .json  小程序的每个页面都要写在 app.json 中的 pag">
+<meta name="twitter:image" content="https://atwxp.github.io/assets/img/wechat-001.png">
   
     <link rel="alternative" href="/atom.xml" title="武小盼uker的博客" type="application/atom+xml">
   
@@ -146,48 +156,151 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-wechat" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/10/webpack-hash/" class="archive-article-date">
-  	<time datetime="2017-04-10T11:45:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/10/webpack-hash/">对 webpack hash 的理解</a>
+    <h1 class="article-title" itemprop="name">
+      微信小程序的尝试
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/04/26/wechat/" class="archive-article-date">
+  	<time datetime="2017-04-26T07:26:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因工作需求尝试开发了微信小程序，这里总结一下开发经验。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>根据<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/" target="_blank" rel="external">官方文档</a>，我们首先要申请 <code>AppId</code>，跟着流程走就好了，因为是个人开发所以<strong>主体类型</strong>就选择<strong>个人</strong>。</p>
+<p>接下来我们要下载 <a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html" target="_blank" rel="external">微信开发者工具</a>，它用来创建、调试、发布小程序。</p>
+<p>浏览一下官方文档，我们大概知道：</p>
+<ul>
+<li><p>小程序的文件类型有四种： <code>.wxml, .wxss, .js, .json</code></p>
+</li>
+<li><p>小程序的每个页面都要写在 <code>app.json</code> 中的 <code>pages</code> 字段内，且 <code>pages</code> 中的第一个页面是小程序的首页，格式为 <strong>路径＋页面</strong>，如</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// app.json</div><div class="line">&quot;pages&quot;:[</div><div class="line">    &quot;pages/welcome/welcome&quot;,</div><div class="line">    &quot;pages/index/index&quot;,</div><div class="line">    &quot;pages/logs/logs&quot;</div><div class="line">],</div></pre></td></tr></table></figure>
+<ul>
+<li><p>每个页面都是由同路径下同名的四个不同后缀文件的组成，如 <code>index</code> 下有 <code>index.js, index.wxml, index.wxss, index.json</code></p>
+</li>
+<li><p>整个程序不是跑在浏览器下，所以和 <code>DOM</code> 相关的事件没法使用</p>
+</li>
+<li><p>我们不能加载非自定义的页面，如跳转到 <code>m.baidu.com</code></p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>看完官方文档介绍后，就可以着手写个 <a href="https://github.com/atwxp/weapp-todos" target="_blank" rel="external">Todo</a> 了（Fork 别人修改的）</p>
+<p><img src="/assets/img/wechat-001.png" alt=""></p>
+<p>项目结构很简单，就只有一个页面：</p>
+<p><img src="/assets/img/wechat-002.png" alt="Alt text"></p>
+<p>这里把 <code>todos</code> 放在 <code>localstorage</code> 保存：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">save: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    wx.setStorageSync(STORAGE_TODO_KEY, data)</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>不管是添加、删除、更改状态，操作的对象都是 <code>Todos</code> 这个数组，但是已经完成的 <code>todo</code>、没有完成的 <code>todo</code> 的个数都是和 <code>Todos</code> 相关联的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">filterDone: <span class="function"><span class="keyword">function</span> (<span class="params">data = this.data.todos</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> data.filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done)</div><div class="line">&#125;,</div><div class="line"></div><div class="line"><span class="attr">filterRemain</span>: <span class="function"><span class="keyword">function</span> (<span class="params">data = this.data.todos</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> data.filter(<span class="function"><span class="params">todo</span> =&gt;</span> !todo.done)</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>所以我们可以写个类似 <code>vue</code> 中 <code>computed</code> 的计算属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">computedTodoData: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">todos</span>: data,</div><div class="line">        <span class="attr">doneCount</span>: <span class="keyword">this</span>.filterDone(data).length,</div><div class="line">        <span class="attr">remainCount</span>: <span class="keyword">this</span>.filterRemain(data).length</div><div class="line">    &#125;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>这样在执行如删除操作的时候，手动调用它就好了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 删除 todo item</span></div><div class="line">removeTodo: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> index = e.currentTarget.dataset.index</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.data.todos.splice(index, <span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.setData(<span class="keyword">this</span>.computedTodoData())</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>项目完成后点击发布，就可以在开发者中心的 <strong>开发管理</strong> 找到 <strong>开发版本</strong>：</p>
+<p><img src="/assets/img/wechat-003.png" alt="Alt text"></p>
+<p>右侧点击 <strong>体验版</strong> 就可以发布为体验版，点击左下角就可以下载二维码进行扫码体验（即使后面再次修改再次发布，这个二维码也不会变）</p>
+<p>然后在 <strong>用户身份</strong> 这里绑定需要的体验者：</p>
+<p><img src="/assets/img/wechat-004.png" alt="Alt text"></p>
+<h2 id="不同"><a href="#不同" class="headerlink" title="不同"></a>不同</h2><h4 id="1-rpx"><a href="#1-rpx" class="headerlink" title="1. rpx"></a>1. rpx</h4><p><code>wxss</code> 中的像素单位有 <code>px, rpx, em...</code> 其中 <code>rpx</code> 是在微信中定义的，即把手机屏幕分为750份</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span>rpx = screen.width / <span class="number">750</span></div></pre></td></tr></table></figure>
+<p>拿 <code>iphone6</code> 来看， <code>1rpx = 0.5px</code></p>
+<p>所以按照 <code>iphone6</code> 的设计稿，前端直接量取间距就可以使用，无需再进行换算</p>
+<h4 id="2-组件"><a href="#2-组件" class="headerlink" title="2. 组件"></a>2. 组件</h4><p>微信定义了一系列组件，不能使用 <code>HTML</code> ，就使用来看</p>
+<p><code>&lt;view&gt;</code> 相当于 <code>&lt;div&gt;</code></p>
+<p><code>&lt;p&gt;&lt;h1-h6&gt;&lt;span&gt;&lt;em&gt;...</code> 相当于  <code>&lt;text&gt;</code></p>
+<p><code>&lt;img&gt;</code> 相当于 <code>&lt;image&gt;</code></p>
+<p>…</p>
+<h4 id="3-图片"><a href="#3-图片" class="headerlink" title="3. 图片"></a>3. 图片</h4><p>微信的 <code>&lt;image&gt;</code> 组件很好用，当我们要把一个图片按比例居中显示，<code>HTML</code> 的写法有点复杂：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"image"</span> <span class="attr">style</span>=<span class="string">"background-image:url();"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">.wrapper &#123;</div><div class="line">    width: 100px;</div><div class="line">    height: 0;</div><div class="line">    padding-top: 100%;</div><div class="line">&#125;</div><div class="line">.image &#123;</div><div class="line">    height: 0;</div><div class="line">    padding-bottom: 100%;</div><div class="line">    background-size: cover;</div><div class="line">    background: top center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在小程序中非常简单，魔法就是 <code>mode</code> 属性，设置为 <code>aspectFill</code> 就可以实现 <code>background-size: cover</code> 的效果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">image</span> <span class="attr">mode</span>=<span class="string">"aspectFill"</span> <span class="attr">src</span>=<span class="string">"&#123;&#123;img&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="有坑"><a href="#有坑" class="headerlink" title="有坑"></a>有坑</h2><h4 id="1-开启环境不校验请求域名"><a href="#1-开启环境不校验请求域名" class="headerlink" title="1. 开启环境不校验请求域名"></a>1. 开启环境不校验请求域名</h4><p>涉及到 <code>wx.request()</code> 的请求，开发的时候要勾选 <strong>开发环境不校验请求域名</strong> 不然 会请求失败</p>
+<p><img src="/assets/img/wechat-005.png" alt="Alt text"></p>
+<p>同时在手机预览调试的时候，需要打开手机上的调试工具 <a href="https://github.com/WechatFE/vConsole" target="_blank" rel="external">vConsole</a></p>
+<h4 id="2-选择符"><a href="#2-选择符" class="headerlink" title="2. 选择符"></a>2. 选择符</h4><p>官方给的选择器有类、ID、元素、<code>::before/::after</code>，但是在项目中 <code>:nth-child, div + div</code> 这些也是能用的，不知道会不有坑。。。</p>
+<h4 id="3-flex布局的坑"><a href="#3-flex布局的坑" class="headerlink" title="3. flex布局的坑"></a>3. flex布局的坑</h4><p>写了个 <a href="http://output.jsbin.com/yumoceqohu" target="_blank" rel="external">例子</a> 想实现这样的布局，使用了 <code>flex</code>，在微信上实现如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;view class="item"&gt;</div><div class="line">        &lt;image src="http://gw.alicdn.com/bao/uploaded/T1tKJKXqlcXXb1upjX.jpg" mode="aspectFill" class="image"/&gt;      </div><div class="line">        &lt;view class="content"&gt;</div><div class="line">        &lt;text class="title"&gt;helllohelllo,helllo,helllohelllo, helllohelllo,helllohelllo&lt;/text&gt;</div><div class="line">        &lt;text class="desc"&gt;fsfsfhelllo, helllohelllo, helllosdfs&lt;/text&gt;</div><div class="line">        &lt;/view&gt;</div><div class="line">&lt;/view&gt;</div><div class="line"></div><div class="line">.item &#123;</div><div class="line">    display: flex;</div><div class="line">    padding: 12px 0;</div><div class="line">&#125;</div><div class="line">.image &#123;</div><div class="line">    display: block;</div><div class="line">    width: 25%;</div><div class="line">    height: 160rpx;</div><div class="line">    margin-right: 24rpx;</div><div class="line">&#125;</div><div class="line">.content &#123;</div><div class="line">    flex: 1;</div><div class="line">    line-height: 44rpx;</div><div class="line">    font-size: 28rpx;</div><div class="line">    // width: 20rpx;</div><div class="line">    // overflow: hidden;</div><div class="line">&#125;</div><div class="line">.title &#123;</div><div class="line">    display: block;</div><div class="line">    overflow: hidden;</div><div class="line">    text-overflow: ellipsis;</div><div class="line">    white-space: nowrap;</div><div class="line">    color: #00c;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.desc &#123;</div><div class="line">    display: -webkit-box;</div><div class="line">    -webkit-line-clamp: 2;</div><div class="line">    -webkit-box-orient: vertical;</div><div class="line">    overflow: hidden;</div><div class="line">    color: #333;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>显示如下：</p>
+<p><img src="/assets/img/wechat-006.png" alt="Alt text"></p>
+<p>左侧图片移出视口之外了，给 <code>.content</code> 加上宽度或者<code>overflow: hidden</code> 就好了</p>
+<p><img src="/assets/img/wechat-007.png" alt="Alt text"></p>
+<p>类似的问题在华为 <code>UC</code> 上也遇到过，需要给 <code>flex item</code> 定个宽度才可以</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>移动端常见的 <code>swiper, scroll</code> 组件都已经内置了，填一下数据就好</li>
+<li>数据必须使用 <code>setData()</code> 才能更新视图</li>
+<li>页面布局基本使用 <code>flex</code> 搞定</li>
+<li>一个列表的图片都是一次性加载的，没有性能优化？？</li>
+<li>还没有在多个真机实践到底还有多少坑</li>
+</ul>
+<h2 id="refer"><a href="#refer" class="headerlink" title="refer"></a>refer</h2><ul>
+<li><p><a href="https://mp.weixin.qq.com/debug/wxadoc/dev/" target="_blank" rel="external">小程序 - 官方文档</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/23536784" target="_blank" rel="external">有用！关于微信小程序，那些开发文档没有告诉你的</a></p>
+</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">构建工具</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -200,17 +313,90 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://atwxp.github.io/2017/04/26/wechat/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/04/19/high-performace-mobile-web-001/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          High Performance Mobile Web 101
+        
+      </div>
+    </a>
   
   
-    </div></section>
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -233,9 +419,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

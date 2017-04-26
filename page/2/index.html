@@ -314,19 +314,19 @@
 
 
   
-    <article id="post-meta" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-iscroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/meta/">meta 元素的使用</a>
+      <a class="article-title" href="/2017/04/10/iscroll/">iscroll 的坑</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/meta/" class="archive-article-date">
+        <a href="/2017/04/10/iscroll/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -334,29 +334,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="meta-标签"><a href="#meta-标签" class="headerlink" title="meta 标签"></a>meta 标签</h1><h3 id="viewport"><a href="#viewport" class="headerlink" title="viewport"></a>viewport</h3><p>设置布局视口为设备宽度，不允许用户缩放，在网页加载时隐藏地址栏与导航栏<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1, user-scalable=no, minimal-ui"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li><code>width</code>：<code>layout viewport</code> 的宽度</li>
-</ul>
-<ul>
-<li><code>height</code>：<code>layout viewport</code> 的高度</li>
-</ul>
-<ul>
-<li><code>initial-scale</code>：初始的缩放比例</li>
-</ul>
-<ul>
-<li><code>maximum-scale</code>：允许用户缩放到的最大比例</li>
-</ul>
-<ul>
-<li><code>user-scalable</code>：用户是否可以手动缩放</li>
-</ul>
-<ul>
-<li><code>minimal-ui</code>：<code>iOS 7.1 Safari</code> 为 <code>meta</code> 标签新增 <code>minimal-ui</code> 属性，在网页加载时隐藏地址栏与导航栏</li>
-</ul>
-<p><strong>PS: iOS 8 中移除了 ‘minimal-ui’</strong></p>
-<h3 id="format-detection"><a href="#format-detection" class="headerlink" title="format-detection"></a>format-detection</h3><p><code>iPhone</code> 下会自动将一连串数字转换为拨号超链接，<code>email</code>则会调起邮件系统，去掉自动识别：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"format-detection"</span> <span class="attr">content</span>=<span class="string">"telephone=no"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"format-detection"</span> <span class="attr">content</span>=<span class="string">"email=no"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- or --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"format-detection"</span> <span class="attr">content</span>=<span class="string">"telephone=no, email=no"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给 <code>iscroll</code> 的子元素绑定 <code>click</code> 事件，在 猎豹，<code>chrome</code>, <code>UC</code> 等失效</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>后来查阅 <a href="https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/basicfeatures.html">文档</a> 发现已经提示我们了</p>
+<blockquote>
+<p><code>options.click</code><br>为了重写原生滚动条，<code>iScroll</code> 禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应 <code>click</code> 事件，那么该设置次属性为 <code>true</code> 。请注意，建议使用自定义的 <code>tap</code> 事件来代替它（见下面）。<br>默认属性：<code>false</code></p>
+<p><code>options.tap</code><br>设置此属性为 <code>true</code>，当滚动区域被点击或者触摸但并没有滚动时，可以让 <code>iScroll</code> 抛出一个自定义的tap事件。<br>这是处理与可以点击元素之间的用户交互的建议方式。侦听 <code>tap</code> 事件和侦听标准事件的方式一致。示例如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">element.addEventListener(<span class="string">'tap'</span>, doSomething, <span class="literal">false</span>); \\ Native</div><div class="line">$(<span class="string">'#element'</span>).on(<span class="string">'tap'</span>, doSomething); \\ jQuery</div></pre></td></tr></table></figure></p>
+<p>你可以通过传递一个字符串来自定义事件名称。比如：<br>tap: ‘myCustomTapEvent’<br>在这个示例里你应该侦听名为myCustomTapEvent的事件。<br>默认值：false</p>
+</blockquote>
         
-          <a class="article-more-a" href="/2017/04/10/meta/#more">more >></a>
+          <a class="article-more-a" href="/2017/04/10/iscroll/#more">more >></a>
         
       
 
@@ -374,7 +360,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
         		</li>
       		
 		</ul>
@@ -395,7 +381,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/meta/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/iscroll/">展开全文 >></a>
         </p>
       
 
@@ -495,170 +481,6 @@
 
 
   
-    <article id="post-rss-reader-cx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/rss-reader-cx/">RSS Reader Chrome Extension</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/rss-reader-cx/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>写了个简单的 <a href="https://github.com/atwxp/rss/">rss reader</a> 扩展，用来订阅一些博客了解最新的技术进展。</p>
-<h2 id="1、实现的功能"><a href="#1、实现的功能" class="headerlink" title="1、实现的功能"></a>1、实现的功能</h2><ul>
-<li>支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到微博、印象笔记、（微信todo）</li>
-<li>可以配置每页文章数量，几天更新一次</li>
-<li>使用客户端存储 <code>localStorage</code></li>
-<li>每次切换到新的 <code>rss feed</code>，都会先判断本地存储是否存在且是否过期，过期会重新更新</li>
-<li>导入 <code>OPML</code> 不会立刻请求所有文章更新，而添加单个 <code>feed</code> 会立刻请求文章存储在本地</li>
-</ul>
-<h2 id="2、实现效果"><a href="#2、实现效果" class="headerlink" title="2、实现效果"></a>2、实现效果</h2><p><img src="/assets/img/rss.png" alt=""></p>
-<p><img src="/assets/img/rss-detail.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">chrome extension</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/茶余饭后/" class="article-tag-list-link color5">茶余饭后</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-ua" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/ua/">UA检测</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/ua/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1、平台检测"><a href="#1、平台检测" class="headerlink" title="1、平台检测"></a>1、平台检测</h2><p>安卓<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> android = ua.match(<span class="regexp">/(Android)\s([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
-<p>IOS<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> ipad = ua.match(<span class="regexp">/(iPad).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> ipod = ua.match(<span class="regexp">/(iPod).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> iphone = !ipad &amp;&amp; ua.match(<span class="regexp">/(iPhone)\sOS\s([\d_]+)/</span>);</div></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2017/04/10/ua/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/ua/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
     <article id="post-touchcancel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -723,90 +545,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/04/10/touchcancel/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-uc-font-scale" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/uc-font-scale/">UC下字体突然变大</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/uc-font-scale/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中遇到了页面的字体在 <code>UC</code> 变大的问题，后来排查是一个地方的 <code>font-size: 12px</code> 导致的，临时方案就是换了字体大小解决了问题</p>
-<p>后来其他同事又遇到了这个问题，这不得不重视起来，于是在 <a href="https://www.zhihu.com/question/29769089" target="_blank" rel="external">知乎</a> 上找到了答案</p>
-<blockquote>
-<p>uc浏览器判断到页面上文字居多时，会自动放大字体优化移动用户体验</p>
-</blockquote>
-<p>解决方法是在头部加上<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"wap-font-scale"</span> <span class="attr">content</span>=<span class="string">"no"</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>尝试了其他方法也是可以的，如改变字体大小，把样式表放在最后加载等</p>
-<p>End.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/uc-font-scale/">展开全文 >></a>
         </p>
       
 
@@ -920,19 +658,19 @@
 
 
   
-    <article id="post-media-query" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-ua" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/media-query/">Media Query</a>
+      <a class="article-title" href="/2017/04/10/ua/">UA检测</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/media-query/" class="archive-article-date">
+        <a href="/2017/04/10/ua/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -940,12 +678,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="一、Media-Type"><a href="#一、Media-Type" class="headerlink" title="一、Media Type"></a>一、Media Type</h1><p><code>HTML4</code> 和 <code>CSS2</code> 支持针对不同媒体类型（<code>Media Type</code>）定制不同的媒体样式。</p>
-<p>在 <code>HTML</code> 中可以这样使用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">media</span>=<span class="string">"print"</span> <span class="attr">href</span>=<span class="string">"print.css"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<p>在样式表中可以这样写:<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">media</span> screen &#123;</div><div class="line">    <span class="selector-tag">p</span> &#123;</div><div class="line">        <span class="attribute">color</span>: <span class="number">#f00</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>规范定义很多媒体类型，但是都支持的浏览器确是很少，不过大都会支持这两个类型：<code>screen &amp; print</code></p>
+        <h2 id="1、平台检测"><a href="#1、平台检测" class="headerlink" title="1、平台检测"></a>1、平台检测</h2><p>安卓<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> android = ua.match(<span class="regexp">/(Android)\s([\d.]+)/</span>);</div></pre></td></tr></table></figure></p>
+<p>IOS<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> ios = ua.match(<span class="regexp">/iPhone|iPad|iPod/</span>);</div><div class="line"><span class="keyword">var</span> ipad = ua.match(<span class="regexp">/(iPad).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> ipod = ua.match(<span class="regexp">/(iPod).*OS\s([\d_]+)/</span>);</div><div class="line"><span class="keyword">var</span> iphone = !ipad &amp;&amp; ua.match(<span class="regexp">/(iPhone)\sOS\s([\d_]+)/</span>);</div></pre></td></tr></table></figure></p>
         
-          <a class="article-more-a" href="/2017/04/10/media-query/#more">more >></a>
+          <a class="article-more-a" href="/2017/04/10/ua/#more">more >></a>
         
       
 
@@ -984,7 +720,258 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/media-query/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/ua/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-click" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/click/">iphone上click事件不冒泡到document</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/click/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在一个带有 <strong>展开/收起</strong> 的列表里，使用了委托处理点击 <strong>查看更多</strong> 的逻辑，如下图：</p>
+<p><img src="/assets/img/more.png" alt=""></p>
+<p>代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.footer'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这段代码在 <code>iphone</code> 上点开不了，安卓都是 <code>OK</code> 的。可以点一下 <a href="http://jsbin.com/zusapo/1/edit?html,css,js,output">测试DEMO</a> 体验一下</p>
+        
+          <a class="article-more-a" href="/2017/04/10/click/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/click/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-rss-reader-cx" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/rss-reader-cx/">RSS Reader Chrome Extension</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/rss-reader-cx/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>写了个简单的 <a href="https://github.com/atwxp/rss/">rss reader</a> 扩展，用来订阅一些博客了解最新的技术进展。</p>
+<h2 id="1、实现的功能"><a href="#1、实现的功能" class="headerlink" title="1、实现的功能"></a>1、实现的功能</h2><ul>
+<li>支持添加订阅、导入已有的 OPML，导出 OPML，可以分享到微博、印象笔记、（微信todo）</li>
+<li>可以配置每页文章数量，几天更新一次</li>
+<li>使用客户端存储 <code>localStorage</code></li>
+<li>每次切换到新的 <code>rss feed</code>，都会先判断本地存储是否存在且是否过期，过期会重新更新</li>
+<li>导入 <code>OPML</code> 不会立刻请求所有文章更新，而添加单个 <code>feed</code> 会立刻请求文章存储在本地</li>
+</ul>
+<h2 id="2、实现效果"><a href="#2、实现效果" class="headerlink" title="2、实现效果"></a>2、实现效果</h2><p><img src="/assets/img/rss.png" alt=""></p>
+<p><img src="/assets/img/rss-detail.png" alt=""></p>
+        
+          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">chrome extension</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/茶余饭后/" class="article-tag-list-link color5">茶余饭后</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/rss-reader-cx/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-uc-font-scale" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/uc-font-scale/">UC下字体突然变大</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/uc-font-scale/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中遇到了页面的字体在 <code>UC</code> 变大的问题，后来排查是一个地方的 <code>font-size: 12px</code> 导致的，临时方案就是换了字体大小解决了问题</p>
+<p>后来其他同事又遇到了这个问题，这不得不重视起来，于是在 <a href="https://www.zhihu.com/question/29769089" target="_blank" rel="external">知乎</a> 上找到了答案</p>
+<blockquote>
+<p>uc浏览器判断到页面上文字居多时，会自动放大字体优化移动用户体验</p>
+</blockquote>
+<p>解决方法是在头部加上<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"wap-font-scale"</span> <span class="attr">content</span>=<span class="string">"no"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>尝试了其他方法也是可以的，如改变字体大小，把样式表放在最后加载等</p>
+<p>End.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/uc-font-scale/">展开全文 >></a>
         </p>
       
 
@@ -1004,7 +991,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1100,6 +1087,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">

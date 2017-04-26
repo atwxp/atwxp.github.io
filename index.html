@@ -148,6 +148,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-wechat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/26/wechat/">微信小程序的尝试</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/26/wechat/" class="archive-article-date">
+  	<time datetime="2017-04-26T07:26:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因工作需求尝试开发了微信小程序，这里总结一下开发经验。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>根据<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/">官方文档</a>，我们首先要申请 <code>AppId</code>，跟着流程走就好了，因为是个人开发所以<strong>主体类型</strong>就选择<strong>个人</strong>。</p>
+<p>接下来我们要下载 <a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html">微信开发者工具</a>，它用来创建、调试、发布小程序。</p>
+<p>浏览一下官方文档，我们大概知道：</p>
+<ul>
+<li><p>小程序的文件类型有四种： <code>.wxml, .wxss, .js, .json</code></p>
+</li>
+<li><p>小程序的每个页面都要写在 <code>app.json</code> 中的 <code>pages</code> 字段内，且 <code>pages</code> 中的第一个页面是小程序的首页，格式为 <strong>路径＋页面</strong>，如</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// app.json</div><div class="line">&quot;pages&quot;:[</div><div class="line">    &quot;pages/welcome/welcome&quot;,</div><div class="line">    &quot;pages/index/index&quot;,</div><div class="line">    &quot;pages/logs/logs&quot;</div><div class="line">],</div></pre></td></tr></table></figure>
+<ul>
+<li><p>每个页面都是由同路径下同名的四个不同后缀文件的组成，如 <code>index</code> 下有 <code>index.js, index.wxml, index.wxss, index.json</code></p>
+</li>
+<li><p>整个程序不是跑在浏览器下，所以和 <code>DOM</code> 相关的事件没法使用</p>
+</li>
+<li><p>我们不能加载非自定义的页面，如跳转到 <code>m.baidu.com</code></p>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2017/04/26/wechat/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/26/wechat/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-high-performace-mobile-web-001" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -392,94 +485,6 @@
 
 
   
-    <article id="post-css-counter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/css-counter/">CSS计数器的使用</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/css-counter/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>类似这样的列表，前面的序号可以使用 <code>CSS Counter</code> 来实现：</p>
-<p><img src="/assets/img/list-counter.png" alt=""></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list</span> &#123;</div><div class="line">	<span class="attribute">counter-reset</span>: index;</div><div class="line">	</div><div class="line">	<span class="attribute">.item</span>::before &#123;</div><div class="line">		counter-increment: index;</div><div class="line">		<span class="attribute">content</span>: <span class="built_in">counter</span>(index);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果不想对某个元素生成计数器，有两个方法：</p>
-<ul>
-<li><p>display: none</p>
-</li>
-<li><p>无法正常生成内容的伪元素</p>
-</li>
-</ul>
-<h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><p>1、减少 <code>HTML</code> 结构，不用多写一个 <code>span</code> 等标签来包裹它<br>2、在某些情况下，涉及动态删除、添加列表等情况下，那么列表顺序会被打乱，不能自动排序，需要在js中动态实现；如果使用 <code>css</code> 的话，我们只需要专心实现<code>dom</code> 的增删即可<br>3、一般这种序号都属于样式修饰，能做到与 <code>HTML</code> 分离自然是很好的</p>
-<p>End.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">移动web开发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/css-counter/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
     <article id="post-ad" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -569,19 +574,19 @@
 
 
   
-    <article id="post-click" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-css-counter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/click/">iphone上click事件不冒泡到document</a>
+      <a class="article-title" href="/2017/04/10/css-counter/">CSS计数器的使用</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/click/" class="archive-article-date">
+        <a href="/2017/04/10/css-counter/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -589,14 +594,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在一个带有 <strong>展开/收起</strong> 的列表里，使用了委托处理点击 <strong>查看更多</strong> 的逻辑，如下图：</p>
-<p><img src="/assets/img/more.png" alt=""></p>
-<p>代码如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.footer'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">    </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>这段代码在 <code>iphone</code> 上点开不了，安卓都是 <code>OK</code> 的。可以点一下 <a href="http://jsbin.com/zusapo/1/edit?html,css,js,output">测试DEMO</a> 体验一下</p>
-        
-          <a class="article-more-a" href="/2017/04/10/click/#more">more >></a>
-        
+        <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>类似这样的列表，前面的序号可以使用 <code>CSS Counter</code> 来实现：</p>
+<p><img src="/assets/img/list-counter.png" alt=""></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.list</span> &#123;</div><div class="line">	<span class="attribute">counter-reset</span>: index;</div><div class="line">	</div><div class="line">	<span class="attribute">.item</span>::before &#123;</div><div class="line">		counter-increment: index;</div><div class="line">		<span class="attribute">content</span>: <span class="built_in">counter</span>(index);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果不想对某个元素生成计数器，有两个方法：</p>
+<ul>
+<li><p>display: none</p>
+</li>
+<li><p>无法正常生成内容的伪元素</p>
+</li>
+</ul>
+<h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><p>1、减少 <code>HTML</code> 结构，不用多写一个 <code>span</code> 等标签来包裹它<br>2、在某些情况下，涉及动态删除、添加列表等情况下，那么列表顺序会被打乱，不能自动排序，需要在js中动态实现；如果使用 <code>css</code> 的话，我们只需要专心实现<code>dom</code> 的增删即可<br>3、一般这种序号都属于样式修饰，能做到与 <code>HTML</code> 分离自然是很好的</p>
+<p>End.</p>
+
       
 
       
@@ -634,87 +644,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/click/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-getComputedStyle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/getComputedStyle/">window.getComputedStyle</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/10/getComputedStyle/" class="archive-article-date">
-  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>获取元素的样式通常使用 <code>window.getComputedStyle</code>，有一天我写成了 <code>document.getComputedStyle</code>，总感觉不对劲，网上一查还真这回事o(╯□╰)o，只不过不是这样写的，而是 <code>document.defaultView.getComputedStyle</code></p>
-<h2 id="window-getComputedStyle"><a href="#window-getComputedStyle" class="headerlink" title="window.getComputedStyle"></a>window.getComputedStyle</h2><pre><code>window.getComputedStyle(elem, [pseudoElt])
-</code></pre><p>1、使用这个方法返回的结果和 <code>elem.style</code> 返回的是一样的，都是 <code>CSSStyleDeclaration</code> 对象</p>
-<p><img src="/assets/img/getComputedStyle.png" alt=""></p>
-<p><img src="/assets/img/style-declaration.png" alt=""></p>
-<p>但是二者也有一些区别：</p>
-        
-          <a class="article-more-a" href="/2017/04/10/getComputedStyle/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/getComputedStyle/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/css-counter/">展开全文 >></a>
         </p>
       
 
@@ -800,6 +730,86 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/04/10/deeplink/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-getComputedStyle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/10/getComputedStyle/">window.getComputedStyle</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/10/getComputedStyle/" class="archive-article-date">
+  	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>获取元素的样式通常使用 <code>window.getComputedStyle</code>，有一天我写成了 <code>document.getComputedStyle</code>，总感觉不对劲，网上一查还真这回事o(╯□╰)o，只不过不是这样写的，而是 <code>document.defaultView.getComputedStyle</code></p>
+<h2 id="window-getComputedStyle"><a href="#window-getComputedStyle" class="headerlink" title="window.getComputedStyle"></a>window.getComputedStyle</h2><pre><code>window.getComputedStyle(elem, [pseudoElt])
+</code></pre><p>1、使用这个方法返回的结果和 <code>elem.style</code> 返回的是一样的，都是 <code>CSSStyleDeclaration</code> 对象</p>
+<p><img src="/assets/img/getComputedStyle.png" alt=""></p>
+<p><img src="/assets/img/style-declaration.png" alt=""></p>
+<p>但是二者也有一些区别：</p>
+        
+          <a class="article-more-a" href="/2017/04/10/getComputedStyle/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/FrontEnd/" class="article-tag-list-link color4">FrontEnd</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/10/getComputedStyle/">展开全文 >></a>
         </p>
       
 
@@ -903,19 +913,19 @@
 
 
   
-    <article id="post-iscroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-meta" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/10/iscroll/">iscroll 的坑</a>
+      <a class="article-title" href="/2017/04/10/meta/">meta 元素的使用</a>
     </h1>
   
 
         
-        <a href="/2017/04/10/iscroll/" class="archive-article-date">
+        <a href="/2017/04/10/meta/" class="archive-article-date">
   	<time datetime="2017-04-10T03:39:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-10</time>
 </a>
         
@@ -923,15 +933,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给 <code>iscroll</code> 的子元素绑定 <code>click</code> 事件，在 猎豹，<code>chrome</code>, <code>UC</code> 等失效</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>后来查阅 <a href="https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/basicfeatures.html">文档</a> 发现已经提示我们了</p>
-<blockquote>
-<p><code>options.click</code><br>为了重写原生滚动条，<code>iScroll</code> 禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应 <code>click</code> 事件，那么该设置次属性为 <code>true</code> 。请注意，建议使用自定义的 <code>tap</code> 事件来代替它（见下面）。<br>默认属性：<code>false</code></p>
-<p><code>options.tap</code><br>设置此属性为 <code>true</code>，当滚动区域被点击或者触摸但并没有滚动时，可以让 <code>iScroll</code> 抛出一个自定义的tap事件。<br>这是处理与可以点击元素之间的用户交互的建议方式。侦听 <code>tap</code> 事件和侦听标准事件的方式一致。示例如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">element.addEventListener(<span class="string">'tap'</span>, doSomething, <span class="literal">false</span>); \\ Native</div><div class="line">$(<span class="string">'#element'</span>).on(<span class="string">'tap'</span>, doSomething); \\ jQuery</div></pre></td></tr></table></figure></p>
-<p>你可以通过传递一个字符串来自定义事件名称。比如：<br>tap: ‘myCustomTapEvent’<br>在这个示例里你应该侦听名为myCustomTapEvent的事件。<br>默认值：false</p>
-</blockquote>
+        <h1 id="meta-标签"><a href="#meta-标签" class="headerlink" title="meta 标签"></a>meta 标签</h1><h3 id="viewport"><a href="#viewport" class="headerlink" title="viewport"></a>viewport</h3><p>设置布局视口为设备宽度，不允许用户缩放，在网页加载时隐藏地址栏与导航栏<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1, user-scalable=no, minimal-ui"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>width</code>：<code>layout viewport</code> 的宽度</li>
+</ul>
+<ul>
+<li><code>height</code>：<code>layout viewport</code> 的高度</li>
+</ul>
+<ul>
+<li><code>initial-scale</code>：初始的缩放比例</li>
+</ul>
+<ul>
+<li><code>maximum-scale</code>：允许用户缩放到的最大比例</li>
+</ul>
+<ul>
+<li><code>user-scalable</code>：用户是否可以手动缩放</li>
+</ul>
+<ul>
+<li><code>minimal-ui</code>：<code>iOS 7.1 Safari</code> 为 <code>meta</code> 标签新增 <code>minimal-ui</code> 属性，在网页加载时隐藏地址栏与导航栏</li>
+</ul>
+<p><strong>PS: iOS 8 中移除了 ‘minimal-ui’</strong></p>
+<h3 id="format-detection"><a href="#format-detection" class="headerlink" title="format-detection"></a>format-detection</h3><p><code>iPhone</code> 下会自动将一连串数字转换为拨号超链接，<code>email</code>则会调起邮件系统，去掉自动识别：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"format-detection"</span> <span class="attr">content</span>=<span class="string">"telephone=no"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"format-detection"</span> <span class="attr">content</span>=<span class="string">"email=no"</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- or --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"format-detection"</span> <span class="attr">content</span>=<span class="string">"telephone=no, email=no"</span>&gt;</span></div></pre></td></tr></table></figure></p>
         
-          <a class="article-more-a" href="/2017/04/10/iscroll/#more">more >></a>
+          <a class="article-more-a" href="/2017/04/10/meta/#more">more >></a>
         
       
 
@@ -949,7 +973,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发经验</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础知识</a>
         		</li>
       		
 		</ul>
@@ -970,7 +994,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/10/iscroll/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/04/10/meta/">展开全文 >></a>
         </p>
       
 
@@ -990,7 +1014,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1086,6 +1110,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础知识</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">
