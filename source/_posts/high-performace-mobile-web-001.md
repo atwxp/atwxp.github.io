@@ -149,3 +149,5 @@ web平台指的是我们编写的web应用在哪里被解析执行，换句话�
 `Android` 使用的是基于 `webkit` 的 `webview`，`Android 2.x` 性能非常慢，虽然在 `4.0 - 4.3` 有所好转，但是在性能兼容性上并没有显著的提升。所以很多厂商都决定使用新版本的 `webkit` 或者 `chromium` 替换默认的 webview ，这就导致每个设备、操作系统对应的 webkit/chromium 的版本可能不一致
 
 在 `Android 4.4` 之后，`Google` 决定使用 `chromium`。在 `Android 5.0` 之后，基于 `chromium 39` 版本的 `webview` 可以自动从 `Google Play Store` 更新，意味着用户不必手动更新系统就能体验最新webview的特性了
+
+End.
